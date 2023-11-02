@@ -55,6 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\DuncanMainWindow.xaml.cs">
+      <DependentUpon>DuncanMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AlbieLoginView.xaml.cs">
+      <DependentUpon>AlbieLoginView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +73,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\DuncanMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AlbieLoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -95,10 +109,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="MyCovidBanner.png" />
+    <Resource Include="Resources\MyCovidBanner.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="MicrosoftTeams-image %282%29.png" />
+    <Resource Include="Resources\MicrosoftTeams-image %282%29.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CovidLogo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
