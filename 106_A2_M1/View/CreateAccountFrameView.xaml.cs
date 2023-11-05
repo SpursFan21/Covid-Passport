@@ -13,13 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _106_A2_M1
+namespace _106_A2_M1.View
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for CreateAccountFrameView.xaml
+    /// </summary>
+    public partial class CreateAccountFrameView : UserControl
     {
-        public MainWindow()
+        public CreateAccountFrameView()
         {
             InitializeComponent();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

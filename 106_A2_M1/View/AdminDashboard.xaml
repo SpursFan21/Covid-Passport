@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="_106_A2_M1.View.LoginView"
+﻿<UserControl x:Class="_106_A2_M1.View.AdminDashboard"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         
         <!-- Top Banner Row -->
-        <Grid Grid.Row="0" Panel.ZIndex="2">
+        <Grid Grid.Row="0" Panel.ZIndex="50">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.3" BlurRadius="10" />
             </Grid.Effect>
@@ -57,27 +57,84 @@
             </Grid.ColumnDefinitions>
             
             <!-- Left panel -->
-            <Grid Grid.Column="0" Background="#FFDEDDEB" Panel.ZIndex="1">
+            <Grid Grid.Column="0" Background="#FFDEDDEB" Panel.ZIndex="40">
                 <Grid.Effect>
                     <DropShadowEffect BlurRadius="10" Opacity="0.3" ShadowDepth="0" />
                 </Grid.Effect>
+                <StackPanel Margin="50 50 0 0">
+                    <RadioButton Content="User Directory"
+                                 Height="50"
+                                 FontSize="24"
+                                 Foreground="Black" 
+                                 Style="{StaticResource MenuButtonTheme}" />
+
+                    <RadioButton Content="QR Code Aprroval Queue"
+                                 Height="50"
+                                 FontSize="24"
+                                 Margin="0 50 0 0"
+                                 Foreground="Black"
+                                 Style="{StaticResource MenuButtonTheme}" />
+
+                    <RadioButton Content="Issue Report Management"
+                                 Height="50"
+                                 FontSize="24"
+                                 Margin="0 50 0 0"
+                                 Foreground="Black"
+                                 Style="{StaticResource MenuButtonTheme}"/>
+                    
+                    
+                </StackPanel>
+
+                
+
             </Grid>
             
             <!-- Center panel -->
-            <Grid Grid.Column="1" Background="#EFEEF5" Panel.ZIndex="0">
-                <Frame x:Name="LoginFrame">
+            <Grid x:Name="AdminContent"
+                  Grid.Column="1" 
+                  Background="#EFEEF5" 
+                  Panel.ZIndex="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Panel.ZIndex="30">
+                    <Grid.Effect>
+                        <DropShadowEffect Opacity="0.3" BlurRadius="10" ShadowDepth="0" />
+                    </Grid.Effect>
+                    <Path Stretch="Fill"  Data="M 0,0 L 0,1 L 1,0 L 0,0" Fill="#FFE066" />
+                    <Path Stretch="Fill"  Data="M 1,1 L 0,1 L 1,0 L 1,1" Fill="#FFEB99" />
+
+                    <!-- Title -->
+                    <TextBlock x:Name="AdminTitle" 
+                               Text="User Directory"
+                               FontSize="42" 
+                               FontWeight="Bold" 
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Left"
+                               Canvas.ZIndex="1" 
+                               Margin="75,0,0,0" />
+
+                </Grid>
+
+
+                <!-- Frame that switches between different admin controls -->
+                <Frame x:Name="AdminFrame"
+                       Grid.Row="1">
                     <Frame.Content>
-                        <!-- Views changed through commands -->
-                        <views:LoginFrameView />
+                        <views:AdminUserDirectory />
                     </Frame.Content>
                 </Frame>
+
             </Grid>
             
             <!-- Right panel -->
-            <Grid Grid.Column="2" Background="#FFDEDDEB" Panel.ZIndex="1">
+            <Grid Grid.Column="2" Background="#FFDEDDEB" Panel.ZIndex="40">
                 <Grid.Effect>
                     <DropShadowEffect BlurRadius="10" Opacity="0.3" ShadowDepth="0" />
                 </Grid.Effect>
+
             </Grid>
         </Grid>
     </Grid>

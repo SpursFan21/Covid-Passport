@@ -12,6 +12,10 @@
         Width="1920"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <views:LoginView />
+        <Frame x:Name="MainFrame">
+            <Frame.Content>
+                <views:LoginView />
+            </Frame.Content>
+        </Frame>
     </Grid>
 </Window>

@@ -13,11 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _106_A2_M1
+namespace _106_A2_M1.View
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Interaction logic for AdminUserDirectory.xaml
+    /// </summary>
+    public partial class AdminUserDirectory : UserControl
     {
-        public MainWindow()
+        public AdminUserDirectory()
         {
             InitializeComponent();
         }
