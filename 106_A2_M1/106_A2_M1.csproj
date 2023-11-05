@@ -63,8 +63,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\AdminQRQueue.xaml.cs">
+      <DependentUpon>AdminQRQueue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AdminUserDirectory.xaml.cs">
+      <DependentUpon>AdminUserDirectory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CreateAccountFrameView.xaml.cs">
+      <DependentUpon>CreateAccountFrameView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DuncanMainWindow.xaml.cs">
       <DependentUpon>DuncanMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AdminDashboard.xaml.cs">
+      <DependentUpon>AdminDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LoginFrameView.xaml.cs">
+      <DependentUpon>LoginFrameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -84,7 +99,35 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Theme\DatePickerTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\MenuButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AdminQRQueue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AdminUserDirectory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CreateAccountFrameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DuncanMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AdminDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\LoginFrameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
