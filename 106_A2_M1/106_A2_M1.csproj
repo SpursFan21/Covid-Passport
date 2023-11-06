@@ -63,29 +63,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="View\AdminQRQueue.xaml.cs">
+    <Compile Include="Model\Admin.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="View\AdminFrames\AdminQRQueue.xaml.cs">
       <DependentUpon>AdminQRQueue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AdminUserDirectory.xaml.cs">
+    <Compile Include="View\AdminFrames\AdminUserDirectory.xaml.cs">
       <DependentUpon>AdminUserDirectory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CreateAccountFrameView.xaml.cs">
+    <Compile Include="View\LoginFrames\CreateAccountFrameView.xaml.cs">
       <DependentUpon>CreateAccountFrameView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DuncanMainWindow.xaml.cs">
-      <DependentUpon>DuncanMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AdminDashboard.xaml.cs">
       <DependentUpon>AdminDashboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\LoginFrameView.xaml.cs">
+    <Compile Include="View\LoginFrames\LoginFrameView.xaml.cs">
       <DependentUpon>LoginFrameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\LoginTemplate.xaml.cs">
-      <DependentUpon>LoginTemplate.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -107,19 +103,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AdminQRQueue.xaml">
+    <Page Include="View\AdminFrames\AdminQRQueue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AdminUserDirectory.xaml">
+    <Page Include="View\AdminFrames\AdminUserDirectory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CreateAccountFrameView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DuncanMainWindow.xaml">
+    <Page Include="View\LoginFrames\CreateAccountFrameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,17 +119,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\LoginFrameView.xaml">
+    <Page Include="View\LoginFrames\LoginFrameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoginView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\LoginTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -182,7 +170,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
