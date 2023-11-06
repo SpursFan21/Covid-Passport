@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    class User
+    class CovidTest
     {
-        public void requestQR()
-        {
-
-        }
-        public void updateUserDetails()
-        {
-
-        }
+        public string test_id;
+        public int test_dare;
+        public bool result;
+        public string test_type;
     }
 }

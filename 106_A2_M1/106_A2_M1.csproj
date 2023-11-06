@@ -64,7 +64,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Admin.cs" />
+    <Compile Include="Model\BaseUser.cs" />
+    <Compile Include="Model\CovidTest.cs" />
+    <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\Vaccine.cs" />
     <Compile Include="View\AdminFrames\AdminQRQueue.xaml.cs">
       <DependentUpon>AdminQRQueue.xaml</DependentUpon>
     </Compile>

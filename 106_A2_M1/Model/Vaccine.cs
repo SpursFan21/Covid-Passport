@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    class User
+    class Vaccine
     {
-        public void requestQR()
-        {
-
-        }
-        public void updateUserDetails()
-        {
-
-        }
+        public string dose_id;
+        public int date_administered;
+        public string brand;
+        public string location;
     }
 }
