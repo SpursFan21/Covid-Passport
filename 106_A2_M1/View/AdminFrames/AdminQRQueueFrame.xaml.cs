@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace _106_A2_M1.View
 {
     /// <summary>
-    /// Interaction logic for AdminQRQueue.xaml
+    /// Interaction logic for AdminQRQueueFrame.xaml
     /// </summary>
-    public partial class AdminQRQueue : UserControl
+    public partial class AdminQRQueueFrame : UserControl
     {
-        public AdminQRQueue()
+        public AdminQRQueueFrame()
         {
             InitializeComponent();
         }

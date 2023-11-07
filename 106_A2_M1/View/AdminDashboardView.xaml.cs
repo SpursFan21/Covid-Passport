@@ -16,23 +16,16 @@ using System.Windows.Shapes;
 namespace _106_A2_M1.View
 {
     /// <summary>
-    /// Interaction logic for CreateAccountFrameView.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class CreateAccountFrameView : UserControl
+    public partial class AdminDashboardView : UserControl
     {
-        public CreateAccountFrameView()
+        public AdminDashboardView()
         {
             InitializeComponent();
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
 
         }
 
-        private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
     }
 }

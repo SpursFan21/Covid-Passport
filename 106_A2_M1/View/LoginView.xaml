@@ -68,7 +68,7 @@
                 <Frame x:Name="LoginFrame">
                     <Frame.Content>
                         <!-- Views changed through commands -->
-                        <views:LoginFrameView />
+                        <views:WelcomeBackFrame />
                     </Frame.Content>
                 </Frame>
             </Grid>
