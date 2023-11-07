@@ -16,15 +16,15 @@ using System.Windows.Shapes;
 namespace _106_A2_M1.View
 {
     /// <summary>
-    /// Interaction logic for LoginFrameView.xaml
+    /// Interaction logic for WelcomeBackFrame.xaml
     /// </summary>
-    public partial class LoginFrameView : UserControl
+    public partial class WelcomeBackFrame : UserControl
     {
-        public LoginFrameView()
+        public WelcomeBackFrame()
         {
             InitializeComponent();
         }
-
+        /*
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Not implemented yet");
@@ -38,7 +38,7 @@ namespace _106_A2_M1.View
             if (LoginFrame != null)
             {
                 // Now you can navigate within the Frame
-                LoginFrame.Navigate(new CreateAccountFrameView());
+                LoginFrame.Navigate(new CreateAccountFrame());
             }
             else
             {
@@ -76,7 +76,7 @@ namespace _106_A2_M1.View
                 MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
                 Frame mainFrame = mainWindow.FindName("MainFrame") as Frame;
 
-                AdminDashboard adminDashboard = new AdminDashboard();
+                AdminDashboardView adminDashboard = new AdminDashboardView();
                 mainFrame.Content = adminDashboard;
 
             }
@@ -102,6 +102,6 @@ namespace _106_A2_M1.View
             // For example:
             // return YourAuthenticationService.ValidateUser(username, password);
             return email == "admin" && password == "password";
-        }
+        }*/
     }
 }

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace _106_A2_M1.View
 {
     /// <summary>
-    /// Interaction logic for AdminUserDirectory.xaml
+    /// Interaction logic for AdminUserDirectoryFrame.xaml
     /// </summary>
-    public partial class AdminUserDirectory : UserControl
+    public partial class AdminUserDirectoryFrame : UserControl
     {
-        public AdminUserDirectory()
+        public AdminUserDirectoryFrame()
         {
             InitializeComponent();
         }
