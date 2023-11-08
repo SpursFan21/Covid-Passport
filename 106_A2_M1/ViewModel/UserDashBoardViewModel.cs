@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.ViewModel
 {
-    public class UserDashBoardViewModel : ViewModelBase 
+    public class UserDashBoardViewModel : MainViewModel 
     {
     }
 }

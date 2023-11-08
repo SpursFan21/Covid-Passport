@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    class User
+    class User : BaseUser
     {
         public void requestQR()
         {
@@ -15,6 +15,11 @@ namespace _106_A2_M1.Model
         public void updateUserDetails()
         {
 
+        }
+
+        internal static void SetPassword(string value)
+        {
+            throw new NotImplementedException();
         }
     }
 }

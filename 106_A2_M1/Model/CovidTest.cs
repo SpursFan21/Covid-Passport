@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    class CovidTest
+    public class CovidTest
     {
-        public string test_id;
-        public int test_dare;
-        public bool result;
-        public string test_type;
+        public string test_id { get; set; }
+        public int test_dare { get; set; }
+        public bool result { get; set; }
+        public string test_type { get; set; }
     }
 }
