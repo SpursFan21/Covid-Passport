@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    class User : BaseUser
+    public class User : BaseUser
     {
         public void requestQR()
         {

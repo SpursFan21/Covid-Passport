@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    class Admin : BaseUser
+    public class Admin : BaseUser
     {
         public string user_id { get; set; }
         public List<User> user_list { get; set; }
