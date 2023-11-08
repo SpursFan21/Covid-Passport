@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    class Issue
+    public class Issue
     {
-        public string issue_id;
-        public string subject;
-        public string description;
-        public bool resolve;
-        public int open_date;
-        public int closed_date;
+        public string issue_id { get; set; }
+        public string subject { get; set; }
+        public string description { get; set; }
+        public bool resolve { get; set; }
+        public int open_date { get; set; }
+        public int closed_date { get; set; }
     }
 }

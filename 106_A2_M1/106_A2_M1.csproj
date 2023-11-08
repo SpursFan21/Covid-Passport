@@ -65,6 +65,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\BaseUser.cs" />
+    <Compile Include="Model\UserDB.cs" />
     <Compile Include="Model\CovidTest.cs" />
     <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\User.cs" />

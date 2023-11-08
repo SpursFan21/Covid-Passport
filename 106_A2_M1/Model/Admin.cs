@@ -8,9 +8,9 @@ namespace _106_A2_M1.Model
 {
     class Admin : BaseUser
     {
-        private string user_id;
-        private List<User> user_list;
-        private List<Issue> issue_list;
+        private string user_id { get; set; }
+        private List<User> user_list { get; set; }
+        private List<Issue> issue_list { get; set; }
 
         protected override void updateUserDetails()
         {
