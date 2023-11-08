@@ -1,5 +1,6 @@
 ﻿using _106_A2_M1.Model;
 using _106_A2_M1.View;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

@@ -3,14 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:local="clr-namespace:_106_A2_M1"
              xmlns:views="clr-namespace:_106_A2_M1.View" 
              xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
-             DataContext="{Binding LoginViewModel, Source={StaticResource ViewModelLocator}}"
              mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}">
+             d:DesignHeight="1080" d:DesignWidth="1920">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
@@ -46,8 +42,6 @@
                 HorizontalAlignment="Right" 
                 Margin="0,5,5,5" 
                 Width="Auto" />
-
-
         </Grid>
 
         <!-- Content Row -->
