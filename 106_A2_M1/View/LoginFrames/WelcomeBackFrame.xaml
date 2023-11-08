@@ -43,11 +43,11 @@
                         Width="300" 
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Password"
-                        Password="{Binding Password}"
                         BorderThickness="2"
                         Background="White" 
                         BorderBrush="{DynamicResource MaterialDesignDivider}" 
                         Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
+                        <!--="{Binding Password}"-->
 
                     <!-- Grid for "Forgot Password and Log In button -->
                     <Grid>

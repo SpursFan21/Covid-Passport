@@ -14,13 +14,12 @@ namespace _106_A2_M1.ViewModel
 {
     public class LoginViewModel : MainViewModel
     {
-        private Model.BaseUser _user;
+        private BaseUser _user;
 
         public LoginViewModel()
         {
             _user = new BaseUser();
-            LoginView loginView = new LoginView();
-            loginView.DataContext = this;
+            
         }
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
