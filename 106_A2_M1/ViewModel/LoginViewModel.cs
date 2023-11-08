@@ -1,4 +1,5 @@
 ﻿using _106_A2_M1.Model;
+using _106_A2_M1.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,8 @@ namespace _106_A2_M1.ViewModel
         public LoginViewModel()
         {
             _user = new BaseUser();
+            LoginView loginView = new LoginView();
+            loginView.DataContext = this;
         }
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -84,11 +87,6 @@ namespace _106_A2_M1.ViewModel
                 }
             }
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }

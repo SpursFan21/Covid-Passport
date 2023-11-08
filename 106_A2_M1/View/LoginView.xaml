@@ -5,24 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1"
-             xmlns:views="clr-namespace:_106_A2_M1.View"
+             xmlns:views="clr-namespace:_106_A2_M1.View" 
+             xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
+             DataContext="{Binding LoginViewModel, Source={StaticResource ViewModelLocator}}"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}">
-    <Grid> 
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" /> 
+            <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <!-- Top Banner Row -->
         <Grid Grid.Row="0" Panel.ZIndex="2">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.3" BlurRadius="10" />
             </Grid.Effect>
             <Path Stretch="Fill"  Data="M 0,0 L 0,1 L 1,0 L 0,0" Fill="#FFFFCC00" />
-            <Path Stretch="Fill"  Data="M 1,1 L 0,1 L 1,0 L 1,1" Fill="#FFFFEB99" /> 
-            
+            <Path Stretch="Fill"  Data="M 1,1 L 0,1 L 1,0 L 1,1" Fill="#FFFFEB99" />
+
             <!-- Title -->
             <TextBlock 
                 x:Name="Title" 
@@ -33,10 +35,10 @@
                 HorizontalAlignment="Left"
                 Canvas.ZIndex="1" 
                 Margin="50,0,0,0" />
-            
+
             <!-- Grid for spacing -->
             <Grid Grid.Row="0" HorizontalAlignment="Stretch" />
-            
+
             <!-- Unite against Covid logo -->
             <Image 
                 Source="/Resources/CovidLogo.jpg" 
@@ -51,28 +53,31 @@
         <!-- Content Row -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400" /> 
+                <ColumnDefinition Width="400" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="400" />
             </Grid.ColumnDefinitions>
-            
+
             <!-- Left panel -->
             <Grid Grid.Column="0" Background="#FFDEDDEB" Panel.ZIndex="1">
                 <Grid.Effect>
                     <DropShadowEffect BlurRadius="10" Opacity="0.3" ShadowDepth="0" />
                 </Grid.Effect>
             </Grid>
-            
+
             <!-- Center panel -->
             <Grid Grid.Column="1" Background="#EFEEF5" Panel.ZIndex="0">
                 <Frame x:Name="LoginFrame">
+                    <Frame.DataContext>
+                        <viewmodel:LoginViewModel />
+                    </Frame.DataContext>
                     <Frame.Content>
                         <!-- Views changed through commands -->
                         <views:WelcomeBackFrame />
                     </Frame.Content>
                 </Frame>
             </Grid>
-            
+
             <!-- Right panel -->
             <Grid Grid.Column="2" Background="#FFDEDDEB" Panel.ZIndex="1">
                 <Grid.Effect>

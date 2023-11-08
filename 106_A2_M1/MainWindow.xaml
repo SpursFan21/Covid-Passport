@@ -13,6 +13,6 @@
         WindowStartupLocation="CenterScreen">
  
     <Grid >
-        <views:LoginView Loaded="LoginView_Loaded" DataContext="{Binding CurrentViewModel}" />
+        <ContentControl Content="{Binding CurrentViewModel}" DataContext="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

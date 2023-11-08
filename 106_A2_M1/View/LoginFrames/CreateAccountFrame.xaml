@@ -15,96 +15,97 @@
 
                     <!-- Title -->
                     <TextBlock
-                                Text="Create Account" 
-                                TextWrapping="Wrap" 
-                                HorizontalAlignment="Center" 
-                                Margin="0,28,0,0" 
-                                FontSize="32" 
-                                FontWeight="Bold" />
+                        Text="Create Account" 
+                        TextWrapping="Wrap" 
+                        HorizontalAlignment="Center" 
+                        Margin="0,28,0,0" 
+                        FontSize="32" 
+                        FontWeight="Bold" />
 
                     <!-- First Name field -->
                     <TextBox 
-                                x:Name="user_FirstName" 
-                                Margin="0 50 0 0" 
-                                Width="300" 
-                                FontSize="18" 
-                                materialDesign:HintAssist.Hint="First Name"
-                                BorderThickness="2"
-                                Background="White" 
-                                BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                        x:Name="user_FirstName" 
+                        Margin="0 50 0 0" 
+                        Width="300" 
+                        FontSize="18" 
+                        materialDesign:HintAssist.Hint="First Name"
+                        BorderThickness="2"
+                        Background="White" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
 
                     <!-- Last Email field -->
                     <TextBox 
-                                x:Name="user_LastName" 
-                                Margin="0 15 0 0" 
-                                Width="300" 
-                                FontSize="18" 
-                                materialDesign:HintAssist.Hint="Last Name" 
-                                BorderThickness="2"
-                                Background="White" 
-                                BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                        x:Name="user_LastName" 
+                        Margin="0 15 0 0" 
+                        Width="300" 
+                        FontSize="18" 
+                        materialDesign:HintAssist.Hint="Last Name" 
+                        BorderThickness="2"
+                        Background="White" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}" />
 
 
 
                     <!-- Birth Date field -->
-                    <DatePicker x:Name="user_DOB" 
-                                Margin="0 15 0 0"
-                                Width="300"
-                                FontSize="18"
-                                materialDesign:HintAssist.Hint="Date of Birth"
-                                BorderThickness="2"
-                                BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
+                    <DatePicker 
+                        x:Name="user_DOB" 
+                        Margin="0 15 0 0"
+                        Width="300"
+                        FontSize="18"
+                        materialDesign:HintAssist.Hint="Date of Birth"
+                        BorderThickness="2"
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}" />
 
                     <!-- Email field -->
                     <TextBox 
-                                x:Name="user_Email" 
-                                Margin="0 15 0 0" 
-                                Width="300" 
-                                FontSize="18" 
-                                materialDesign:HintAssist.Hint="Email" 
-                                BorderThickness="2"
-                                Background="White" 
-                                BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                        x:Name="user_Email" 
+                        Margin="0 15 0 0" 
+                        Width="300" 
+                        FontSize="18" 
+                        materialDesign:HintAssist.Hint="Email" 
+                        BorderThickness="2"
+                        Background="White" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}" />
 
                     <!-- NHI Number field -->
                     <TextBox 
-                                x:Name="user_NHI" 
-                                Margin="0 15 0 0" 
-                                Width="300" 
-                                FontSize="18" 
-                                materialDesign:HintAssist.Hint="NHI Number" 
-                                BorderThickness="2"
-                                Background="White" 
-                                BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                        x:Name="user_NHI" 
+                        Margin="0 15 0 0" 
+                        Width="300" 
+                        FontSize="18" 
+                        materialDesign:HintAssist.Hint="NHI Number" 
+                        BorderThickness="2"
+                        Background="White" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}" />
 
                     <!-- Password field -->
                     <PasswordBox 
-                                x:Name="user_Password" 
-                                Margin="0 15 0 0" 
-                                Width="300" 
-                                FontSize="18" 
-                                materialDesign:HintAssist.Hint="Password" 
-                                BorderThickness="2"
-                                Background="White" 
-                                BorderBrush="{DynamicResource MaterialDesignDivider}" 
-                                Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
+                        x:Name="user_Password" 
+                        Margin="0 15 0 0" 
+                        Width="300" 
+                        FontSize="18" 
+                        materialDesign:HintAssist.Hint="Password" 
+                        BorderThickness="2"
+                        Background="White" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                        Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
 
                     <!-- Confirm Password field -->
                     <PasswordBox 
-                                x:Name="user_ConfirmPassword" 
-                                Margin="0 15 0 0" 
-                                Width="300" 
-                                FontSize="18" 
-                                materialDesign:HintAssist.Hint="Confirm Password" 
-                                BorderThickness="2"
-                                Background="White" 
-                                BorderBrush="{DynamicResource MaterialDesignDivider}" 
-                                Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
+                        x:Name="user_ConfirmPassword" 
+                        Margin="0 15 0 0" 
+                        Width="300" 
+                        FontSize="18" 
+                        materialDesign:HintAssist.Hint="Confirm Password" 
+                        BorderThickness="2"
+                        Background="White" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                        Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
 
                     <!-- Grid for "Back and Create Account buttons -->
                     <Grid>
@@ -115,22 +116,22 @@
 
                         <!-- Back button -->
                         <Button 
-                                        x:Name="backBtn"
-                                        Content="Back" 
-                                        Margin="0 5 0 0" 
-                                        Click="BackButton_Click"
-                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" 
-                                        materialDesign:ShadowAssist.ShadowDepth="Depth0" 
-                                        Height="50" 
-                                        Width="100" 
-                                        materialDesign:ButtonAssist.CornerRadius="10"
-                                        FontSize="18" 
-                                        Background="#FFEB99" 
-                                        Foreground="#DD000000" 
-                                        HorizontalAlignment="Left" 
-                                        BorderBrush="{x:Null}" 
-                                        VerticalAlignment="Top" 
-                                        HorizontalContentAlignment="Center" >
+                            x:Name="backBtn"
+                            Content="Back" 
+                            Margin="0 5 0 0" 
+                            Click="BackButton_Click"
+                            Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                            materialDesign:ShadowAssist.ShadowDepth="Depth0" 
+                            Height="50" 
+                            Width="100" 
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            FontSize="18" 
+                            Background="#FFEB99" 
+                            Foreground="#DD000000" 
+                            HorizontalAlignment="Left" 
+                            BorderBrush="{x:Null}" 
+                            VerticalAlignment="Top" 
+                            HorizontalContentAlignment="Center" >
                             <Button.Effect>
                                 <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
                             </Button.Effect>
@@ -138,22 +139,22 @@
 
                         <!-- Create Account button-->
                         <Button 
-                                        x:Name="createAccountBtn"
-                                        Content="Create Account" 
-                                        Margin="0 5 0 0" 
-                                        Click="CreateAccountButton_Click"
-                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" 
-                                        materialDesign:ShadowAssist.ShadowDepth="Depth0" 
-                                        Height="50" 
-                                        Width="auto" 
-                                        materialDesign:ButtonAssist.CornerRadius="10"
-                                        FontSize="18" 
-                                        Background="#FFFFCC00" 
-                                        Foreground="#DD000000" 
-                                        HorizontalAlignment="Right" 
-                                        BorderBrush="{x:Null}" 
-                                        VerticalAlignment="Top" 
-                                        HorizontalContentAlignment="Center" >
+                            x:Name="createAccountBtn"
+                            Content="Create Account" 
+                            Margin="0 5 0 0" 
+                            Click="CreateAccountButton_Click"
+                            Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                            materialDesign:ShadowAssist.ShadowDepth="Depth0" 
+                            Height="50" 
+                            Width="auto" 
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            FontSize="18" 
+                            Background="#FFFFCC00" 
+                            Foreground="#DD000000" 
+                            HorizontalAlignment="Right" 
+                            BorderBrush="{x:Null}" 
+                            VerticalAlignment="Top" 
+                            HorizontalContentAlignment="Center" >
                             <Button.Effect>
                                 <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
                             </Button.Effect>
