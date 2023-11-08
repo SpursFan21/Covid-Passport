@@ -1,4 +1,5 @@
 ﻿using _106_A2_M1.Model;
+using _106_A2_M1.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,17 +11,33 @@ namespace _106_A2_M1.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public ViewModelBase CurrentViewModel { get; }
+        private ViewModelBase _currentViewModel;
+        public ViewModelBase CurrentViewModel 
+        {
+            get { return _currentViewModel; }
+            set
+            {
+                if(_currentViewModel != value)
+                {
+                    _currentViewModel = value;
+                    OnPropertyChanged(nameof(CurrentViewModel));
+                }
+            }
+        }
         public MainViewModel()
         {
-            CurrentViewModel = new LoginViewModel();
-
+            CurrentViewModel = ViewModelLocator.Instance.LoginViewModel;
         }
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        public void NavigateToAdminDashboard()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CurrentViewModel = ViewModelLocator.Instance.AdminDashboardViewModel;
         }
+
+        public void NavigateToUserDashboard()
+        {
+            CurrentViewModel = ViewModelLocator.Instance.UserDashboardViewModel;
+        }
+
     }
 }

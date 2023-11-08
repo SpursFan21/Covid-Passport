@@ -12,7 +12,7 @@ namespace _106_A2_M1.Model
         {
 
         }
-        public void updateUserDetails()
+        protected override void updateUserDetails()
         {
 
         }

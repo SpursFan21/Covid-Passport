@@ -1,4 +1,6 @@
-﻿using _106_A2_M1.ViewModel;
+﻿using _106_A2_M1.Services;
+using _106_A2_M1.View;
+using _106_A2_M1.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,14 +18,17 @@ namespace _106_A2_M1
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainViewModel()
-            };
-            MainWindow.Show();
-
             base.OnStartup(e);
+
+            MainViewModel mainViewModel = ViewModelLocator.Instance.MainViewModel;
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.DataContext = mainViewModel;
+            mainWindow.Show();
+
         }
+
+        LoginViewModel loginViewModel = new LoginViewModel();
+        LoginView loginView = new LoginView();
     }
 
 }

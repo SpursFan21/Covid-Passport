@@ -23,9 +23,6 @@ namespace _106_A2_M1.View
         public LoginView()
         {
             InitializeComponent();
-
         }
-
-        
     }
 }

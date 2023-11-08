@@ -8,6 +8,7 @@ namespace _106_A2_M1.Model
 {
     public class BaseUser
     {
+
         //unique data members
         public string id { get; set; }
         public int account_type { get; set; }
@@ -20,6 +21,7 @@ namespace _106_A2_M1.Model
         protected List<CovidTest> test_list { get; set; }
         public UserDB db_member { get; set; }
 
+        
         protected void login(string Password)
         {
             sendPassword(Password); //ITC

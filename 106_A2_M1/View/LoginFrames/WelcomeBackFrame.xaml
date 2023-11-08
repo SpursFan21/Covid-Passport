@@ -6,7 +6,6 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1.View" 
              xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel" 
-             d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -17,39 +16,38 @@
 
                     <!-- Title -->
                     <TextBlock 
-                                Text="Welcome Back!" 
-                                TextWrapping="Wrap" 
-                                HorizontalAlignment="Center" 
-                                Margin="0,28,0,0" 
-                                FontSize="32" 
-                                FontWeight="Bold" />
+                        Text="Welcome Back!" 
+                        TextWrapping="Wrap" 
+                        HorizontalAlignment="Center" 
+                        Margin="0,28,0,0" 
+                        FontSize="32" 
+                         />
 
                     <!-- Email field -->
                     <TextBox 
-                                x:Name="txtEmail" 
-                                Margin="0 50 0 0" 
-                                Width="300" 
-                                FontSize="18" 
-                                materialDesign:HintAssist.Hint="Email"
-                                Text="{Binding Email}"
-                                BorderThickness="2"
-                                Background="White" 
-                                BorderBrush="{DynamicResource MaterialDesignDivider}"
-                                Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                        x:Name="txtEmail" 
+                        Margin="0 50 0 0" 
+                        Width="300" 
+                        FontSize="18" 
+                        materialDesign:HintAssist.Hint="Email"
+                        Text="{Binding Email}"
+                        BorderThickness="2"
+                        Background="White" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}" />
 
                     <!-- Password field -->
                     <PasswordBox 
-                                Margin="0 15 0 0" 
-                                x:Name="txtPassword" 
-                                Width="300" 
-                                FontSize="18" 
-                                materialDesign:HintAssist.Hint="Password"
-                                Password="{Binding Password}"
-                                BorderThickness="2"
-                                Background="White" 
-                                BorderBrush="{DynamicResource MaterialDesignDivider}" 
-                                Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
-                                KeyDown="PasswordBox_KeyDown"/>
+                        Margin="0 15 0 0" 
+                        x:Name="txtPassword" 
+                        Width="300" 
+                        FontSize="18" 
+                        materialDesign:HintAssist.Hint="Password"
+                        BorderThickness="2"
+                        Background="White" 
+                        BorderBrush="{DynamicResource MaterialDesignDivider}" 
+                        Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
+                        <!--="{Binding Password}"-->
 
                     <!-- Grid for "Forgot Password and Log In button -->
                     <Grid>
@@ -61,28 +59,28 @@
                         <!-- Forgot Password button -->
                         <StackPanel Grid.Column="0" Margin="0 5 0 0" >
                             <TextBlock>
-                                <Hyperlink Click="ForgotPassword_Click">Forgot Password?</Hyperlink>
+                                Forgot Password?
                             </TextBlock>
                         </StackPanel>
 
                         <!-- Log in button-->
                         <Button 
-                                        Margin="0 5 0 0" 
-                                        x:Name="loginBtn"
-                                        Click="LoginButton_Click"
-                                        Style="{StaticResource MaterialDesignFlatMidBgButton}" 
-                                        materialDesign:ShadowAssist.ShadowDepth="Depth0" 
-                                        Height="50" 
-                                        Width="100" 
-                                        materialDesign:ButtonAssist.CornerRadius="10"
-                                        FontSize="18" 
-                                        Content="Log in" 
-                                        Background="#FFFFCC00" 
-                                        Foreground="#DD000000" 
-                                        HorizontalAlignment="Right" 
-                                        BorderBrush="{x:Null}" 
-                                        VerticalAlignment="Top" 
-                                        HorizontalContentAlignment="Center" >
+                            Margin="0 5 0 0" 
+                            x:Name="loginBtn"
+                            
+                            Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                            materialDesign:ShadowAssist.ShadowDepth="Depth0" 
+                            Height="50" 
+                            Width="100" 
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            FontSize="18" 
+                            Content="Log in" 
+                            Background="#FFFFCC00" 
+                            Foreground="#DD000000" 
+                            HorizontalAlignment="Right" 
+                            BorderBrush="{x:Null}" 
+                            VerticalAlignment="Top" 
+                            HorizontalContentAlignment="Center" >
                             <Button.Effect>
                                 <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
                             </Button.Effect>
@@ -94,7 +92,7 @@
 
             <StackPanel Grid.Column="0" Margin="0 15 0 0" >
                 <TextBlock HorizontalAlignment="Center">
-                            Don't have an account? <Hyperlink Click="CreateAccount_Click">Create Account</Hyperlink>
+                            Don't have an account? Click Here
                 </TextBlock>
             </StackPanel>
         </StackPanel>
