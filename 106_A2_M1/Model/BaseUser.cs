@@ -16,12 +16,11 @@ namespace _106_A2_M1.Model
         public string image_link { get; set; }
 
         //data objects
-        protected Vaccine first_dose { get; set; }
-        protected Vaccine second_dose { get; set; }
-        protected List<CovidTest> test_list { get; set; }
+        public Vaccine first_dose { get; set; }
+        public Vaccine second_dose { get; set; }
+        public List<CovidTest> test_list { get; set; }
         public UserDB db_member { get; set; }
 
-        
         protected void login(string Password)
         {
             sendPassword(Password); //ITC
