@@ -4,10 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              xmlns:local="clr-namespace:_106_A2_M1.View" 
              xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewmodel:LoginViewModel />
+    </UserControl.DataContext>
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <materialDesign:Card UniformCornerRadius="2" Background="#FFDEDDEB" Padding="50,25,50,25" HorizontalAlignment="Center" VerticalAlignment="Center" >
@@ -30,11 +34,10 @@
                         Width="300" 
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Email"
-                        Text="{Binding Email}"
+                        
                         BorderThickness="2"
                         Background="White" 
-                        BorderBrush="{DynamicResource MaterialDesignDivider}"
-                        Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                         />
 
                     <!-- Password field -->
                     <PasswordBox 
@@ -45,8 +48,7 @@
                         materialDesign:HintAssist.Hint="Password"
                         BorderThickness="2"
                         Background="White" 
-                        BorderBrush="{DynamicResource MaterialDesignDivider}" 
-                        Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
+                         />
                         <!--="{Binding Password}"-->
 
                     <!-- Grid for "Forgot Password and Log In button -->
@@ -67,8 +69,8 @@
                         <Button 
                             Margin="0 5 0 0" 
                             x:Name="loginBtn"
-                            
-                            Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                            Command="{Binding ClickEventCommand}"
+                             
                             materialDesign:ShadowAssist.ShadowDepth="Depth0" 
                             Height="50" 
                             Width="100" 

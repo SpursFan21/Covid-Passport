@@ -15,5 +15,6 @@ namespace _106_A2_M1.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }
