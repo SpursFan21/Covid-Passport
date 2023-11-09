@@ -14,6 +14,8 @@ namespace _106_A2_M1.Model
         public int account_type { get; set; }
         public string u_token { get; set; }
         public string image_link { get; set; }
+        public int IsolationDate { get; set; }
+       
 
         //data objects
         public Vaccine first_dose { get; set; }
@@ -64,20 +66,65 @@ namespace _106_A2_M1.Model
             // Perform logic to save the new user account to the database or any other storage mechanism
             // Redirect auto login user and then deliver them to UserDashB
         }
-
-        protected void getIsolationDate()
+        protected void getIsolationDate(CovidTest covidTest)
         {
-
+            if (covidTest != null)
+            {
+                // Assuming test_date contains the number of days from today
+                // Adding 10 days to test_date
+                IsolationDate = covidTest.test_date + 10;
+            }
+            else
+            {
+                // Throw a custom exception when covidTest is null
+                throw new ArgumentNullException(nameof(covidTest), "CovidTest instance cannot be null.");
+            }
         }
+
         protected void sendPassword(string Password)
         {
             //http receive token ITC
             u_token = "admin";
             //test received token to check if valid 
         }
-        protected void addTest()
+        public void addTest(int testDate, bool result, string testType)
         {
+            // Validate input parameters
+            if (string.IsNullOrEmpty(testType))
+            {
+                throw new ArgumentException("Test type cannot be null or empty.", nameof(testType));
+            }
 
+            // Generate test_id based on test_date, result, and test_type
+            string testId = GenerateTestId(testDate, result, testType);
+
+            // Create a new CovidTest instance with the provided data
+            CovidTest newTest = new CovidTest
+            {
+                test_date = testDate,
+                result = result,
+                test_type = testType,
+                test_id = testId
+            };
+
+            // Add the new test instance to test_list
+            test_list.Add(newTest);
+
+            // send the new test instance to the backend
+            // SendRequestToBackend(newTest);
+
+            // For demonstration purposes, print the generated test_id
+            Console.WriteLine($"Generated test_id: {testId}");
+        }
+
+        private string GenerateTestId(int testDate, bool result, string testType)
+        {
+            // Generate a unique test_id based on test_date, result, and test_type
+            string formattedDate = testDate.ToString("yyyyMMdd"); // Format test_date as YYYYMMDD
+            string resultIndicator = result ? "1" : "0"; // Use "1" for true and "0" for false
+            string testId = $"{formattedDate}_{resultIndicator}_{testType}";
+
+            return testId;
         }
         protected void reportIssue()
         {
