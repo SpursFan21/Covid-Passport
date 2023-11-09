@@ -41,10 +41,30 @@ namespace _106_A2_M1.Model
                 //send User to User Dashboard
             }
         }
-        protected void createAccount() 
+        protected void createAccount(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
         {
-        
+            // Validate the input data (perform validation based on your specific requirements)
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                // Handle invalid input (throw an exception, return an error code, etc.)
+                throw new ArgumentException("Invalid input data. Please provide all required information.");
+            }
+
+            // Create a new user account using the provided data
+            User newUser = new User
+            {
+                Email = email,
+                Password = password,
+                FirstName = firstName,
+                LastName = lastName,
+                DateOfBirth = dob,
+                NhiNumber = nhiNumber
+            };
+
+            // Perform logic to save the new user account to the database or any other storage mechanism
+            // Redirect auto login user and then deliver them to UserDashB
         }
+
         protected void getIsolationDate()
         {
 
