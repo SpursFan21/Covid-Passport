@@ -36,6 +36,8 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
+        
+
         public BaseUser User { get; set; } // MODEL to ViewModel Pipeline
 
         //MODEL to ViewModel Pipeline

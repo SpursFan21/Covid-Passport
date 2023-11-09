@@ -9,7 +9,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="LoginPage">
-
     <Page.DataContext>
         <viewmodel:LoginViewModel />
     </Page.DataContext>
@@ -67,16 +66,9 @@
 
             <!-- Center panel -->
             <Grid Grid.Column="1" Background="#EFEEF5" Panel.ZIndex="0">
-                <Frame x:Name="LoginFrame">
-                    <Frame.DataContext>
-                        <viewmodel:LoginViewModel />
-                    </Frame.DataContext>
-                    <Frame.Content>
-                        <!-- Views changed through commands -->
-                        <views:WelcomeBackFrame />
-                    </Frame.Content>
-                </Frame>
+                <Frame x:Name="LoginFrame" Content="{Binding CurrentDisplayFrame}" />
             </Grid>
+
 
             <!-- Right panel -->
             <Grid Grid.Column="2" Background="#FFDEDDEB" Panel.ZIndex="1">

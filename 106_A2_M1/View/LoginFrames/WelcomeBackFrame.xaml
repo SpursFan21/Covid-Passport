@@ -6,12 +6,9 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              xmlns:local="clr-namespace:_106_A2_M1.View" 
-             xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel" 
+             xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <viewmodel:LoginViewModel />
-    </UserControl.DataContext>
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <materialDesign:Card UniformCornerRadius="2" Background="#FFDEDDEB" Padding="50,25,50,25" HorizontalAlignment="Center" VerticalAlignment="Center" >
@@ -69,7 +66,7 @@
                         <Button 
                             Margin="0 5 0 0" 
                             x:Name="loginBtn"
-                            Command="{Binding ClickEventCommand}"
+                            Command="{Binding AdminDashboardCommand}"
                              
                             materialDesign:ShadowAssist.ShadowDepth="Depth0" 
                             Height="50" 
@@ -94,8 +91,10 @@
 
             <StackPanel Grid.Column="0" Margin="0 15 0 0" >
                 <TextBlock HorizontalAlignment="Center">
-                            Don't have an account? Click Here
+                    
+                    Don't have an account?<Hyperlink Command="{Binding NewAccountCommand}">Click Here</Hyperlink>
                 </TextBlock>
+
             </StackPanel>
         </StackPanel>
     </Grid>

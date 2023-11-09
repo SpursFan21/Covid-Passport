@@ -18,24 +18,41 @@ namespace _106_A2_M1.ViewModel
     public class LoginViewModel : ViewModelBase
     {
         private BaseUser _user;
-
         public LoginViewModel()
         {
             _user = new BaseUser();
 
-            ClickEventCommand = new RelayCommand(x => ClickEventDefinition(new AdminDashboardPage()));
+            CurrentDisplayFrame = new WelcomeBackFrame();
             
+            AdminDashboardCommand = new RelayCommand(x => NavigateToPage(new AdminDashboardPage()));
+            NewAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
         }
-        public ICommand ClickEventCommand
+        
+        public ICommand AdminDashboardCommand { get; set; }
+        public ICommand NewAccountCommand { get; set; }
+        private UserControl _currentDisplayFrame;
+        public UserControl CurrentDisplayFrame
         {
-            get;
-            set;
-        }
+            get
+            {
+                return _currentDisplayFrame;
+            }
 
-        private void ClickEventDefinition(Page destinationPage)
+            set
+            {
+                _currentDisplayFrame = value;
+                OnPropertyChanged("CurrentDisplayFrame");
+            }
+        }
+        private void NavigateToPage(Page destinationPage)
         {
             MainWindowVM mainVM = (MainWindowVM)Application.Current.MainWindow.DataContext;
             mainVM.CurrentDisplayPage = destinationPage;
+        }
+
+        private void NavigateToFrame(UserControl destinationFrame)
+        {
+            CurrentDisplayFrame = destinationFrame;
         }
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
