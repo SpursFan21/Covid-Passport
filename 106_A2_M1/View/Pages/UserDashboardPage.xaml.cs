@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _106_A2_M1.View
+namespace _106_A2_M1.View.Pages
 {
     /// <summary>
-    /// Interaction logic for UserDashboardView.xaml
+    /// Interaction logic for UserDashboardPage.xaml
     /// </summary>
-    public partial class UserDashboardView : UserControl
+    public partial class UserDashboardPage : Page
     {
-        public UserDashboardView()
+        public UserDashboardPage()
         {
             InitializeComponent();
         }

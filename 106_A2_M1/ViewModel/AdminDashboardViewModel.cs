@@ -7,7 +7,7 @@ using _106_A2_M1.Model;
 
 namespace _106_A2_M1.ViewModel
 {
-    public class AdminDashboardViewModel : MainViewModel
+    public class AdminDashboardViewModel : ViewModelBase
     {
         private Admin _admin; // Declare an instance of the Admin class MODEL to ViewModel Pipeline
 

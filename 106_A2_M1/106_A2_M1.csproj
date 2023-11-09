@@ -70,10 +70,10 @@
     <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Vaccine.cs" />
-    <Compile Include="Services\ViewModelLocator.cs" />
+    <Compile Include="Services\RelayCommand.cs" />
     <Compile Include="ViewModel\AdminDashboardViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\UserDashboardViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\AdminFrames\AdminQRQueueFrame.xaml.cs">
@@ -85,17 +85,17 @@
     <Compile Include="View\LoginFrames\CreateAccountFrame.xaml.cs">
       <DependentUpon>CreateAccountFrame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AdminDashboardView.xaml.cs">
-      <DependentUpon>AdminDashboardView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\LoginFrames\WelcomeBackFrame.xaml.cs">
       <DependentUpon>WelcomeBackFrame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
+    <Compile Include="View\Pages\AdminDashboardPage.xaml.cs">
+      <DependentUpon>AdminDashboardPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserDashboardView.xaml.cs">
-      <DependentUpon>UserDashboardView.xaml</DependentUpon>
+    <Compile Include="View\Pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\UserDashboardPage.xaml.cs">
+      <DependentUpon>UserDashboardPage.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -129,19 +129,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AdminDashboardView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\LoginFrames\WelcomeBackFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\LoginView.xaml">
+    <Page Include="View\Pages\AdminDashboardPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserDashboardView.xaml">
+    <Page Include="View\Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\UserDashboardPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

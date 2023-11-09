@@ -6,13 +6,19 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:views="clr-namespace:_106_A2_M1.View"
         xmlns:local="clr-namespace:_106_A2_M1"
+        xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="1080" 
         Width="1920"
-        WindowStartupLocation="CenterScreen">
- 
-    <Grid >
-        <ContentControl Content="{Binding CurrentViewModel}" DataContext="{Binding CurrentViewModel}" />
-    </Grid>
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+
+    <Window.DataContext>
+        <vm:MainWindowVM/>
+    </Window.DataContext>
+
+    <Window.Content>
+        <Binding Path="CurrentDisplayPage" UpdateSourceTrigger="PropertyChanged"/>
+    </Window.Content>
 </Window>

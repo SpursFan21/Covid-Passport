@@ -13,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _106_A2_M1.View
+namespace _106_A2_M1.View.Pages
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for LoginPage.xaml
     /// </summary>
-    public partial class AdminDashboardView : UserControl
+    public partial class LoginPage : Page
     {
-        public AdminDashboardView()
+        public LoginPage()
         {
             InitializeComponent();
-
         }
-
-        
     }
 }

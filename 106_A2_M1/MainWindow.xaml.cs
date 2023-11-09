@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _106_A2_M1.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,6 @@ namespace _106_A2_M1
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void LoginView_Loaded(object sender, RoutedEventArgs e)
-        {
 
         }
     }

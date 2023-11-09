@@ -1,5 +1,7 @@
 ﻿using _106_A2_M1.Model;
+using _106_A2_M1.Services;
 using _106_A2_M1.View;
+using _106_A2_M1.View.Pages;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
@@ -7,19 +9,33 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace _106_A2_M1.ViewModel
 {
-    public class LoginViewModel : MainViewModel
+    public class LoginViewModel : ViewModelBase
     {
         private BaseUser _user;
 
         public LoginViewModel()
         {
             _user = new BaseUser();
+
+            ClickEventCommand = new RelayCommand(x => ClickEventDefinition(new AdminDashboardPage()));
             
+        }
+        public ICommand ClickEventCommand
+        {
+            get;
+            set;
+        }
+
+        private void ClickEventDefinition(Page destinationPage)
+        {
+            MainWindowVM mainVM = (MainWindowVM)Application.Current.MainWindow.DataContext;
+            mainVM.CurrentDisplayPage = destinationPage;
         }
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -35,8 +51,8 @@ namespace _106_A2_M1.ViewModel
         }
 
 
-        public string Email => _user.db_member.email;
-        public string Password;
+        //public string Email => _user.db_member.email;
+        //public string Password;
 
         public string Id
         {

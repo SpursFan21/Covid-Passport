@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.ViewModel
 {
-    public class UserDashboardViewModel : MainViewModel 
+    public class UserDashboardViewModel : ViewModelBase
     {
         private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
 
