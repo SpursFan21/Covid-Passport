@@ -66,7 +66,11 @@
 
             <!-- Center panel -->
             <Grid Grid.Column="1" Background="#EFEEF5" Panel.ZIndex="0">
-                <Frame x:Name="LoginFrame" Content="{Binding CurrentDisplayFrame}" />
+                <Frame>
+                    <Frame.Content>
+                        <Binding Path="CurrentDisplayFrame" UpdateSourceTrigger="PropertyChanged"/>
+                    </Frame.Content>
+                </Frame>
             </Grid>
 
 

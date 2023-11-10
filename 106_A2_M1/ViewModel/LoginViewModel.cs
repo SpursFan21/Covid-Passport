@@ -22,14 +22,19 @@ namespace _106_A2_M1.ViewModel
         {
             _user = new BaseUser();
 
+            // Set the default frame to WelcomeBackFrame
             CurrentDisplayFrame = new WelcomeBackFrame();
-            
+            CurrentDisplayFrame.DataContext = this;
+
             AdminDashboardCommand = new RelayCommand(x => NavigateToPage(new AdminDashboardPage()));
             NewAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
+            WelcomeBackCommand = new RelayCommand(x => NavigateToFrame(new WelcomeBackFrame()));
         }
         
         public ICommand AdminDashboardCommand { get; set; }
         public ICommand NewAccountCommand { get; set; }
+        public ICommand WelcomeBackCommand { get; set; }
+
         private UserControl _currentDisplayFrame;
         public UserControl CurrentDisplayFrame
         {
@@ -53,6 +58,7 @@ namespace _106_A2_M1.ViewModel
         private void NavigateToFrame(UserControl destinationFrame)
         {
             CurrentDisplayFrame = destinationFrame;
+            CurrentDisplayFrame.DataContext = this;
         }
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
