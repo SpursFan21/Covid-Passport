@@ -24,15 +24,5 @@ namespace _106_A2_M1.View
         {
             InitializeComponent();
         }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
