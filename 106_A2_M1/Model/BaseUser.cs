@@ -27,6 +27,7 @@ namespace _106_A2_M1.Model
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
         public UserDB db_member { get; set; }
+ 
 
         protected void login(string Password)
         {
@@ -195,6 +196,35 @@ namespace _106_A2_M1.Model
 
             // For demonstration purposes
             Console.WriteLine("User logged out and reset to base state");
+        }
+        public void deleteVaccination(string doseId, string doseType)
+        {
+            // Determine which dose to delete based on the specified doseType
+            Vaccine vaccineToDelete = doseType.ToLower() == "first"
+                ? first_dose
+                : (doseType.ToLower() == "second" ? second_dose : null);
+
+            if (vaccineToDelete != null && vaccineToDelete.dose_id == doseId)
+            {
+                // Remove the specified dose
+                if (doseType.ToLower() == "first")
+                {
+                    first_dose = null;
+                }
+                else if (doseType.ToLower() == "second")
+                {
+                    second_dose = null;
+                }
+
+                // Additional logic to notify backend or perform any other necessary actions TBC
+                // SendRequestToDeleteVaccination(vaccineToDelete); TBC 
+
+                Console.WriteLine($"Vaccination ({doseType} dose) with dose ID {doseId} deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine($"Vaccination ({doseType} dose) with dose ID {doseId} not found.");
+            }
         }
     }
 }
