@@ -29,7 +29,7 @@ namespace _106_A2_M1.Model
             // Add logic to send user info to the queue (TBC)
             Console.WriteLine("Sending user info to the queue...");
         }
-        public override void UpdateUserDetails(string currentPassword, string newPassword, string email, string firstName, string lastName)//TBC
+        public void UpdateUserDetails1(string currentPassword, string newPassword, string email, string firstName, string lastName)//TBC
         {
             // Validate input parameters
             if (string.IsNullOrEmpty(currentPassword) || string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
@@ -48,8 +48,7 @@ namespace _106_A2_M1.Model
                 throw new InvalidOperationException("Invalid current password.");
             }
 
-            // Call the base class method to update basic details
-            base.UpdateUserDetails(email, firstName, lastName);
+            //ship to backend TBC
 
             // Custom logic for updating the password in the User class
             Password = newPassword;
