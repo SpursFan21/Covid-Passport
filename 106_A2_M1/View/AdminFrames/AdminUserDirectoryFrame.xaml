@@ -6,20 +6,37 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="830" d:DesignWidth="1120">
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10 10 10 0">
             <TextBox
                 materialDesign:HintAssist.Hint="Search by name"
+                Margin="20 25 0 25"
                 Width="400"
                 Height="50"
                 FontSize="24"
                 Foreground="#B2B2B2"
                 Background="White"
                 Padding="10 0 0 0"
+                HorizontalAlignment="Left"
                 VerticalContentAlignment="Center" />
-            
-            
+
+            <Grid Background="white">
+                <ListView x:Name="userList" Margin="10 25 10 10" Width="1120">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="NAME" Width="auto"
+                                            DisplayMemberBinding="{Binding UserName}" />
+                            <GridViewColumn Header="DOB" Width="auto"
+                                            DisplayMemberBinding="{Binding UserDOB}" />
+                            <GridViewColumn Header="EMAIL" Width="auto"
+                                            DisplayMemberBinding="{Binding UserEmail}" />
+                            <GridViewColumn Header="ACTIONS" Width="auto"
+                                            />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
         </StackPanel>
     </Grid>
 </UserControl>
