@@ -38,7 +38,7 @@
                 Margin="50,0,0,0" />
 
             <!-- Grid for spacing -->
-            <Grid Grid.Row="0" HorizontalAlignment="Stretch" />
+            
 
             <!-- Unite against Covid logo -->
             <Image 

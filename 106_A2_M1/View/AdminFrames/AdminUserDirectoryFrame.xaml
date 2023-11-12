@@ -9,10 +9,17 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <materialDesign:Card UniformCornerRadius="2" Background="#FFDEDDEB" Padding="50,25,50,25" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <!-- Content goes here -->
-                <TextBlock Text="Admin User Directory Here" />
-            </materialDesign:Card>
+            <TextBox
+                materialDesign:HintAssist.Hint="Search by name"
+                Width="400"
+                Height="50"
+                FontSize="24"
+                Foreground="#B2B2B2"
+                Background="White"
+                Padding="10 0 0 0"
+                VerticalContentAlignment="Center" />
+            
+            
         </StackPanel>
     </Grid>
 </UserControl>
