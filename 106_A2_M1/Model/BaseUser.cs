@@ -15,7 +15,12 @@ namespace _106_A2_M1.Model
         public string u_token { get; set; }
         public string image_link { get; set; }
         public int IsolationDate { get; set; }
-       
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int DateOfBirth { get; set; }
+        public int NhiNumber { get; set; }
+
 
         //data objects
         public Vaccine first_dose { get; set; }
@@ -113,7 +118,7 @@ namespace _106_A2_M1.Model
             // send the new test instance to the backend
             // SendRequestToBackend(newTest);
 
-            // For demonstration purposes, print the generated test_id
+            // For demonstration purposes
             Console.WriteLine($"Generated test_id: {testId}");
         }
 
@@ -126,17 +131,70 @@ namespace _106_A2_M1.Model
 
             return testId;
         }
-        protected void reportIssue()
+        public void reportIssue(string subject, string description)
         {
+            // Validate input parameters
+            if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(description))
+            {
+                throw new ArgumentException("Subject and description cannot be null or empty.");
+            }
 
+            // Create a new Issue instance with the provided data
+            Issue newIssue = new Issue
+            {
+                issue_id = GenerateIssueId(),
+                subject = subject,
+                description = description,
+                resolve = false, // By default, set resolve to false
+                open_date = GetCurrentDate(), // Set open_date to the current date TBC
+                closed_date = 0 // By default, set closed_date to 0 (indicating not closed yet)
+            };
+
+            // send the new Issue instance to the backend
+            // SendRequestToBackend(newIssue);
+
+            // For demonstration purposes
+            Console.WriteLine($"Reported issue with issue_id: {newIssue.issue_id}");
         }
-        protected virtual void updateUserDetails()
-        {
 
+        private string GenerateIssueId()
+        {
+            // Generate a unique issue_id TBC
+            return Guid.NewGuid().ToString();
         }
-        protected void logout()
-        {
 
+        private int GetCurrentDate()
+        {
+            // Get the current date as an integer TBC
+            return int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+        }
+        public virtual void UpdateUserDetails(string email, string firstName, string lastName)
+        {
+            // Validate input parameters
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentException("Email, first name, and last name cannot be null or empty.");
+            }
+
+            // Update the basic details
+            Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+
+            // For demonstration purposes
+            Console.WriteLine($"Updated basic details for email: {Email}");
+        }
+
+        public void logout()
+        {
+            // Reset the properties to their initial values and perform any necessary cleanup
+            u_token = null; // Set the user token to null or an initial value
+            image_link = null; // Set the image link to null or an initial value
+            IsolationDate = 0; // Reset isolation date to an initial value
+            // Reset other properties as needed TBC
+
+            // For demonstration purposes
+            Console.WriteLine("User logged out and reset to base state");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,21 +9,58 @@ namespace _106_A2_M1.Model
 {
     public class User : BaseUser
     {
-        public string Email { get; set; }
         public string Password { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int DateOfBirth { get; set; }
-        public int NhiNumber { get; set; }
-        public void requestQR()
+        public UserDB UserDB { get; set; }
+
+        public void RequestQR()
         {
+            // Update qr_status to 1
+            UserDB.qr_status = 1;
 
+            // Add logic to send user info to the queue (TBC)
+            SendUserInfoToQueue();
+
+            // For demonstration purposes
+            Console.WriteLine($"User requested QR. QrStatus: {UserDB.qr_status}");
         }
-        protected override void updateUserDetails()
+
+        private void SendUserInfoToQueue()
         {
+            // Add logic to send user info to the queue (TBC)
+            Console.WriteLine("Sending user info to the queue...");
+        }
+        public override void UpdateUserDetails(string currentPassword, string newPassword, string email, string firstName, string lastName)//TBC
+        {
+            // Validate input parameters
+            if (string.IsNullOrEmpty(currentPassword) || string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentException("Current password, new password, email, first name, and last name cannot be null or empty.");
+            }
 
+            // Update the basic details
+            Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+
+            // Validate current password (replace this with your actual validation logic)
+            if (!ValidateCurrentPassword(currentPassword))
+            {
+                throw new InvalidOperationException("Invalid current password.");
+            }
+
+            // Call the base class method to update basic details
+            base.UpdateUserDetails(email, firstName, lastName);
+
+            // Custom logic for updating the password in the User class
+            Password = newPassword;
+            Console.WriteLine($"Updated password for email: {Email}");
         }
 
+        private bool ValidateCurrentPassword(string currentPassword)
+        {
+            // Replace this with your actual password validation logic
+            return Password == currentPassword;
+        }
         internal static void SetPassword(string value)
         {
             throw new NotImplementedException();

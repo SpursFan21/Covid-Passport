@@ -9,12 +9,29 @@ namespace _106_A2_M1.Model
     public class Admin : BaseUser
     {
         public string user_id { get; set; }
+
         public List<User> user_list { get; set; }
         public List<Issue> issue_list { get; set; }
 
-        protected override void updateUserDetails()
+        public override void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)//TBC
         {
+            // Validate input parameters
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentException("Email, first name, and last name cannot be null or empty.");
+            }
 
+            // Update the basic details
+            Email = email;
+            FirstName = firstName;
+            LastName = lastName;
+
+            // Additional logic for updating Admin-specific details
+            DateOfBirth = dateOfBirth;
+            NhiNumber = nhiNumber;
+
+            // For demonstration purposes
+            Console.WriteLine($"Updated details for email: {Email}, Date of Birth: {DateOfBirth}, NHI Number: {NhiNumber}");
         }
         public void manageUser()
         {
