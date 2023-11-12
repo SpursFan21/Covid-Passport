@@ -168,7 +168,8 @@ namespace _106_A2_M1.Model
             // Get the current date as an integer TBC
             return int.Parse(DateTime.Now.ToString("yyyyMMdd"));
         }
-        public virtual void UpdateUserDetails(string email, string firstName, string lastName)
+        // Overloaded method with additional parameters
+        public virtual void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)
         {
             // Validate input parameters
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
@@ -182,9 +183,8 @@ namespace _106_A2_M1.Model
             LastName = lastName;
 
             // For demonstration purposes
-            Console.WriteLine($"Updated basic details for email: {Email}");
+            Console.WriteLine($"Updated details for email: {Email}, Date of Birth: {dateOfBirth}, NHI Number: {nhiNumber}");
         }
-
         public void logout()
         {
             // Reset the properties to their initial values and perform any necessary cleanup
