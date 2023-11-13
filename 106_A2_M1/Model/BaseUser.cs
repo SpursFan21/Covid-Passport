@@ -21,34 +21,48 @@ namespace _106_A2_M1.Model
         public int DateOfBirth { get; set; }
         public int NhiNumber { get; set; }
 
-
         //data objects
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
         public UserDB db_member { get; set; }
- 
 
-        protected void login(string Password)
+
+        protected async Task Login(string email, string password, string u_token)
         {
-            sendPassword(Password); //ITC
-            //Hardcoded user tokens for testing purposes
+            // Hardcoded user tokens for testing purposes
             if (u_token == "admin") // Login as Admin
             {
+                // Assuming you have an authentication token for the admin
+                string adminAuthToken = "adminAuthToken"; // Replace with actual admin token
+
+                // Call the LoginAsync method from SingletonClient to perform authentication
+                await SingletonClient.Instance.LoginAsync(email, password, adminAuthToken);
+
+                // Assuming LoginAsync sets the authentication token based on the result
                 Admin admin = new Admin();
-                admin.u_token = this.u_token; // BaseUser class token updated to admin token
-                //need to receive database content for admin use ITC
-                //send Admin to Admin dashboard
+                admin.u_token = adminAuthToken; // Use the authentication token received from LoginAsync
+
+                // Need to receive database content for admin ITC
+                // Send Admin to Admin dashboard Via ModelView NAV
             }
-            // Componet to receive invalid PW from backend ITC
-            else// Login as User
+            else // Login as User
             {
+                // Assuming you have an authentication token for the user
+                string userAuthToken = "userAuthToken"; // Replace with actual user token
+
+                // Call the LoginAsync method from SingletonClient to perform authentication
+                await SingletonClient.Instance.LoginAsync(email, password, userAuthToken);
+
+                // Assuming LoginAsync sets the authentication token based on the result
                 User user = new User();
-                user.u_token = this.u_token;
-                //need to receive database content for user ITC
-                //send User to User Dashboard
+                user.u_token = userAuthToken; // Use the authentication token received from LoginAsync
+
+                // Need to receive database content for user ITC
+                // Send User to User Dashboard Via ModelView NAV
             }
         }
+
         protected void createAccount(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
         {
             // Validate the input data (perform validation based on your specific requirements)
@@ -87,12 +101,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-        protected void sendPassword(string Password)
-        {
-            //http receive token ITC
-            u_token = "admin";
-            //test received token to check if valid 
-        }
         public void addTest(int testDate, bool result, string testType)
         {
             // Validate input parameters
@@ -192,7 +200,7 @@ namespace _106_A2_M1.Model
             u_token = null; // Set the user token to null or an initial value
             image_link = null; // Set the image link to null or an initial value
             IsolationDate = 0; // Reset isolation date to an initial value
-            // Reset other properties as needed TBC
+            SingletonClient.Instance.Dispose();
 
             // For demonstration purposes
             Console.WriteLine("User logged out and reset to base state");
