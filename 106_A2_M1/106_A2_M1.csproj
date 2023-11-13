@@ -43,6 +43,9 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.1.0.2556, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.4.1.0\lib\net452\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -63,6 +66,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\Auth\AdminAuth.cs" />
+    <Compile Include="Interfaces\Auth\LoginRequest.cs" />
+    <Compile Include="Interfaces\Auth\UserAuth.cs" />
+    <Compile Include="Interfaces\Issues\CreateIssue.cs" />
+    <Compile Include="Interfaces\Issues\Issue.cs" />
+    <Compile Include="Interfaces\Issues\Issues.cs" />
+    <Compile Include="Interfaces\QrCodes\QrCodeUrl.cs" />
+    <Compile Include="Interfaces\RequestBody.cs" />
+    <Compile Include="Interfaces\ResponseBody.cs" />
+    <Compile Include="Interfaces\User\UpdatePasswordRequest.cs" />
+    <Compile Include="Interfaces\User\User.cs" />
+    <Compile Include="Interfaces\User\UserDetailsUpdateRequest.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\BaseUser.cs" />
     <Compile Include="Model\UserDB.cs" />
