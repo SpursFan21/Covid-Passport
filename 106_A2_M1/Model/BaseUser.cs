@@ -116,7 +116,7 @@ namespace _106_A2_M1.Model
             // Add the new test instance to test_list
             test_list.Add(newTest);
 
-            // send the new test instance to the backend
+            // send the new test instance to the backend TBC
             // SendRequestToBackend(newTest);
 
             // For demonstration purposes
@@ -147,7 +147,7 @@ namespace _106_A2_M1.Model
                 subject = subject,
                 description = description,
                 resolve = false, // By default, set resolve to false
-                open_date = GetCurrentDate(), // Set open_date to the current date TBC
+                open_date = GetCurrentDate(), // Set open_date to the current date
                 closed_date = 0 // By default, set closed_date to 0 (indicating not closed yet)
             };
 
