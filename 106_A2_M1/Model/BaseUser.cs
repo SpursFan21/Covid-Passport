@@ -33,36 +33,45 @@ namespace _106_A2_M1.Model
             // Hardcoded user tokens for testing purposes
             if (u_token == "admin") // Login as Admin
             {
-                // Assuming you have an authentication token for the admin
-                string adminAuthToken = "adminAuthToken"; // Replace with actual admin token
-
                 // Call the LoginAsync method from SingletonClient to perform authentication
-                await SingletonClient.Instance.LoginAsync(email, password, adminAuthToken);
+                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, "adminAuthToken");
 
-                // Assuming LoginAsync sets the authentication token based on the result
-                Admin admin = new Admin();
-                admin.u_token = adminAuthToken; // Use the authentication token received from LoginAsync
+                if (loginResult == 1)
+                {
+                    // Admin authentication successful
+                    Admin admin = new Admin();
+                    admin.u_token = "adminAuthToken"; // Use the hardcoded admin token or set it based on the authentication result
 
-                // Need to receive database content for admin ITC
-                // Send Admin to Admin dashboard Via ModelView NAV
+                    // Need to receive database content for admin ITC
+                    // Send Admin to Admin dashboard Via ModelView NAV
+                }
+                else
+                {
+                    // Admin authentication failed
+                    Console.WriteLine("Admin authentication failed!");
+                }
             }
             else // Login as User
             {
-                // Assuming you have an authentication token for the user
-                string userAuthToken = "userAuthToken"; // Replace with actual user token
-
                 // Call the LoginAsync method from SingletonClient to perform authentication
-                await SingletonClient.Instance.LoginAsync(email, password, userAuthToken);
+                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, "userAuthToken");
 
-                // Assuming LoginAsync sets the authentication token based on the result
-                User user = new User();
-                user.u_token = userAuthToken; // Use the authentication token received from LoginAsync
+                if (loginResult == 2)
+                {
+                    // User authentication successful
+                    User user = new User();
+                    user.u_token = "userAuthToken"; // Use the hardcoded user token or set it based on the authentication result
 
-                // Need to receive database content for user ITC
-                // Send User to User Dashboard Via ModelView NAV
+                    // Need to receive database content for user ITC
+                    // Send User to User Dashboard Via ModelView NAV
+                }
+                else
+                {
+                    // User authentication failed
+                    Console.WriteLine("User authentication failed!");
+                }
             }
         }
-
         protected void createAccount(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
         {
             // Validate the input data (perform validation based on your specific requirements)

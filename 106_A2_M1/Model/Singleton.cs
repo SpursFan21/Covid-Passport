@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
+using _106_A2_M1.Interfaces.Auth;
+
 namespace _106_A2_M1.Model
 {
     public class SingletonClient
@@ -28,7 +30,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task LoginAsync(string email, string password, string authToken)
+        public async Task<int> LoginAsync(string email, string password, string authToken)
         {
             // Create a new HttpClient instance if it doesn't exist
             if (this._client == null)
@@ -41,13 +43,17 @@ namespace _106_A2_M1.Model
             try
             {
                 // Create a string containing the login data
-                string loginData = $"{{\"email\": \"{email}\", \"password\": \"{password}\"}}";
+                LoginRequest loginData = new LoginRequest()
+                {
+                    email = email,
+                    password = password
+                };
 
                 // Convert the data to StringContent
-                var stringContent = new StringContent(loginData, Encoding.UTF8, "application/json");
-
+                var stringContent = new StringContent(loginData.ToJSONString(), Encoding.UTF8, "application/json");
+                
                 // Add the Authorization header with the provided authToken
-                this._client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+                // this._client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
 
                 // Make a POST request with the login data and Authorization header
                 HttpResponseMessage response = await this._client.PostAsync(apiUrl, stringContent);
@@ -56,15 +62,37 @@ namespace _106_A2_M1.Model
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     Console.WriteLine(content);
+
+                    AdminAuth admin_auth = AdminAuth.FromJSONString(content);
+
+                    byte[] bytes = Convert.FromBase64String(admin_auth.token.Split('.')[1]);
+                    string decoded_string = Encoding.UTF8.GetString(bytes);
+
+                    Console.WriteLine(decoded_string);
+
+                    this._client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", admin_auth.token);
+
+                    if (decoded_string.Contains("admin"))
+                    {
+                        // is admin
+                        return 1;
+                    } 
+                    else
+                    {
+                        // not admin
+                        return 2;
+                    }
                 }
                 else
                 {
                     Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                    return 0;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
+                return 0;
             }
         }
 

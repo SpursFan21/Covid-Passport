@@ -9,9 +9,9 @@ namespace _106_A2_M1.Interfaces
         /// </summary>
         /// <param name="obj">in the vast majority scenario, this will be <c>this</c></param>
         /// <returns></returns>
-        public static string ToJSONString(T obj)
+        public string ToJSONString()
         {
-            return JsonConvert.SerializeObject(obj);
+            return JsonConvert.SerializeObject(this);
         }
     }
 }
