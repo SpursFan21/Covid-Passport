@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="_106_A2_M1.View.AdminFrames.AdminIssueManagementFrame"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:_106_A2_M1.View"
+             xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1120">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10 10 10 10" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBox
+                    materialDesign:HintAssist.Hint="Search by name"
+                    Margin="20 25 0 25"
+                    Width="400"
+                    Height="50"
+                    FontSize="24"
+                    Foreground="#B2B2B2"
+                    Background="White"
+                    Padding="10 0 0 0"
+                    HorizontalAlignment="Left"
+                    VerticalContentAlignment="Center" />
+                <Button
+                    HorizontalAlignment="Right"
+                    Content="All"
+                    Width="100"
+                    Height="50"
+                    />
+            </StackPanel>
+
+            <ListView x:Name="issuePanel">
+                <!--ItemsSource="{Binding IssueList}"-->
+                <ListViewItem>
+                    <Grid Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="SUBJECT" 
+                                    FontSize="16"
+                                    Foreground="Black" />
+                            <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="My account was hacked!" />
+
+                        </Grid>
+
+
+                    </Grid>
+                </ListViewItem>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</UserControl>

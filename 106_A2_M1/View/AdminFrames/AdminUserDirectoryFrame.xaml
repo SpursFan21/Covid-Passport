@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1.View"
+             xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="830" d:DesignWidth="1120">
     <Grid>
@@ -22,21 +23,33 @@
                 VerticalContentAlignment="Center" />
 
             <Grid Background="white">
-                <ListView x:Name="userList" Margin="10 25 10 10" Width="1120">
+                <ListView x:Name="userList" Margin="10 25 10 10" Width="1120" ItemsSource="{Binding UserList}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="NAME" Width="auto"
-                                            DisplayMemberBinding="{Binding UserName}" />
+                                            DisplayMemberBinding="{Binding Path=FirstName}" />
                             <GridViewColumn Header="DOB" Width="auto"
-                                            DisplayMemberBinding="{Binding UserDOB}" />
+                                            DisplayMemberBinding="{Binding Path=DateOfBirth}" />
                             <GridViewColumn Header="EMAIL" Width="auto"
-                                            DisplayMemberBinding="{Binding UserEmail}" />
-                            <GridViewColumn Header="ACTIONS" Width="auto"
-                                            />
+                                            DisplayMemberBinding="{Binding Path=Email}" />
+                            <GridViewColumn Header="ACTIONS" Width="auto">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Manage" 
+                                                Background="#EFEEF5" 
+                                                BorderBrush="#A1A1A1" 
+                                                Foreground="Black"
+                                                />
+
+
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </Grid>
+
         </StackPanel>
     </Grid>
 </UserControl>

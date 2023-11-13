@@ -53,7 +53,8 @@
                     FontWeight="Bold"
                     HorizontalAlignment="Right"
                     Background="{x:Null}"
-                    Foreground="Black" BorderBrush="{x:Null}"/>
+                    Foreground="Black" BorderBrush="{x:Null}"
+                    Command="{Binding LogoutCommand}"/>
                 <TextBlock
                     Grid.Row="1"
                     Text="ADMINISTRATOR MODE"
@@ -86,14 +87,17 @@
                                  Height="50"
                                  FontSize="24"
                                  Foreground="Black" 
-                                 Style="{StaticResource MenuButtonTheme}" />
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding UserDirectoryCommand}"
+                                 IsChecked="True"/>
 
-                    <RadioButton Content="QR Code Aprroval Queue"
+                    <RadioButton Content="QR Code Approval Queue"
                                  Height="50"
                                  FontSize="24"
                                  Margin="0 50 0 0"
                                  Foreground="Black"
-                                 Style="{StaticResource MenuButtonTheme}" />
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding AdminQRQueueCommand}" />
 
                     <RadioButton Content="Issue Report Management"
                                  Height="50"
@@ -152,7 +156,7 @@
 
                     <!-- Title -->
                     <TextBlock x:Name="AdminTitle" 
-                               Text="User Directory"
+                               Text="{Binding FrameTitle}"
                                FontSize="42" 
                                FontWeight="Bold" 
                                VerticalAlignment="Center" 
@@ -164,10 +168,11 @@
 
 
                 <!-- Frame that switches between different admin controls -->
-                <Frame x:Name="AdminFrame"
-                       Grid.Row="1">
+                <Frame x:Name="adminFrame"
+                       Grid.Row="1"
+                       NavigationUIVisibility="Hidden">
                     <Frame.Content>
-                        <views:AdminUserDirectoryFrame />
+                        <Binding Path="CurrentDisplayFrame" UpdateSourceTrigger="PropertyChanged"/>
                     </Frame.Content>
                 </Frame>
 

@@ -17,7 +17,12 @@ namespace _106_A2_M1.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
+        public ICommand AdminDashboardCommand { get; set; }
+        public ICommand NewAccountCommand { get; set; }
+        public ICommand WelcomeBackCommand { get; set; }
         private BaseUser _user;
+        private UserControl _currentDisplayFrame;
+        
         public LoginViewModel()
         {
             _user = new BaseUser();
@@ -31,11 +36,7 @@ namespace _106_A2_M1.ViewModel
             WelcomeBackCommand = new RelayCommand(x => NavigateToFrame(new WelcomeBackFrame()));
         }
         
-        public ICommand AdminDashboardCommand { get; set; }
-        public ICommand NewAccountCommand { get; set; }
-        public ICommand WelcomeBackCommand { get; set; }
 
-        private UserControl _currentDisplayFrame;
         public UserControl CurrentDisplayFrame
         {
             get
