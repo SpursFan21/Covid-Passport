@@ -57,7 +57,7 @@ namespace _106_A2_M1.Model
 
         private bool ValidateCurrentPassword(string currentPassword)
         {
-            // Replace this with your actual password validation logic
+            // Replace this with actual password validation logic
             return Password == currentPassword;
         }
         internal static void SetPassword(string value)

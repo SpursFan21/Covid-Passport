@@ -21,31 +21,55 @@ namespace _106_A2_M1.Model
         public int DateOfBirth { get; set; }
         public int NhiNumber { get; set; }
 
-
         //data objects
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
         public UserDB db_member { get; set; }
 
-        protected void login(string Password)
+
+        protected async Task Login(string email, string password, string u_token)
         {
-            sendPassword(Password); //ITC
-            //Hardcoded user tokens for testing purposes
+            // Hardcoded user tokens for testing purposes
             if (u_token == "admin") // Login as Admin
             {
-                Admin admin = new Admin();
-                admin.u_token = this.u_token; // BaseUser class token updated to admin token
-                //need to receive database content for admin use ITC
-                //send Admin to Admin dashboard
+                // Call the LoginAsync method from SingletonClient to perform authentication
+                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, "adminAuthToken");
+
+                if (loginResult == 1)
+                {
+                    // Admin authentication successful
+                    Admin admin = new Admin();
+                    admin.u_token = "adminAuthToken"; // Use the hardcoded admin token or set it based on the authentication result
+
+                    // Need to receive database content for admin ITC
+                    // Send Admin to Admin dashboard Via ModelView NAV
+                }
+                else
+                {
+                    // Admin authentication failed
+                    Console.WriteLine("Admin authentication failed!");
+                }
             }
-            // Componet to receive invalid PW from backend ITC
-            else// Login as User
+            else // Login as User
             {
-                User user = new User();
-                user.u_token = this.u_token;
-                //need to receive database content for user ITC
-                //send User to User Dashboard
+                // Call the LoginAsync method from SingletonClient to perform authentication
+                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, "userAuthToken");
+
+                if (loginResult == 2)
+                {
+                    // User authentication successful
+                    User user = new User();
+                    user.u_token = "userAuthToken"; // Use the hardcoded user token or set it based on the authentication result
+
+                    // Need to receive database content for user ITC
+                    // Send User to User Dashboard Via ModelView NAV
+                }
+                else
+                {
+                    // User authentication failed
+                    Console.WriteLine("User authentication failed!");
+                }
             }
         }
         protected void createAccount(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
@@ -86,12 +110,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-        protected void sendPassword(string Password)
-        {
-            //http receive token ITC
-            u_token = "admin";
-            //test received token to check if valid 
-        }
         public void addTest(int testDate, bool result, string testType)
         {
             // Validate input parameters
@@ -115,7 +133,7 @@ namespace _106_A2_M1.Model
             // Add the new test instance to test_list
             test_list.Add(newTest);
 
-            // send the new test instance to the backend
+            // send the new test instance to the backend TBC
             // SendRequestToBackend(newTest);
 
             // For demonstration purposes
@@ -146,7 +164,7 @@ namespace _106_A2_M1.Model
                 subject = subject,
                 description = description,
                 resolve = false, // By default, set resolve to false
-                open_date = GetCurrentDate(), // Set open_date to the current date TBC
+                open_date = GetCurrentDate(), // Set open_date to the current date
                 closed_date = 0 // By default, set closed_date to 0 (indicating not closed yet)
             };
 
@@ -191,10 +209,39 @@ namespace _106_A2_M1.Model
             u_token = null; // Set the user token to null or an initial value
             image_link = null; // Set the image link to null or an initial value
             IsolationDate = 0; // Reset isolation date to an initial value
-            // Reset other properties as needed TBC
+            SingletonClient.Instance.Dispose();
 
             // For demonstration purposes
             Console.WriteLine("User logged out and reset to base state");
+        }
+        public void deleteVaccination(string doseId, string doseType)
+        {
+            // Determine which dose to delete based on the specified doseType
+            Vaccine vaccineToDelete = doseType.ToLower() == "first"
+                ? first_dose
+                : (doseType.ToLower() == "second" ? second_dose : null);
+
+            if (vaccineToDelete != null && vaccineToDelete.dose_id == doseId)
+            {
+                // Remove the specified dose
+                if (doseType.ToLower() == "first")
+                {
+                    first_dose = null;
+                }
+                else if (doseType.ToLower() == "second")
+                {
+                    second_dose = null;
+                }
+
+                // Additional logic to notify backend or perform any other necessary actions TBC
+                // SendRequestToDeleteVaccination(vaccineToDelete); TBC 
+
+                Console.WriteLine($"Vaccination ({doseType} dose) with dose ID {doseId} deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine($"Vaccination ({doseType} dose) with dose ID {doseId} not found.");
+            }
         }
     }
 }
