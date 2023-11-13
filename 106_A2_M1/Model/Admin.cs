@@ -309,6 +309,7 @@ namespace _106_A2_M1.Model
         {
             // come back another time TBC
         }
+
         public void UpdateIssue()
         {
             Console.WriteLine("Enter the issue ID to update:");
