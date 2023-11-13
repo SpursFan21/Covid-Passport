@@ -57,11 +57,10 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Forgot Password button -->
-                        <StackPanel Grid.Column="0" Margin="0 5 0 0" >
-                            <TextBlock>
-                                Forgot Password?
-                            </TextBlock>
-                        </StackPanel>
+                        <TextBlock Margin="0 5 0 0">
+                            Forgot Password?
+                        </TextBlock>
+
 
                         <!-- Log in button-->
                         <Button 
