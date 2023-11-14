@@ -12,23 +12,18 @@ namespace _106_A2_M1.Model
         public string Password { get; set; }
         public UserDB UserDB { get; set; }
 
-        public void RequestQR()
+        public async Task RequestQRAsync()
         {
-            // Update qr_status to 1
+            // Update qr_status to 1 which means they want QR aproval from Admin
             UserDB.qr_status = 1;
 
-            // Add logic to send user info to the queue (TBC)
-            SendUserInfoToQueue();
+            // Use SingletonClient to request a QR code and send user to QR que
+            await SingletonClient.Instance.RequestQRCodeAsync();
 
             // For demonstration purposes
             Console.WriteLine($"User requested QR. QrStatus: {UserDB.qr_status}");
         }
 
-        private void SendUserInfoToQueue()
-        {
-            // Add logic to send user info to the queue (TBC)
-            Console.WriteLine("Sending user info to the queue...");
-        }
         public void UpdateUserDetails1(string currentPassword, string newPassword, string email, string firstName, string lastName)//TBC
         {
             // Validate input parameters

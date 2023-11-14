@@ -227,6 +227,30 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task RequestQRCodeAsync()
+        {
+            try
+            {
+                // Make a POST request to request a QR code
+                HttpResponseMessage response = await _client.PostAsync("https://cse106-backend.d3rpp.dev/api/qrcodes/request", null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // QR code request successful
+                    Console.WriteLine("QR code request successful.");
+                }
+                else
+                {
+                    Console.WriteLine($"Error requesting QR code: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+
 
         // Dispose method to clean up resources when the application exits
         public void Dispose()
