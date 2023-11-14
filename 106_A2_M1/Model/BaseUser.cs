@@ -82,7 +82,8 @@ namespace _106_A2_M1.Model
                 // Redirect auto-login logic and navigate to UserDashB based on the result
                 if (result == 1)
                 {
-                    // Account creation successful, perform auto-login and navigation logic here
+                    // Account creation successful, perform auto-login logic here
+                    await Login(email, password, "userAuthToken");
                     // Redirect to UserDashB Via ModelView NAV
                 }
                 else
