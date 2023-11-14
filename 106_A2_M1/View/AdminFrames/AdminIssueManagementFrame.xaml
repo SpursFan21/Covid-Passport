@@ -6,10 +6,16 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1.View"
              xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
+             xmlns:converters="clr-namespace:_106_A2_M1.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1120">
+    <UserControl.Resources>
+        <converters:BoolToResolvedColorConverter x:Key="BoolToResolvedColorConverter" />
+        <converters:BoolToResolvedTextConverter x:Key="BoolToResolvedTextConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
     <Grid>
-        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10 10 10 10" >
+        <StackPanel x:Name="contentPanel" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10 10 10 10" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -31,6 +37,7 @@
 
                 <!-- View Filter -->
                 <Button
+                    Margin="20"
                     HorizontalAlignment="Right"
                     Content="All"
                     Background="White"
@@ -40,44 +47,59 @@
                     Height="50"
                     />
             </Grid>
-            
-            
-            
-            <ListView x:Name="issuePanel" HorizontalAlignment="Stretch">
-                <!--ItemsSource="{Binding IssueList}"-->
-                <ListViewItem HorizontalAlignment="Stretch">
-                    <materialDesign:Card UniformCornerRadius="2" Background="White" Padding="15" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+
+            <ListView x:Name="issuePanel" ItemsSource="{Binding IssueList}" HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card UniformCornerRadius="2" Background="White" Padding="15">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                                <!-- Left column -->
+                                <StackPanel Grid.Column="0" MaxWidth="770" HorizontalAlignment="Left">
+                                    <TextBlock Text="SUBJECT" FontSize="16" FontWeight="Medium" Foreground="Black"/>
+                                    <TextBlock Text="{Binding Path=subject}" FontWeight="Bold" Margin="0,5,0,0" FontSize="18" TextWrapping="Wrap"/>
+                                    <TextBlock Text="DESCRIPTION" FontSize="16" FontWeight="Medium" Foreground="Black" Margin="0,15,0,0"/>
+                                    <TextBlock Text="{Binding Path=description}" FontWeight="Bold" Margin="0,5,0,0" FontSize="16" TextWrapping="Wrap"/>
+                                </StackPanel>
 
-                                <TextBlock
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    Text="SUBJECT" 
-                                    FontSize="16"
-                                    Foreground="Black" />
-                                <TextBlock
+                                <!-- Right column -->
+                                <Grid Grid.Column="1">
+                                    <materialDesign:Card
+                                        x:Name="resolvedTag"
+                                        UniformCornerRadius="5" 
+                                        Padding="10"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top">
+                                        
+                                        <materialDesign:Card.Background>
+                                            <SolidColorBrush Color="{Binding Path=resolve, Converter={StaticResource BoolToResolvedColorConverter}}" />
 
-                                    Text="My account was hacked!" />
-                                <Button
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Right"
-                                    Content="Unresolved"
-                                    Background="#FF8F89"
-                                    Foreground="Black"
-                                    FontWeight="Bold" 
-                                    BorderBrush="{x:Null}"
-                                />
+                                        </materialDesign:Card.Background>
+
+                                        <TextBlock 
+                                            Text="{Binding Path=resolve, Converter={StaticResource BoolToResolvedTextConverter}}"
+                                            FontWeight="Bold"
+                                            FontSize="16">
+                                        </TextBlock>
+
+                                    </materialDesign:Card>
+                                    <Button
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Bottom"
+                                        Content="Mark as resolved"
+                                        Background="#EFEEF5"
+                                        Foreground="Black"
+                                        BorderBrush="#A1A1A1"
+                                        Command="{Binding DataContext.MarkAsResolvedCommand, ElementName=contentPanel}"
+                                        CommandParameter="{Binding}"
+                                        Visibility="{Binding Path=resolve, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                </Grid>
                             </Grid>
-                        </StackPanel>
-                    </materialDesign:Card>
-                </ListViewItem>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
-            
+
+
         </StackPanel>
     </Grid>
 </UserControl>

@@ -10,6 +10,7 @@ using System.Windows.Input;
 using _106_A2_M1.Model;
 using _106_A2_M1.Services;
 using _106_A2_M1.View;
+using _106_A2_M1.View.AdminFrames;
 using _106_A2_M1.View.Pages;
 
 namespace _106_A2_M1.ViewModel
@@ -18,14 +19,19 @@ namespace _106_A2_M1.ViewModel
     {
         private ICommand _userSearchCommand;
         public ICommand LogoutCommand { get; }
-        public ICommand AdminQRQueueCommand { get; }
+        public ICommand QRQueueCommand { get; }
         public ICommand UserDirectoryCommand { get; }
+        public ICommand IssueQueueCommand { get; }
+
+        public ICommand MarkAsResolvedCommand { get; }
+
         private Admin _admin; // Declare an instance of the Admin class MODEL to ViewModel Pipeline
         private ObservableCollection<User> _userList; // Change the type to ObservableCollection<User>
         private ObservableCollection<Issue> _issueList;
         private UserControl _currentDisplayFrame;
         private string _frameTitle;
 
+        private Issue _testIssue = new Issue() { subject = "woohoo", description = "not again", resolve = false };
         public ICommand UserSearchCommand
         {
             get
@@ -45,7 +51,15 @@ namespace _106_A2_M1.ViewModel
                 OnPropertyChanged(nameof(UserList)); // Notify property changed to update the UI
             }
         }
-
+        public ObservableCollection<Issue> IssueList   //MODEL to ViewModel Pipeline
+        {
+            get => _issueList;  // Access the ObservableCollection
+            set
+            {
+                _issueList = value;
+                OnPropertyChanged(nameof(IssueList)); // Notify property changed to update the UI
+            }
+        }
         public string FrameTitle
         {
             get { return _frameTitle; } // Access the string
@@ -55,13 +69,13 @@ namespace _106_A2_M1.ViewModel
                 OnPropertyChanged(nameof(FrameTitle)); // Notify property changed to update the UI
             }
         }
-        public ObservableCollection<Issue> IssueList   //MODEL to ViewModel Pipeline
+        public Issue TestIssue
         {
-            get { return _issueList; } // Access the ObservableCollection
+            get => _testIssue;
             set
             {
-                _issueList = value;
-                OnPropertyChanged(nameof(IssueList)); // Notify property changed to update the UI
+                _testIssue = value;
+                OnPropertyChanged(nameof(TestIssue));
             }
         }
 
@@ -72,14 +86,15 @@ namespace _106_A2_M1.ViewModel
             IssueList = new ObservableCollection<Issue>(_admin.issue_list); // Initialize IssueList
 
             TestAddUsers();
-
+            TestAddIssues();
+            TestIssue = new Issue() { subject = "this is my problem", description = "please help me with this problem please help me with this problem please help me with this problem please help me with this problem please help me with this problem" }; ;
             // Set the default frame to UserDirectoryFrame
             FrameTitle = "User Directory";
             CurrentDisplayFrame = new AdminUserDirectoryFrame();
             CurrentDisplayFrame.DataContext = this;
 
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
-            AdminQRQueueCommand = new RelayCommand(x => 
+            QRQueueCommand = new RelayCommand(x => 
                 { 
                     FrameTitle = "QR Code Approval Queue";
                     NavigateToFrame(new AdminQRQueueFrame()); 
@@ -89,6 +104,12 @@ namespace _106_A2_M1.ViewModel
                 FrameTitle = "User Directory";
                 NavigateToFrame(new AdminUserDirectoryFrame());
             });
+            IssueQueueCommand = new RelayCommand(x =>
+            {
+                FrameTitle = "Issue Report Management";
+                NavigateToFrame(new AdminIssueManagementFrame());
+            });
+            MarkAsResolvedCommand = new RelayCommand(x => MarkAsResolved(x));
         }
 
         public UserControl CurrentDisplayFrame
@@ -121,6 +142,11 @@ namespace _106_A2_M1.ViewModel
             _admin.TestUserGeneration();
             UserList = new ObservableCollection<User>(_admin.user_list); // Update the ObservableCollection after adding users
         }
+        public void TestAddIssues() // TESTING PURPOSES ONLY
+        {
+            _admin.TestIssueGeneration();
+            IssueList = new ObservableCollection<Issue>(_admin.issue_list); // Update the ObservableCollection after adding users
+        }
 
         public void UserDirSearch()
         {
@@ -132,6 +158,16 @@ namespace _106_A2_M1.ViewModel
             if (e.Key == Key.Enter)
             {
                 MessageBox.Show("Data Context Working!");
+            }
+        }
+
+        public void MarkAsResolved(object parameter)
+        {
+            if (parameter is Issue issue)
+            {
+                issue.resolve = true;
+
+                OnPropertyChanged(nameof(IssueList));
             }
         }
     }

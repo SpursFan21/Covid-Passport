@@ -63,6 +63,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToResolvedColorConverter.cs" />
+    <Compile Include="Converters\BoolToResolvedTextConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\BaseUser.cs" />
     <Compile Include="Model\UserDB.cs" />

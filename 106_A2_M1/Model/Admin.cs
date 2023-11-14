@@ -27,6 +27,24 @@ namespace _106_A2_M1.Model
             user_list.Add(user2);
 
         }
+
+        public void TestIssueGeneration()
+        {
+            Issue issue1 = new Issue()
+            {
+                subject = "I have a problem",
+                description = "Where do I log out of my account, I have been logged in for 72 days.",
+                resolve = false
+            };
+            Issue issue2 = new Issue()
+            {
+                subject = "I too, have a problem",
+                description = "How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!",
+                resolve = false
+            };
+            issue_list.Add(issue1);
+            issue_list.Add(issue2);
+        }
         public override void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)//TBC
         {
             // Validate input parameters

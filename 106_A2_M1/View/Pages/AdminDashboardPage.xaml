@@ -97,14 +97,15 @@
                                  Margin="0 50 0 0"
                                  Foreground="Black"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding AdminQRQueueCommand}" />
+                                 Command="{Binding QRQueueCommand}" />
 
                     <RadioButton Content="Issue Report Management"
                                  Height="50"
                                  FontSize="24"
                                  Margin="0 50 0 0"
                                  Foreground="Black"
-                                 Style="{StaticResource MenuButtonTheme}"/>
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding IssueQueueCommand}" />
 
                     <Grid
                         Background="#ADAACE"
