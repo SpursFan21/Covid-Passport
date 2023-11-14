@@ -62,7 +62,6 @@ namespace _106_A2_M1.Model
                     User user = new User();
                     user.u_token = "userAuthToken"; // Use the hardcoded user token or set it based on the authentication result
 
-                    // Need to receive database content for user ITC
                     // Send User to User Dashboard Via ModelView NAV
                 }
                 else
@@ -72,29 +71,34 @@ namespace _106_A2_M1.Model
                 }
             }
         }
-        protected void createAccount(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
+        protected async Task<int> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
         {
-            // Validate the input data (perform validation based on your specific requirements)
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            try
             {
-                // Handle invalid input (throw an exception, return an error code, etc.)
-                throw new ArgumentException("Invalid input data. Please provide all required information.");
+                // Use SingletonClient to create a new account
+                SingletonClient singletonClient = SingletonClient.Instance;
+                int result = await singletonClient.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNumber);
+
+                // Redirect auto-login logic and navigate to UserDashB based on the result
+                if (result == 1)
+                {
+                    // Account creation successful, perform auto-login and navigation logic here
+                    // Redirect to UserDashB Via ModelView NAV
+                }
+                else
+                {
+                    Console.WriteLine("Account creation failed!");
+                }
+
+                return result;
             }
-
-            // Create a new user account using the provided data
-            User newUser = new User
+            catch (Exception ex)
             {
-                Email = email,
-                Password = password,
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dob,
-                NhiNumber = nhiNumber
-            };
-
-            // Perform logic to save the new user account to the database or any other storage mechanism
-            // Redirect auto login user and then deliver them to UserDashB
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return 0; // Indicate failure due to an exception
+            }
         }
+
         protected void getIsolationDate(CovidTest covidTest)
         {
             if (covidTest != null)
