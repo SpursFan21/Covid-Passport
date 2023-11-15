@@ -12,8 +12,12 @@ namespace _106_A2_M1.Model
 
         public List<User> user_list { get; set; }
         public List<Issue> issue_list { get; set; }
+
         //field to store the users with QR status
         private List<UserDB> usersWithQR;
+
+        // Property to store the QR code image link
+        public string QrCodeImageUrl { get; private set; }
 
         public override void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)//TBC
         {
@@ -210,7 +214,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public void ApproveQR()
+        public async Task ApproveQRAsync()
         {
             try
             {
@@ -228,9 +232,12 @@ namespace _106_A2_M1.Model
 
                     Console.WriteLine($"QR code approved for user with email {selectedUserEmail}");
 
-                    // Example: Open the QR code image link in the view
-                    // This could involve opening a browser window or displaying it in your application's view.
-                    // The specific implementation depends on your application's architecture.
+                    // Retrieve the QR code image URL asynchronously
+                    await RetrieveQRUrlAsync(selectedUser);
+
+                    // Retrieve the QR code for the selected user asynchronously
+                    await RetrieveQRCode(selectedUser);
+
                 }
                 else
                 {
@@ -244,7 +251,55 @@ namespace _106_A2_M1.Model
         }
 
 
+        public async Task RetrieveQRUrlAsync(UserDB selectedUser)
+        {
+            try
+            {
+                // Use the SingletonClient to get the QR code image URL for the selected user
+                string qrCodeImageUrl = await SingletonClient.Instance.GetQRCodeImageUrlAsync(selectedUser.id);
 
+                if (qrCodeImageUrl != null)
+                {
+                    Console.WriteLine($"QR code image URL for user with email {selectedUser.email}: {qrCodeImageUrl}");
+                    // Example: Open the QR code image URL in the view or download the image as needed
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code image URL for user with email {selectedUser.email}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        // Function to retrieve QR code and store the image link
+        public async Task RetrieveQRCode(UserDB selectedUser)
+        {
+            try
+            {
+                // Use the SingletonClient to get the QR code image URL for the selected user
+                string qrCodeImageUrl = await SingletonClient.Instance.GetQRCodeImageUrlAsync(selectedUser.id);
+
+                if (qrCodeImageUrl != null)
+                {
+                    // Store the QR code image URL
+                    QrCodeImageUrl = qrCodeImageUrl;
+
+                    Console.WriteLine($"QR code image URL for user with email {selectedUser.email}: {qrCodeImageUrl}");
+                    // Example: Display the QR code image URL in the view or download the image as needed
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code image URL for user with email {selectedUser.email}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
 
         public void DeleteQR()
         {

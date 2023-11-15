@@ -15,10 +15,13 @@ namespace _106_A2_M1.Model
     {
         // A static object used for locking to ensure thread safety during instance creation
         private static readonly object lockObject = new object();
+
         // The single instance of the SingletonClient
         private static SingletonClient instance;
+
         // The HttpClient instance used for making HTTP requests
         private HttpClient _client;
+
         // Private constructor to prevent external instantiation
         private SingletonClient()
         {
@@ -305,6 +308,78 @@ namespace _106_A2_M1.Model
                 return null; // Or handle the error in a way that suits your application
             }
         }
+
+        public async Task<List<string>> GetQRCodeUrlsAsync()
+        {
+            try
+            {
+                // Construct the URL for the GET request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/qrcodes";
+
+                // Make a GET request to retrieve the list of QR code image URLs
+                HttpResponseMessage response = await this._client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a List<string>
+                    List<string> qrCodeUrls = JsonConvert.DeserializeObject<List<string>>(content);
+
+                    return qrCodeUrls;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code URLs: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving QR code URLs: {ex.Message}");
+                return null; // Or handle the error in a way that suits your application
+            }
+        }
+
+
+        public async Task<string> GetQRCodeImageUrlAsync(string userId)
+        {
+            try
+            {
+                // Use the SingletonClient to get the list of QR code image URLs
+                List<string> qrCodeUrls = await GetQRCodeUrlsAsync();
+
+                if (qrCodeUrls != null && qrCodeUrls.Any())
+                {
+                    // Find the URL for the specific user
+                    string imageUrl = qrCodeUrls.FirstOrDefault(url => url.Contains(userId));
+
+                    if (!string.IsNullOrEmpty(imageUrl))
+                    {
+                        Console.WriteLine($"QR code image URL for user with ID {userId}: {imageUrl}");
+                        return imageUrl;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"QR code image URL not found for user with ID {userId}.");
+                        return null;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Error retrieving QR code URLs.");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving QR code image URL: {ex.Message}");
+                return null;
+            }
+        }
+
+
 
 
         // Dispose method to clean up resources when the application exits
