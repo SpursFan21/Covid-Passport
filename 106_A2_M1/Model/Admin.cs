@@ -179,6 +179,35 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task GetQRListAsync()
+        {
+            try
+            {
+                // Use SingletonClient to fetch a list of users with qr_status = 1
+                List<UserDB> usersWithQR = await SingletonClient.Instance.GetUsersWithQRStatusAsync();
+
+                if (usersWithQR != null && usersWithQR.Any())
+                {
+                    // Display details of users with QR status 1 which = requesting QR aproval
+                    foreach (var user in usersWithQR)
+                    {
+                        Console.WriteLine($"User: {user.first_name} {user.last_name}");
+                        Console.WriteLine($"Email: {user.email}");
+                        Console.WriteLine($"Vaccine Status: {user.vaccine_status}");
+                        Console.WriteLine("---------------");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No users found with QR status 1.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
         public void GenerateQR()
         {
             // Allow the admin to select a user to generate a QR code

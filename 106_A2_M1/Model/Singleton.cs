@@ -250,6 +250,33 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<List<UserDB>> GetUsersWithQRStatusAsync()
+        {
+            try
+            {
+                // Make a GET request to fetch users with qr_status = 1
+                HttpResponseMessage response = await _client.GetAsync("https://cse106-backend.d3rpp.dev/api/qrcodes/requests");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Deserialize the response content to obtain the list of users
+                    string content = await response.Content.ReadAsStringAsync();
+                    List<UserDB> usersWithQR = JsonConvert.DeserializeObject<List<UserDB>>(content);
+
+                    return usersWithQR;
+                }
+                else
+                {
+                    Console.WriteLine($"Error fetching users with QR status: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while fetching users with QR status: {ex.Message}");
+                return null;
+            }
+        }
 
 
         // Dispose method to clean up resources when the application exits
