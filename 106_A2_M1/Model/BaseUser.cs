@@ -27,6 +27,27 @@ namespace _106_A2_M1.Model
         public List<CovidTest> test_list { get; set; }
         public UserDB db_member { get; set; }
 
+        protected async void GetLoginAsync(string email, string password)
+        {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+                {
+                    Console.WriteLine("Both email and password are required for login.");
+                    return;
+                }
+
+                // Call the Login method with the provided email and password
+                await Login(email, password, u_token);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred during login: {ex.Message}");
+                // Log the exception or handle it based on your application's needs
+            }
+        }
+
 
         protected async Task Login(string email, string password, string u_token)
         {
