@@ -12,6 +12,8 @@ namespace _106_A2_M1.Model
 
         public List<User> user_list { get; set; }
         public List<Issue> issue_list { get; set; }
+        //field to store the users with QR status
+        private List<UserDB> usersWithQR;
 
         public override void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)//TBC
         {
@@ -208,39 +210,42 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public void GenerateQR()
+        public void ApproveQR()
         {
-            // Allow the admin to select a user to generate a QR code
-            Console.WriteLine("Enter the user ID to generate QR code:");
-            string selectedUserId = Console.ReadLine();
-
-            // Find the selected user
-            BaseUser selectedUser = user_list.FirstOrDefault(u => u.id == selectedUserId);
-
-            if (selectedUser != null)
+            try
             {
-                // Call the backend to generate QR code for the selected user TBC
-                // make an HTTP request to the backend here TBC
-                // and receive the image link for the generated QR code. TBC
+                // Allow the admin to select a user to approve a QR code by entering the email
+                Console.WriteLine("Enter the user email to approve QR code:");
+                string selectedUserEmail = Console.ReadLine();
 
-                /* Mock response for demonstration purposes
-                string mockQRCodeImageLink = "https://example.com/qrcode/123456";
-                selectedUser.image_link = mockQRCodeImageLink;
-                
+                // Find the selected user by email in the existing list
+                UserDB selectedUser = usersWithQR.FirstOrDefault(u => u.email == selectedUserEmail);
 
-                Console.WriteLine($"QR code generated for user with ID {selectedUserId}");
-                Console.WriteLine($"QR code image link: {mockQRCodeImageLink}");
+                if (selectedUser != null)
+                {
+                    // Update the QR status to 2 (approved)
+                    selectedUser.qr_status = 2;
 
-                // Example: Open the QR code image link in the view
-                // This could involve opening a browser window or displaying it in your application's view.
-                // The specific implementation depends on your application's architecture.
-                */
+                    Console.WriteLine($"QR code approved for user with email {selectedUserEmail}");
+
+                    // Example: Open the QR code image link in the view
+                    // This could involve opening a browser window or displaying it in your application's view.
+                    // The specific implementation depends on your application's architecture.
+                }
+                else
+                {
+                    Console.WriteLine($"User with email {selectedUserEmail} not found in the list.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"User with ID {selectedUserId} not found.");
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+
+
+
+
         public void DeleteQR()
         {
             // Allow the admin to select a user to delete the QR code

@@ -278,6 +278,34 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<HttpResponseMessage> ApproveQRCodeAsync(string userId)
+        {
+            try
+            {
+                // Construct the URL for the PUT request
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/qrcodes/approve/{userId}";
+
+                // Update the QR status to 2
+                var updateStatus = new
+                {
+                    qr_status = 2
+                };
+
+                // Convert the data to StringContent
+                var stringContent = new StringContent(JsonConvert.SerializeObject(updateStatus), Encoding.UTF8, "application/json");
+
+                // Make a PUT request to update the QR status
+                HttpResponseMessage response = await this._client.PutAsync(apiUrl, stringContent);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while approving QR code: {ex.Message}");
+                return null; // Or handle the error in a way that suits your application
+            }
+        }
+
 
         // Dispose method to clean up resources when the application exits
         public void Dispose()
