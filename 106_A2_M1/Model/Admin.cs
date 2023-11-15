@@ -28,7 +28,7 @@ namespace _106_A2_M1.Model
 
         }
 
-        public void TestIssueGeneration()
+        public void TestIssueGeneration() // TESTINF PURPOSES ONLY
         {
             Issue issue1 = new Issue()
             {

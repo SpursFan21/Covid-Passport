@@ -22,16 +22,14 @@ namespace _106_A2_M1.ViewModel
         public ICommand QRQueueCommand { get; }
         public ICommand UserDirectoryCommand { get; }
         public ICommand IssueQueueCommand { get; }
-
         public ICommand MarkAsResolvedCommand { get; }
 
         private Admin _admin; // Declare an instance of the Admin class MODEL to ViewModel Pipeline
         private ObservableCollection<User> _userList; // Change the type to ObservableCollection<User>
         private ObservableCollection<Issue> _issueList;
         private UserControl _currentDisplayFrame;
-        private string _frameTitle;
+        private string _frameTitle; // Title text for each admin frame
 
-        private Issue _testIssue = new Issue() { subject = "woohoo", description = "not again", resolve = false };
         public ICommand UserSearchCommand
         {
             get
@@ -69,15 +67,6 @@ namespace _106_A2_M1.ViewModel
                 OnPropertyChanged(nameof(FrameTitle)); // Notify property changed to update the UI
             }
         }
-        public Issue TestIssue
-        {
-            get => _testIssue;
-            set
-            {
-                _testIssue = value;
-                OnPropertyChanged(nameof(TestIssue));
-            }
-        }
 
         public AdminDashboardViewModel()
         {
@@ -87,7 +76,6 @@ namespace _106_A2_M1.ViewModel
 
             TestAddUsers();
             TestAddIssues();
-            TestIssue = new Issue() { subject = "this is my problem", description = "please help me with this problem please help me with this problem please help me with this problem please help me with this problem please help me with this problem" }; ;
             // Set the default frame to UserDirectoryFrame
             FrameTitle = "User Directory";
             CurrentDisplayFrame = new AdminUserDirectoryFrame();
@@ -168,6 +156,7 @@ namespace _106_A2_M1.ViewModel
                 issue.resolve = true;
 
                 OnPropertyChanged(nameof(IssueList));
+                NavigateToFrame(new AdminIssueManagementFrame());
             }
         }
     }

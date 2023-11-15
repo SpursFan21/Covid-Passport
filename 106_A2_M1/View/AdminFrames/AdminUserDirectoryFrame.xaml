@@ -23,14 +23,14 @@
                 VerticalContentAlignment="Center" />
 
             <Grid Background="white">
-                <ListView x:Name="userList" Margin="10 25 10 10" Width="1120" ItemsSource="{Binding UserList}">
+                <ListView x:Name="userList" Margin="10 25 10 10" Width="1120" ItemsSource="{Binding UserList}" HorizontalContentAlignment="Stretch">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="NAME" Width="auto"
+                            <GridViewColumn Header="NAME" Width="300"
                                             DisplayMemberBinding="{Binding Path=FirstName}" />
-                            <GridViewColumn Header="DOB" Width="auto"
+                            <GridViewColumn Header="DOB" Width="200"
                                             DisplayMemberBinding="{Binding Path=DateOfBirth}" />
-                            <GridViewColumn Header="EMAIL" Width="auto"
+                            <GridViewColumn Header="EMAIL" Width="300"
                                             DisplayMemberBinding="{Binding Path=Email}" />
                             <GridViewColumn Header="ACTIONS" Width="auto">
                                 <GridViewColumn.CellTemplate>
