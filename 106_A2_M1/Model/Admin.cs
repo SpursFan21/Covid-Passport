@@ -13,6 +13,38 @@ namespace _106_A2_M1.Model
         public List<User> user_list { get; set; }
         public List<Issue> issue_list { get; set; }
 
+        public Admin()
+        {
+            user_list = new List<User>();
+            issue_list = new List<Issue>();
+        }
+
+        public void TestUserGeneration() // TESTING PURPOSES ONLY
+        {
+            User user1 = new User() { FirstName = "Hank", DateOfBirth = 01011972, Email = "hank@gmail.com" };
+            User user2 = new User() { FirstName = "Marie", DateOfBirth = 02021978, Email = "marie@gmail.com" };
+            user_list.Add(user1);
+            user_list.Add(user2);
+
+        }
+
+        public void TestIssueGeneration() // TESTINF PURPOSES ONLY
+        {
+            Issue issue1 = new Issue()
+            {
+                subject = "I have a problem",
+                description = "Where do I log out of my account, I have been logged in for 72 days.",
+                resolve = false
+            };
+            Issue issue2 = new Issue()
+            {
+                subject = "I too, have a problem",
+                description = "How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!",
+                resolve = false
+            };
+            issue_list.Add(issue1);
+            issue_list.Add(issue2);
+        }
         public override void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)//TBC
         {
             // Validate input parameters

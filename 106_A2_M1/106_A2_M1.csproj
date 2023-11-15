@@ -66,6 +66,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+
+    <Compile Include="Converters\BoolToResolvedColorConverter.cs" />
+    <Compile Include="Converters\BoolToResolvedTextConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+
     <Compile Include="Interfaces\Auth\AdminAuth.cs" />
     <Compile Include="Interfaces\Auth\LoginRequest.cs" />
     <Compile Include="Interfaces\Auth\UserAuth.cs" />
@@ -78,6 +83,7 @@
     <Compile Include="Interfaces\User\UpdatePasswordRequest.cs" />
     <Compile Include="Interfaces\User\User.cs" />
     <Compile Include="Interfaces\User\UserDetailsUpdateRequest.cs" />
+
     <Compile Include="Model\Admin.cs" />
     <Compile Include="Model\BaseUser.cs" />
     <Compile Include="Model\Singleton.cs" />
@@ -92,6 +98,9 @@
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\UserDashboardViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\AdminFrames\AdminIssueManagementFrame.xaml.cs">
+      <DependentUpon>AdminIssueManagementFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AdminFrames\AdminQRQueueFrame.xaml.cs">
       <DependentUpon>AdminQRQueueFrame.xaml</DependentUpon>
     </Compile>
@@ -130,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme\MenuButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AdminFrames\AdminIssueManagementFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

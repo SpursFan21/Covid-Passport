@@ -5,14 +5,51 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1.View"
+             xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="830" d:DesignWidth="1120">
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <materialDesign:Card UniformCornerRadius="2" Background="#FFDEDDEB" Padding="50,25,50,25" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <!-- Content goes here -->
-                <TextBlock Text="Admin User Directory Here" />
-            </materialDesign:Card>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10 10 10 0">
+            <TextBox
+                materialDesign:HintAssist.Hint="Search by name"
+                Margin="20 25 0 25"
+                Width="400"
+                Height="50"
+                FontSize="24"
+                Foreground="#B2B2B2"
+                Background="White"
+                Padding="10 0 0 0"
+                HorizontalAlignment="Left"
+                VerticalContentAlignment="Center" />
+
+            <Grid Background="white">
+                <ListView x:Name="userList" Margin="10 25 10 10" Width="1120" ItemsSource="{Binding UserList}" HorizontalContentAlignment="Stretch">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="NAME" Width="300"
+                                            DisplayMemberBinding="{Binding Path=FirstName}" />
+                            <GridViewColumn Header="DOB" Width="200"
+                                            DisplayMemberBinding="{Binding Path=DateOfBirth}" />
+                            <GridViewColumn Header="EMAIL" Width="300"
+                                            DisplayMemberBinding="{Binding Path=Email}" />
+                            <GridViewColumn Header="ACTIONS" Width="auto">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Manage" 
+                                                Background="#EFEEF5" 
+                                                BorderBrush="#A1A1A1" 
+                                                Foreground="Black"
+                                                />
+
+
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+
         </StackPanel>
     </Grid>
 </UserControl>
