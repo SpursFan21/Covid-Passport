@@ -154,43 +154,35 @@ namespace _106_A2_M1.Model
 
             return testId;
         }
-        public void reportIssue(string subject, string description)
+        public async Task ReportIssueAsync(string subject, string description)
         {
-            // Validate input parameters
-            if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(description))
+            try
             {
-                throw new ArgumentException("Subject and description cannot be null or empty.");
+                // Validate input parameters
+                if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(description))
+                {
+                    throw new ArgumentException("Subject and description cannot be null or empty.");
+                }
+
+                // Create a new Issue instance with the provided data
+                Issue newIssue = new Issue
+                {
+                    subject = subject,
+                    description = description,
+                };
+
+                // Use the SingletonClient to report the issue
+                await SingletonClient.Instance.ReportIssueAsync(newIssue);
+
+                // For demonstration purposes
+                Console.WriteLine($"Reported issue with subject: {subject}");
             }
-
-            // Create a new Issue instance with the provided data
-            Issue newIssue = new Issue
+            catch (Exception ex)
             {
-                issue_id = GenerateIssueId(),
-                subject = subject,
-                description = description,
-                resolve = false, // By default, set resolve to false
-                open_date = GetCurrentDate(), // Set open_date to the current date
-                closed_date = 0 // By default, set closed_date to 0 (indicating not closed yet)
-            };
-
-            // send the new Issue instance to the backend
-            // SendRequestToBackend(newIssue);
-
-            // For demonstration purposes
-            Console.WriteLine($"Reported issue with issue_id: {newIssue.issue_id}");
+                Console.WriteLine($"An error occurred while reporting the issue: {ex.Message}");
+            }
         }
 
-        private string GenerateIssueId()
-        {
-            // Generate a unique issue_id TBC
-            return Guid.NewGuid().ToString();
-        }
-
-        private int GetCurrentDate()
-        {
-            // Get the current date as an integer TBC
-            return int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-        }
         // Overloaded method with additional parameters
         public virtual void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)
         {

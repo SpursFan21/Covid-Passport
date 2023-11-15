@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
 using _106_A2_M1.Interfaces.Auth;
 using Newtonsoft.Json;
 
@@ -280,102 +279,141 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
-
-        public async Task<HttpResponseMessage> ApproveQRCodeAsync(string userId)
-        {
-            try
-            {
-                // Construct the URL for the PUT request
-                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/qrcodes/approve/{userId}";
-
-                // Update the QR status to 2
-                var updateStatus = new
+        /*
+                public async Task<HttpResponseMessage> ApproveQRCodeAsync(string userId)
                 {
-                    qr_status = 2
-                };
-
-                // Convert the data to StringContent
-                var stringContent = new StringContent(JsonConvert.SerializeObject(updateStatus), Encoding.UTF8, "application/json");
-
-                // Make a PUT request to update the QR status
-                HttpResponseMessage response = await this._client.PutAsync(apiUrl, stringContent);
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while approving QR code: {ex.Message}");
-                return null; // Or handle the error in a way that suits your application
-            }
-        }
-
-        public async Task<List<string>> GetQRCodeUrlsAsync()
-        {
-            try
-            {
-                // Construct the URL for the GET request
-                string apiUrl = "https://cse106-backend.d3rpp.dev/api/qrcodes";
-
-                // Make a GET request to retrieve the list of QR code image URLs
-                HttpResponseMessage response = await this._client.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    // Read the response content as a string
-                    string content = await response.Content.ReadAsStringAsync();
-
-                    // Deserialize the string to a List<string>
-                    List<string> qrCodeUrls = JsonConvert.DeserializeObject<List<string>>(content);
-
-                    return qrCodeUrls;
-                }
-                else
-                {
-                    Console.WriteLine($"Error retrieving QR code URLs: {response.StatusCode} - {response.ReasonPhrase}");
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while retrieving QR code URLs: {ex.Message}");
-                return null; // Or handle the error in a way that suits your application
-            }
-        }
-
-
-        public async Task<string> GetQRCodeImageUrlAsync(string userId)
-        {
-            try
-            {
-                // Use the SingletonClient to get the list of QR code image URLs
-                List<string> qrCodeUrls = await GetQRCodeUrlsAsync();
-
-                if (qrCodeUrls != null && qrCodeUrls.Any())
-                {
-                    // Find the URL for the specific user
-                    string imageUrl = qrCodeUrls.FirstOrDefault(url => url.Contains(userId));
-
-                    if (!string.IsNullOrEmpty(imageUrl))
+                    try
                     {
-                        Console.WriteLine($"QR code image URL for user with ID {userId}: {imageUrl}");
-                        return imageUrl;
+                        // Construct the URL for the PUT request
+                        string apiUrl = $"https://cse106-backend.d3rpp.dev/api/qrcodes/approve/{userId}";
+
+                        // Update the QR status to 2
+                        var updateStatus = new
+                        {
+                            qr_status = 2
+                        };
+
+                        // Convert the data to StringContent
+                        var stringContent = new StringContent(JsonConvert.SerializeObject(updateStatus), Encoding.UTF8, "application/json");
+
+                        // Make a PUT request to update the QR status
+                        HttpResponseMessage response = await this._client.PutAsync(apiUrl, stringContent);
+
+                        return response;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Console.WriteLine($"QR code image URL not found for user with ID {userId}.");
+                        Console.WriteLine($"An error occurred while approving QR code: {ex.Message}");
+                        return null; // Or handle the error in a way that suits your application
+                    }
+                }
+
+                public async Task<List<string>> GetQRCodeUrlsAsync()
+                {
+                    try
+                    {
+                        // Construct the URL for the GET request
+                        string apiUrl = "https://cse106-backend.d3rpp.dev/api/qrcodes";
+
+                        // Make a GET request to retrieve the list of QR code image URLs
+                        HttpResponseMessage response = await this._client.GetAsync(apiUrl);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            // Read the response content as a string
+                            string content = await response.Content.ReadAsStringAsync();
+
+                            // Deserialize the string to a List<string>
+                            List<string> qrCodeUrls = JsonConvert.DeserializeObject<List<string>>(content);
+
+                            return qrCodeUrls;
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Error retrieving QR code URLs: {response.StatusCode} - {response.ReasonPhrase}");
+                            return null;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An error occurred while retrieving QR code URLs: {ex.Message}");
+                        return null; // Or handle the error in a way that suits your application
+                    }
+                }
+
+
+                public async Task<string> GetQRCodeImageUrlAsync(string userId)
+                {
+                    try
+                    {
+                        // Use the SingletonClient to get the list of QR code image URLs
+                        List<string> qrCodeUrls = await GetQRCodeUrlsAsync();
+
+                        if (qrCodeUrls != null && qrCodeUrls.Any())
+                        {
+                            // Find the URL for the specific user
+                            string imageUrl = qrCodeUrls.FirstOrDefault(url => url.Contains(userId));
+
+                            if (!string.IsNullOrEmpty(imageUrl))
+                            {
+                                Console.WriteLine($"QR code image URL for user with ID {userId}: {imageUrl}");
+                                return imageUrl;
+                            }
+                            else
+                            {
+                                Console.WriteLine($"QR code image URL not found for user with ID {userId}.");
+                                return null;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error retrieving QR code URLs.");
+                            return null;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An error occurred while retrieving QR code image URL: {ex.Message}");
                         return null;
                     }
                 }
+
+        */
+
+        public async Task ReportIssueAsync(Issue newIssue)
+        {
+            try
+            {
+                // Validate input parameters
+                if (newIssue == null)
+                {
+                    throw new ArgumentNullException(nameof(newIssue));
+                }
+
+                // Construct the URL for the POST request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/issues/create";
+
+                // Serialize the newIssue object to JSON manually
+                string jsonContent = JsonConvert.SerializeObject(newIssue);
+
+                // Create StringContent with JSON content
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Make a POST request to send the new Issue instance to the backend
+                HttpResponseMessage response = await this._client.PostAsync(apiUrl, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Issue reported successfully with subject: {newIssue.subject}");
+                }
                 else
                 {
-                    Console.WriteLine("Error retrieving QR code URLs.");
-                    return null;
+                    Console.WriteLine($"Error reporting issue: {response.StatusCode} - {response.ReasonPhrase}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while retrieving QR code image URL: {ex.Message}");
-                return null;
+                Console.WriteLine($"An error occurred while reporting the issue: {ex.Message}");
             }
         }
 

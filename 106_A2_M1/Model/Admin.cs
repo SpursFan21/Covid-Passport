@@ -213,7 +213,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-
+/*
         public async Task ApproveQRAsync()
         {
             try
@@ -300,7 +300,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-
+*/
         public void DeleteQR()
         {
             // Allow the admin to select a user to delete the QR code
