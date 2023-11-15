@@ -417,6 +417,37 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<List<Issue>> GetOpenIssuesAsync()
+        {
+            try
+            {
+                // Construct the URL for the GET request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/issues";
+
+                // Make a GET request to retrieve all open issues
+                HttpResponseMessage response = await this._client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string jsonContent = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the JSON content to a list of Issue objects
+                    List<Issue> openIssues = JsonConvert.DeserializeObject<List<Issue>>(jsonContent);
+                    return openIssues;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving open issues: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving open issues: {ex.Message}");
+                return null; // handle the error
+            }
+        }
 
 
 

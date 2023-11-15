@@ -12,6 +12,8 @@ namespace _106_A2_M1.Model
 
         public List<User> user_list { get; set; }
         public List<Issue> issue_list { get; set; }
+        public List<Issue> OpenIssues { get; set; }
+
 
         //field to store the users with QR status
         private List<UserDB> usersWithQR;
@@ -397,6 +399,38 @@ namespace _106_A2_M1.Model
         public void searchIssue()
         {
             // come back another time TBC
+        }
+
+        public async Task ViewAllOpenIssuesAsync()
+        {
+            try
+            {
+                // Use the SingletonClient to fetch all open issues from the backend
+                List<Issue> openIssues = await SingletonClient.Instance.GetOpenIssuesAsync();
+
+                if (openIssues != null && openIssues.Any())
+                {
+                    // Store the open issues for display purposes
+                    this.OpenIssues = openIssues;
+
+                    // Display details of open issues
+                    foreach (var issue in openIssues)
+                    {
+                        Console.WriteLine($"Issue ID: {issue.issue_id}");
+                        Console.WriteLine($"Subject: {issue.subject}");
+                        Console.WriteLine($"Description: {issue.description}");
+                        Console.WriteLine("---------------");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No open issues found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
 
         public void UpdateIssue()
