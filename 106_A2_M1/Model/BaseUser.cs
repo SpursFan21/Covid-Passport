@@ -22,80 +22,121 @@ namespace _106_A2_M1.Model
         public int DateOfBirth { get; set; }
         public int NhiNumber { get; set; }
 
+        // Private field for UserType
+        private int _userType = 0;
+
+        // Property for UserType
+        public int UserType
+        {
+            get { return _userType; }
+            set { _userType = value; }
+        }
+
+        public string email { get; set; }
+
         //data objects
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
         public UserDB db_member { get; set; }
 
+        protected async void GetLoginAsync(string email, string password)
+        {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+                {
+                    Console.WriteLine("Both email and password are required for login.");
+                    return;
+                }
+
+                // Call the Login method with the provided email and password
+                await Login(email, password, u_token);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred during login: {ex.Message}");
+                // Log the exception or handle it based on your application's needs
+            }
+        }
+
 
         protected async Task Login(string email, string password, string u_token)
         {
-            // Hardcoded user tokens for testing purposes
-            if (u_token == "admin") // Login as Admin
+            try
             {
-                // Call the LoginAsync method from SingletonClient to perform authentication
-                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, "adminAuthToken");
+                // Validate input parameters
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(u_token))
+                {
+                    Console.WriteLine("Email, password, and user token are required for login.");
+                    return;
+                }
 
-                if (loginResult == 1)
+                // Call the LoginAsync method from SingletonClient to perform authentication
+                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, u_token);
+
+                if (loginResult == 1 && u_token == "admin")
                 {
                     // Admin authentication successful
                     Admin admin = new Admin();
-                    admin.u_token = "adminAuthToken"; // Use the hardcoded admin token or set it based on the authentication result
+                    admin.u_token = u_token;
+                    UserType = 1; // used for ModelView Nav Command 
 
-                    // Need to receive database content for admin ITC
                     // Send Admin to Admin dashboard Via ModelView NAV
                 }
-                else
-                {
-                    // Admin authentication failed
-                    Console.WriteLine("Admin authentication failed!");
-                }
-            }
-            else // Login as User
-            {
-                // Call the LoginAsync method from SingletonClient to perform authentication
-                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, "userAuthToken");
-
-                if (loginResult == 2)
+                else if (loginResult == 2 && u_token == "user")
                 {
                     // User authentication successful
                     User user = new User();
-                    user.u_token = "userAuthToken"; // Use the hardcoded user token or set it based on the authentication result
+                    user.u_token = u_token;
+                    UserType = 2; // used for ModelView NAV command
 
-                    // Need to receive database content for user ITC
                     // Send User to User Dashboard Via ModelView NAV
                 }
                 else
                 {
-                    // User authentication failed
-                    Console.WriteLine("User authentication failed!");
+                    // Authentication failed
+                    Console.WriteLine("Authentication failed!");
                 }
             }
-        }
-        protected void createAccount(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
-        {
-            // Validate the input data (perform validation based on your specific requirements)
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            catch (Exception ex)
             {
-                // Handle invalid input (throw an exception, return an error code, etc.)
-                throw new ArgumentException("Invalid input data. Please provide all required information.");
+                Console.WriteLine($"An error occurred during login: {ex.Message}");
+                // Log the exception or handle it based on your application's needs
             }
-
-            // Create a new user account using the provided data
-            User newUser = new User
-            {
-                Email = email,
-                Password = password,
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dob,
-                NhiNumber = nhiNumber
-            };
-
-            // Perform logic to save the new user account to the database or any other storage mechanism
-            // Redirect auto login user and then deliver them to UserDashB
         }
+
+        protected async Task<int> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
+        {
+            try
+            {
+                // Use SingletonClient to create a new account
+                SingletonClient singletonClient = SingletonClient.Instance;
+                int result = await singletonClient.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNumber);
+
+                // Redirect auto-login logic and navigate to UserDashB based on the result
+                if (result == 1)
+                {
+                    // Account creation successful, perform auto-login logic here
+                    await Login(email, password, "userAuthToken");
+                    // Redirect to UserDashB Via ModelView NAV
+                }
+                else
+                {
+                    Console.WriteLine("Account creation failed!");
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return 0; // Indicate failure due to an exception
+            }
+        }
+
         protected void getIsolationDate(CovidTest covidTest)
         {
             if (covidTest != null)
@@ -150,43 +191,35 @@ namespace _106_A2_M1.Model
 
             return testId;
         }
-        public void reportIssue(string subject, string description)
+        public async Task ReportIssueAsync(string subject, string description)
         {
-            // Validate input parameters
-            if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(description))
+            try
             {
-                throw new ArgumentException("Subject and description cannot be null or empty.");
+                // Validate input parameters
+                if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(description))
+                {
+                    throw new ArgumentException("Subject and description cannot be null or empty.");
+                }
+
+                // Create a new Issue instance with the provided data
+                Issue newIssue = new Issue
+                {
+                    subject = subject,
+                    description = description,
+                };
+
+                // Use the SingletonClient to report the issue
+                await SingletonClient.Instance.ReportIssueAsync(newIssue);
+
+                // For demonstration purposes
+                Console.WriteLine($"Reported issue with subject: {subject}");
             }
-
-            // Create a new Issue instance with the provided data
-            Issue newIssue = new Issue
+            catch (Exception ex)
             {
-                issue_id = GenerateIssueId(),
-                subject = subject,
-                description = description,
-                resolve = false, // By default, set resolve to false
-                open_date = GetCurrentDate(), // Set open_date to the current date
-                closed_date = 0 // By default, set closed_date to 0 (indicating not closed yet)
-            };
-
-            // send the new Issue instance to the backend
-            // SendRequestToBackend(newIssue);
-
-            // For demonstration purposes
-            Console.WriteLine($"Reported issue with issue_id: {newIssue.issue_id}");
+                Console.WriteLine($"An error occurred while reporting the issue: {ex.Message}");
+            }
         }
 
-        private string GenerateIssueId()
-        {
-            // Generate a unique issue_id TBC
-            return Guid.NewGuid().ToString();
-        }
-
-        private int GetCurrentDate()
-        {
-            // Get the current date as an integer TBC
-            return int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-        }
         // Overloaded method with additional parameters
         public virtual void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)
         {

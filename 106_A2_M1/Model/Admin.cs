@@ -12,6 +12,14 @@ namespace _106_A2_M1.Model
 
         public List<User> user_list { get; set; }
         public List<Issue> issue_list { get; set; }
+        public List<Issue> OpenIssues { get; set; }
+
+
+        //field to store the users with QR status
+        private List<UserDB> usersWithQR;
+
+        // Property to store the QR code image link
+        public string QrCodeImageUrl { get; private set; }
 
         public Admin()
         {
@@ -211,39 +219,122 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public void GenerateQR()
+        public async Task GetQRListAsync()
         {
-            // Allow the admin to select a user to generate a QR code
-            Console.WriteLine("Enter the user ID to generate QR code:");
-            string selectedUserId = Console.ReadLine();
-
-            // Find the selected user
-            BaseUser selectedUser = user_list.FirstOrDefault(u => u.id == selectedUserId);
-
-            if (selectedUser != null)
+            try
             {
-                // Call the backend to generate QR code for the selected user TBC
-                // make an HTTP request to the backend here TBC
-                // and receive the image link for the generated QR code. TBC
+                // Use SingletonClient to fetch a list of users with qr_status = 1
+                List<UserDB> usersWithQR = await SingletonClient.Instance.GetUsersWithQRStatusAsync();
 
-                /* Mock response for demonstration purposes
-                string mockQRCodeImageLink = "https://example.com/qrcode/123456";
-                selectedUser.image_link = mockQRCodeImageLink;
-                
-
-                Console.WriteLine($"QR code generated for user with ID {selectedUserId}");
-                Console.WriteLine($"QR code image link: {mockQRCodeImageLink}");
-
-                // Example: Open the QR code image link in the view
-                // This could involve opening a browser window or displaying it in your application's view.
-                // The specific implementation depends on your application's architecture.
-                */
+                if (usersWithQR != null && usersWithQR.Any())
+                {
+                    // Display details of users with QR status 1 which = requesting QR aproval
+                    foreach (var user in usersWithQR)
+                    {
+                        Console.WriteLine($"User: {user.first_name} {user.last_name}");
+                        Console.WriteLine($"Email: {user.email}");
+                        Console.WriteLine($"Vaccine Status: {user.vaccine_status}");
+                        Console.WriteLine("---------------");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No users found with QR status 1.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"User with ID {selectedUserId} not found.");
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+/*
+        public async Task ApproveQRAsync()
+        {
+            try
+            {
+                // Allow the admin to select a user to approve a QR code by entering the email
+                Console.WriteLine("Enter the user email to approve QR code:");
+                string selectedUserEmail = Console.ReadLine();
+
+                // Find the selected user by email in the existing list
+                UserDB selectedUser = usersWithQR.FirstOrDefault(u => u.email == selectedUserEmail);
+
+                if (selectedUser != null)
+                {
+                    // Update the QR status to 2 (approved)
+                    selectedUser.qr_status = 2;
+
+                    Console.WriteLine($"QR code approved for user with email {selectedUserEmail}");
+
+                    // Retrieve the QR code image URL asynchronously
+                    await RetrieveQRUrlAsync(selectedUser);
+
+                    // Retrieve the QR code for the selected user asynchronously
+                    await RetrieveQRCode(selectedUser);
+
+                }
+                else
+                {
+                    Console.WriteLine($"User with email {selectedUserEmail} not found in the list.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+
+        public async Task RetrieveQRUrlAsync(UserDB selectedUser)
+        {
+            try
+            {
+                // Use the SingletonClient to get the QR code image URL for the selected user
+                string qrCodeImageUrl = await SingletonClient.Instance.GetQRCodeImageUrlAsync(selectedUser.id);
+
+                if (qrCodeImageUrl != null)
+                {
+                    Console.WriteLine($"QR code image URL for user with email {selectedUser.email}: {qrCodeImageUrl}");
+                    // Example: Open the QR code image URL in the view or download the image as needed
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code image URL for user with email {selectedUser.email}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        // Function to retrieve QR code and store the image link
+        public async Task RetrieveQRCode(UserDB selectedUser)
+        {
+            try
+            {
+                // Use the SingletonClient to get the QR code image URL for the selected user
+                string qrCodeImageUrl = await SingletonClient.Instance.GetQRCodeImageUrlAsync(selectedUser.id);
+
+                if (qrCodeImageUrl != null)
+                {
+                    // Store the QR code image URL
+                    QrCodeImageUrl = qrCodeImageUrl;
+
+                    Console.WriteLine($"QR code image URL for user with email {selectedUser.email}: {qrCodeImageUrl}");
+                    // Example: Display the QR code image URL in the view or download the image as needed
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code image URL for user with email {selectedUser.email}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+*/
         public void DeleteQR()
         {
             // Allow the admin to select a user to delete the QR code
@@ -340,6 +431,38 @@ namespace _106_A2_M1.Model
         public void searchIssue()
         {
             // come back another time TBC
+        }
+
+        public async Task ViewAllOpenIssuesAsync()
+        {
+            try
+            {
+                // Use the SingletonClient to fetch all open issues from the backend
+                List<Issue> openIssues = await SingletonClient.Instance.GetOpenIssuesAsync();
+
+                if (openIssues != null && openIssues.Any())
+                {
+                    // Store the open issues for display purposes
+                    this.OpenIssues = openIssues;
+
+                    // Display details of open issues
+                    foreach (var issue in openIssues)
+                    {
+                        Console.WriteLine($"Issue ID: {issue.issue_id}");
+                        Console.WriteLine($"Subject: {issue.subject}");
+                        Console.WriteLine($"Description: {issue.description}");
+                        Console.WriteLine("---------------");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No open issues found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
 
         public void UpdateIssue()
