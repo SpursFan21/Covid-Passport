@@ -7,6 +7,7 @@
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              xmlns:local="clr-namespace:_106_A2_M1.View" 
              xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
+             xmlns:service="clr-namespace:_106_A2_M1.Services"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -28,26 +29,26 @@
                     <!-- Email field -->
                     <TextBox 
                         x:Name="txtEmail" 
+                        Text="{Binding Path=LoginEmail}"
                         Margin="0 50 0 0" 
                         Width="300" 
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Email"
-                        
                         BorderThickness="2"
                         Background="White" 
                          />
 
                     <!-- Password field -->
                     <PasswordBox 
-                        Margin="0 15 0 0" 
                         x:Name="txtPassword" 
+                        PasswordChanged="PasswordBox_PasswordChanged"
+                        Margin="0 15 0 0" 
                         Width="300" 
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Password"
                         BorderThickness="2"
                         Background="White" 
                          />
-                        <!--="{Binding Password}"-->
 
                     <!-- Grid for "Forgot Password and Log In button -->
                     <Grid>
@@ -66,7 +67,7 @@
                         <Button 
                             Margin="0 5 0 0" 
                             x:Name="loginBtn"
-                            Command="{Binding AdminDashboardCommand}"
+                            Command="{Binding LoginCommand}"
                              
                             materialDesign:ShadowAssist.ShadowDepth="Depth0" 
                             Height="50" 
