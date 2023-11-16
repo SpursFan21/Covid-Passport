@@ -21,6 +21,18 @@ namespace _106_A2_M1.Model
         public int DateOfBirth { get; set; }
         public int NhiNumber { get; set; }
 
+        // Private field for UserType
+        private int _userType = 0;
+
+        // Property for UserType
+        public int UserType
+        {
+            get { return _userType; }
+            set { _userType = value; }
+        }
+
+        public string email { get; set; }
+
         //data objects
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
@@ -40,6 +52,7 @@ namespace _106_A2_M1.Model
 
                 // Call the Login method with the provided email and password
                 await Login(email, password, u_token);
+
             }
             catch (Exception ex)
             {
@@ -51,47 +64,49 @@ namespace _106_A2_M1.Model
 
         protected async Task Login(string email, string password, string u_token)
         {
-            // Hardcoded user tokens for testing purposes
-            if (u_token == "admin") // Login as Admin
+            try
             {
-                // Call the LoginAsync method from SingletonClient to perform authentication
-                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, "adminAuthToken");
+                // Validate input parameters
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(u_token))
+                {
+                    Console.WriteLine("Email, password, and user token are required for login.");
+                    return;
+                }
 
-                if (loginResult == 1)
+                // Call the LoginAsync method from SingletonClient to perform authentication
+                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, u_token);
+
+                if (loginResult == 1 && u_token == "admin")
                 {
                     // Admin authentication successful
                     Admin admin = new Admin();
-                    admin.u_token = "adminAuthToken"; // Use the hardcoded admin token or set it based on the authentication result
+                    admin.u_token = u_token;
+                    UserType = 1; // used for ModelView Nav Command 
 
-                    // Need to receive database content for admin ITC
                     // Send Admin to Admin dashboard Via ModelView NAV
                 }
-                else
-                {
-                    // Admin authentication failed
-                    Console.WriteLine("Admin authentication failed!");
-                }
-            }
-            else // Login as User
-            {
-                // Call the LoginAsync method from SingletonClient to perform authentication
-                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, "userAuthToken");
-
-                if (loginResult == 2)
+                else if (loginResult == 2 && u_token == "user")
                 {
                     // User authentication successful
                     User user = new User();
-                    user.u_token = "userAuthToken"; // Use the hardcoded user token or set it based on the authentication result
+                    user.u_token = u_token;
+                    UserType = 2; // used for ModelView NAV command
 
                     // Send User to User Dashboard Via ModelView NAV
                 }
                 else
                 {
-                    // User authentication failed
-                    Console.WriteLine("User authentication failed!");
+                    // Authentication failed
+                    Console.WriteLine("Authentication failed!");
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred during login: {ex.Message}");
+                // Log the exception or handle it based on your application's needs
+            }
         }
+
         protected async Task<int> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
         {
             try
