@@ -11,7 +11,6 @@ namespace _106_A2_M1.Model
     {
 
         //unique data members
-        public string id { get; set; }
         public int account_type { get; set; }
         public string u_token { get; set; }
         public string image_link { get; set; }
@@ -30,6 +29,16 @@ namespace _106_A2_M1.Model
         {
             get { return _userType; }
             set { _userType = value; }
+        }
+
+
+        public UserDB _userInformation;
+
+        // Expose UserDB through a property
+        public UserDB UserInformation
+        {
+            get { return _userInformation; }
+            set { _userInformation = value; }
         }
 
         public string email { get; set; }

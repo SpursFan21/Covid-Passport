@@ -27,15 +27,6 @@ namespace _106_A2_M1.Model
             issue_list = new List<Issue>();
         }
 
-        public void TestUserGeneration() // TESTING PURPOSES ONLY
-        {
-            User user1 = new User() { FirstName = "Hank", DateOfBirth = 01011972, Email = "hank@gmail.com" };
-            User user2 = new User() { FirstName = "Marie", DateOfBirth = 02021978, Email = "marie@gmail.com" };
-            user_list.Add(user1);
-            user_list.Add(user2);
-
-        }
-
         public void TestIssueGeneration() // TESTINF PURPOSES ONLY
         {
             Issue issue1 = new Issue()
@@ -74,15 +65,26 @@ namespace _106_A2_M1.Model
             Console.WriteLine($"Updated details for email: {Email}, Date of Birth: {DateOfBirth}, NHI Number: {NhiNumber}");
         }
 
+        // Function to manage users
         public void ManageUser()
         {
             // Your user management logic to display users in the admin dashboard
 
             // Example: Display a list of users
-            foreach (BaseUser user in user_list)
+            foreach (UserDB user in _userList)
             {
-                Console.WriteLine($"User: {user.id}, Email: {user.Email}");
+                Console.WriteLine($"User: {user.id}, Email: {user.email}");
             }
+        }
+
+        // Method to fetch user data asynchronously
+        public async Task FetchUserDataAsync()
+        {
+            // Fetch user data from the backend
+            List<UserDB> userData = await SingletonClient.Instance.GetUserDataAsync();
+
+            // Populate the user list in BaseUser
+            _userList = userData;
         }
 
         public void DeleteVaccine()
@@ -125,7 +127,7 @@ namespace _106_A2_M1.Model
             string selectedUserId = Console.ReadLine();
 
             // Find the selected user
-            BaseUser selectedUser = user_list.FirstOrDefault(u => u.id == selectedUserId);
+            BaseUser selectedUser = user_list.FirstOrDefault(u => u.UserDB.id == selectedUserId);
 
             if (selectedUser != null)
             {
@@ -184,7 +186,7 @@ namespace _106_A2_M1.Model
             string selectedUserId = Console.ReadLine();
 
             // find selected user
-            BaseUser selectedUser = user_list.FirstOrDefault(u => u.id == selectedUserId);
+            BaseUser selectedUser = user_list.FirstOrDefault(u => u.UserDB.id == selectedUserId);
 
             if (selectedUser != null)
             {
@@ -342,7 +344,7 @@ namespace _106_A2_M1.Model
             string selectedUserId = Console.ReadLine();
 
             // Find the selected user
-            BaseUser selectedUser = user_list.FirstOrDefault(u => u.id == selectedUserId);
+            BaseUser selectedUser = user_list.FirstOrDefault(u => u.UserDB.id == selectedUserId);
 
             if (selectedUser != null)
             {
@@ -351,7 +353,7 @@ namespace _106_A2_M1.Model
                 // The specific API endpoint and payload depend on your backend implementation.
 
                 // Mock response
-                bool isDeleted = DeleteQRCodeFromBackend(selectedUser.id);
+                bool isDeleted = DeleteQRCodeFromBackend(selectedUser.UserDB.id);
 
                 if (isDeleted)
                 {

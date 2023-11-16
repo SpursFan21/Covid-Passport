@@ -54,6 +54,7 @@ namespace _106_A2_M1.ViewModel
             LoginCommand = new RelayCommand(async x => await PerformLogin());
         }
 
+        
         private void NavigateToPage(Page destinationPage)
         {
             MainWindowVM mainVM = (MainWindowVM)Application.Current.MainWindow.DataContext;
@@ -120,7 +121,7 @@ namespace _106_A2_M1.ViewModel
                 // model.HandlePassword(password); // Call a method in Model
             }
         }
- 
+
         public string Id
         {
             get { return _baseUser.id; }
