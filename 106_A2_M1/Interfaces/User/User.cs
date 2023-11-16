@@ -9,26 +9,26 @@
         /// For more info on ULIDs, see <see href="https://github.com/ulid/spec"/>
         /// </para>
         /// </summary>
-        public string id { get; }
+        public string id { get; set; }
         /// <summary>
         /// the e-mail address of the user, can be changed
         /// </summary>
-        public string email { get; }
+        public string email { get; set; }
         /// <summary>
         /// The family name of the user, named as such since in some 
         /// languages and cultures the family name comes before the 
         /// given name and not after like it does in english, as such 
         /// we use this term instead of last name
         /// </summary>
-        public string family_name { get; }
+        public string family_name { get; set; }
         /// <summary>
         /// The given name of the user
         /// </summary>
-        public string given_name { get; }
+        public string given_name { get; set; }
         /// <summary>
         /// The users NHI Number
         /// </summary>
-        public string national_health_index { get; }
+        public string national_health_index { get; set; }
         /// <summary>
         /// The users birthdate formatted as a UTC timestamp (milliseconds)
         /// 
@@ -37,7 +37,7 @@
         /// <see cref="System.DateTime"/> object <see href="https://stackoverflow.com/questions/17317466/c-sharp-how-to-convert-timestamp-to-date"/>
         /// </para>
         /// </summary>
-        public int dob_ts { get; }
+        public int dob_ts { get; set; }
         /// <summary>
         /// <para>
         /// Key of what this number means
@@ -57,19 +57,19 @@
         ///     </item>
         /// </list>
         /// </summary>
-        public int qrcode_status { get; }
+        public int qrcode_status { get; set; }
         /// <summary>
         /// The number of issues that a user has submitted, this will be 0 initially on sign up
         /// </summary>
-        public int issue_count { get; }
+        public int issue_count { get; set; }
         /// <summary>
         /// The number of tests submitted by the user, this will be 0 initially on sign up
         /// </summary>
-        public int test_count { get; }
+        public int test_count { get; set; }
         /// <summary>
         /// The vaccination status of the user, until the user gets vaccinated and an admin updates their account, this will be 0
         /// </summary>
-        public int vaccine_status { get; }
+        public int vaccine_status { get; set; }
     }
 }
 

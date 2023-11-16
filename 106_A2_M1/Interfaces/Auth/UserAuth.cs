@@ -15,6 +15,6 @@
         /// The token that should be put into the HTTP Client Headers in order to Authenticate all requests from now on
         /// </para>
         /// </summary>
-        public string token { get; }
+        public string token { get; set; }
     }
 }

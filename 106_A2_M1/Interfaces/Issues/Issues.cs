@@ -8,14 +8,14 @@ namespace _106_A2_M1.Interfaces.Issues
         /// <summary>
         /// The number of results, this is equivalent to <see cref="List{T}.Count"/>
         /// </summary>
-        public int count { get; }
+        public int count { get; set; }
         /// <summary>
         /// Ignore, this will always be <c>0</c>
         /// </summary>
-        public int offset { get; }
+        public int offset { get; set; }
         /// <summary>
         /// The list of results, iterate over this to get your issues
         /// </summary>
-        public List<Issue> results { get; }
+        public List<Issue> results { get; set; }
     }
 }

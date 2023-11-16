@@ -8,7 +8,7 @@
         /// 
         /// add this in a form control for remote images
         /// </summary>
-        public string url { get; }
+        public string url { get; set; }
         /// <summary>
         /// Expiry date as a timestamp, in milliseconds
         /// 
@@ -17,6 +17,6 @@
         /// <see href="https://stackoverflow.com/questions/17317466/c-sharp-how-to-convert-timestamp-to-date"/>
         /// </para>
         /// </summary>
-        public int exp {  get; }
+        public int exp {  get; set; }
     }
 }

@@ -6,6 +6,6 @@
         /// <summary>
         /// The token for an admin account
         /// </summary>
-        public string token { get; }
+        public string token { get; set; }
     }
 }

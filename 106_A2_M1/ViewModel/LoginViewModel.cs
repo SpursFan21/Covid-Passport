@@ -103,13 +103,6 @@ namespace _106_A2_M1.ViewModel
             get { return _baseUser.UserType == 2; }
         }
 
-
-        /*private async Task PerformLogin()
-        {
-            string email = LoginEmail;
-            string password = LoginPassword;
-            //await _baseUser.Login(email, password);
-        }*/
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             // Update the LoginPassword property when the password changes
@@ -127,9 +120,7 @@ namespace _106_A2_M1.ViewModel
                 // model.HandlePassword(password); // Call a method in Model
             }
         }
-
-
-        
+ 
         public string Id
         {
             get { return _baseUser.id; }
