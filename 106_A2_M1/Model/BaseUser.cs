@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    public class BaseUser : ViewModelBase
+    public class BaseUser
     {
 
         //unique data members

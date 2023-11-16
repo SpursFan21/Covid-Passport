@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace _106_A2_M1.Model
 {
-    public class Issue : ViewModelBase
+    public class Issue
     {
         public string issue_id { get; set; }
         public string subject { get; set; }
