@@ -37,9 +37,6 @@
                 Canvas.ZIndex="1" 
                 Margin="50,0,0,0" />
 
-            <!-- Grid for spacing -->
-            
-
             <!-- Unite against Covid logo -->
             <Image 
                 Source="/Resources/CovidLogo.jpg" 
@@ -66,7 +63,7 @@
 
             <!-- Center panel -->
             <Grid Grid.Column="1" Background="#EFEEF5" Panel.ZIndex="0">
-                <Frame>
+                <Frame NavigationUIVisibility="Hidden">
                     <Frame.Content>
                         <Binding Path="CurrentDisplayFrame" UpdateSourceTrigger="PropertyChanged"/>
                     </Frame.Content>

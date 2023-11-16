@@ -27,6 +27,11 @@ namespace _106_A2_M1.View
 
         }
 
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { ((dynamic)this.DataContext).LoginPassword = ((PasswordBox)sender).Password; }
+        }
 
         /*
 private void ForgotPassword_Click(object sender, RoutedEventArgs e)

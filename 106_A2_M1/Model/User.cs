@@ -12,6 +12,13 @@ namespace _106_A2_M1.Model
         public string Password { get; set; }
         public UserDB UserDB { get; set; }
 
+        public User(string fName = "", string lName = "", string pword = "")
+        {
+            this.Password = pword;
+            this.db_member = new UserDB();
+            this.db_member.first_name = fName;
+            this.db_member.last_name = lName;
+        }
         public void RequestQR()
         {
             // Update qr_status to 1

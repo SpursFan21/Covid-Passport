@@ -25,8 +25,7 @@
             </Grid.Effect>
             <Path Stretch="Fill"  Data="M 0,0 L 0,1 L 1,0 L 0,0" Fill="#FFFFCC00" />
             <Path Stretch="Fill"  Data="M 1,1 L 0,1 L 1,0 L 1,1" Fill="#FFFFEB99" />
-
-            
+   
             <!-- Title -->
             <TextBlock 
                 x:Name="Title" 
@@ -65,8 +64,6 @@
                     Margin="0 0 10 10"/>
             </Grid>
 
-
-
         </Grid>
 
         <!-- Content Row -->
@@ -88,7 +85,7 @@
                                  FontSize="24"
                                  Foreground="Black" 
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding UserDirectoryCommand}"
+                                 Command="{Binding NavUserDirectoryCommand}"
                                  IsChecked="True"/>
 
                     <RadioButton Content="QR Code Approval Queue"
@@ -97,7 +94,7 @@
                                  Margin="0 50 0 0"
                                  Foreground="Black"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding QRQueueCommand}" />
+                                 Command="{Binding NavQRQueueCommand}" />
 
                     <RadioButton Content="Issue Report Management"
                                  Height="50"
@@ -105,7 +102,7 @@
                                  Margin="0 50 0 0"
                                  Foreground="Black"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding IssueQueueCommand}" />
+                                 Command="{Binding NavIssueQueueCommand}" />
 
                     <Grid
                         Background="#ADAACE"

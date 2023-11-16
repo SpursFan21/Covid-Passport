@@ -17,11 +17,28 @@ namespace _106_A2_M1.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
-        public ICommand AdminDashboardCommand { get; set; }
-        public ICommand NewAccountCommand { get; set; }
+        public ICommand NavAdminDashboardCommand { get; set; }
+        public ICommand NavUserDashboardCommand { get; set; }
+        public ICommand NavCreateAccountCommand { get; set; }
         public ICommand WelcomeBackCommand { get; set; }
+        public ICommand LoginCommand { get; set; }
         private BaseUser _user;
         private UserControl _currentDisplayFrame;
+
+        public string _loginEmail;
+        public string LoginEmail
+        {
+            get => _loginEmail;
+            set
+            {
+                if (_loginEmail != value)
+                {
+                    _loginEmail = value;
+                    OnPropertyChanged(nameof(LoginEmail));
+                }
+            }
+        }
+        public string LoginPassword { private get; set; }
         
         public LoginViewModel()
         {
@@ -31,11 +48,12 @@ namespace _106_A2_M1.ViewModel
             CurrentDisplayFrame = new WelcomeBackFrame();
             CurrentDisplayFrame.DataContext = this;
 
-            AdminDashboardCommand = new RelayCommand(x => NavigateToPage(new AdminDashboardPage()));
-            NewAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
+            NavAdminDashboardCommand = new RelayCommand(x => NavigateToPage(new AdminDashboardPage()));
+            NavUserDashboardCommand = new RelayCommand(x => NavigateToPage(new UserDashboardPage()));
+            NavCreateAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
             WelcomeBackCommand = new RelayCommand(x => NavigateToFrame(new WelcomeBackFrame()));
+            LoginCommand = new RelayCommand(x => PerformLogin());
         }
-        
 
         public UserControl CurrentDisplayFrame
         {
@@ -61,6 +79,22 @@ namespace _106_A2_M1.ViewModel
             CurrentDisplayFrame = destinationFrame;
             CurrentDisplayFrame.DataContext = this;
         }
+
+        private void PerformLogin()
+        {
+            MessageBox.Show("Password entered: " + LoginPassword);
+        }
+        /*private async Task PerformLogin()
+        {
+            string email = LoginEmail;
+            string password = LoginPassword;
+            //await _user.Login(email, password);
+        }*/
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            // Update the LoginPassword property when the password changes
+            //LoginPassword = txtPassword.Password;
+        }
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -75,8 +109,6 @@ namespace _106_A2_M1.ViewModel
         }
 
 
-        //public string Email => _user.db_member.email;
-        //public string Password;
 
         public string Id
         {
