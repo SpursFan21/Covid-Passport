@@ -49,7 +49,7 @@ namespace _106_A2_M1.Model
     public UserDB UserInformation { get; private set; }
 
 
-        public async Task<int> LoginAsync(string email, string password, string authToken)
+        public async Task<int> LoginAsync(string email, string password)
         {
             // Create a new HttpClient instance if it doesn't exist
             if (this._client == null)
@@ -83,7 +83,7 @@ namespace _106_A2_M1.Model
                     Console.WriteLine(content);
 
                     AdminAuth admin_auth = AdminAuth.FromJSONString(content);
-
+                  
                     byte[] bytes = Convert.FromBase64String(admin_auth.token.Split('.')[1]);
                     string decoded_string = Encoding.UTF8.GetString(bytes);
 

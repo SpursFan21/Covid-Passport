@@ -22,8 +22,7 @@ namespace _106_A2_M1.ViewModel
         public ICommand NavCreateAccountCommand { get; set; }
         public ICommand WelcomeBackCommand { get; set; }
         public ICommand LoginCommand { get; set; }
-        private BaseUser _user;
-        private UserControl _currentDisplayFrame;
+        private BaseUser _baseUser;
 
         public string _loginEmail;
         public string LoginEmail
@@ -42,7 +41,7 @@ namespace _106_A2_M1.ViewModel
         
         public LoginViewModel()
         {
-            _user = new BaseUser();
+            _baseUser = new BaseUser();
 
             // Set the default frame to WelcomeBackFrame
             CurrentDisplayFrame = new WelcomeBackFrame();
@@ -52,22 +51,9 @@ namespace _106_A2_M1.ViewModel
             NavUserDashboardCommand = new RelayCommand(x => NavigateToPage(new UserDashboardPage()));
             NavCreateAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
             WelcomeBackCommand = new RelayCommand(x => NavigateToFrame(new WelcomeBackFrame()));
-            LoginCommand = new RelayCommand(x => PerformLogin());
+            LoginCommand = new RelayCommand(async x => await PerformLogin());
         }
 
-        public UserControl CurrentDisplayFrame
-        {
-            get
-            {
-                return _currentDisplayFrame;
-            }
-
-            set
-            {
-                _currentDisplayFrame = value;
-                OnPropertyChanged("CurrentDisplayFrame");
-            }
-        }
         private void NavigateToPage(Page destinationPage)
         {
             MainWindowVM mainVM = (MainWindowVM)Application.Current.MainWindow.DataContext;
@@ -80,15 +66,49 @@ namespace _106_A2_M1.ViewModel
             CurrentDisplayFrame.DataContext = this;
         }
 
-        private void PerformLogin()
+        public async Task PerformLogin()
         {
             MessageBox.Show("Password entered: " + LoginPassword);
+            await _baseUser.GetLoginAsync(LoginEmail, LoginPassword);
+            SetUserType();
         }
+
+        public void SetUserType()
+        {
+            if (_baseUser.UserType == 1)
+            {
+                // Nav command to Admin Dashboard
+                NavigateToPage(new AdminDashboardPage());
+            }
+            else if (_baseUser.UserType == 2)
+            {
+                // Nav command to User Dashboard
+                NavigateToPage(new UserDashboardPage());
+            }
+            else
+            {
+                Console.WriteLine("Login Failed");
+            }
+        }
+
+        // Property to check if the user is an Admin
+        public bool IsAdmin
+        {
+            get { return _baseUser.UserType == 1; }
+        }
+
+        // Property to check if the user is a regular User
+        public bool IsUser
+        {
+            get { return _baseUser.UserType == 2; }
+        }
+
+
         /*private async Task PerformLogin()
         {
             string email = LoginEmail;
             string password = LoginPassword;
-            //await _user.Login(email, password);
+            //await _baseUser.Login(email, password);
         }*/
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -109,15 +129,15 @@ namespace _106_A2_M1.ViewModel
         }
 
 
-
+        
         public string Id
         {
-            get { return _user.id; }
+            get { return _baseUser.id; }
             set
             {
-                if (_user.id != value)
+                if (_baseUser.id != value)
                 {
-                    _user.id = value;
+                    _baseUser.id = value;
                     OnPropertyChanged(nameof(Id));
                 }
             }
@@ -125,37 +145,37 @@ namespace _106_A2_M1.ViewModel
 
         public int AccountType
         {
-            get { return _user.account_type; }
+            get { return _baseUser.account_type; }
             set
             {
-                if (_user.account_type != value)
+                if (_baseUser.account_type != value)
                 {
-                    _user.account_type = value;
+                    _baseUser.account_type = value;
                     OnPropertyChanged(nameof(AccountType));
                 }
             }
         }
         public string u_token
         {
-            get { return _user.u_token; }
+            get { return _baseUser.u_token; }
             set
             {
-                if (_user.u_token != value)
+                if (_baseUser.u_token != value)
                 {
-                    _user.u_token = value;
-                    OnPropertyChanged(nameof(_user.u_token));
+                    _baseUser.u_token = value;
+                    OnPropertyChanged(nameof(_baseUser.u_token));
                 }
             }
         }
         public string image_link
         {
-            get { return _user.image_link; }
+            get { return _baseUser.image_link; }
             set
             {
-                if (_user.image_link != value)
+                if (_baseUser.image_link != value)
                 {
-                    _user.image_link = value;
-                    OnPropertyChanged(nameof(_user.image_link));
+                    _baseUser.image_link = value;
+                    OnPropertyChanged(nameof(_baseUser.image_link));
                 }
             }
         }

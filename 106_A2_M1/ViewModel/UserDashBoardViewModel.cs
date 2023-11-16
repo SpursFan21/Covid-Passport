@@ -38,8 +38,8 @@ namespace _106_A2_M1.ViewModel
         }
         public UserDashboardViewModel()
         {
-            _user = new User("Hank", "Schrader", "pass"); // Initialize a new User instance MODEL to ViewModel Pipeline
-            UserFullName = _user.db_member.first_name +" " + _user.db_member.last_name;
+            _user = new User(); // Initialize a new User instance MODEL to ViewModel Pipeline
+            //UserFullName = _user.db_member.first_name +" " + _user.db_member.last_name;
             FrameTitle = "My Vaccine Pass";
             NavigateToFrame(new UserMyVaccinePassFrame());
 

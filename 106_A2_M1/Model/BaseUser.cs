@@ -40,7 +40,7 @@ namespace _106_A2_M1.Model
         public List<CovidTest> test_list { get; set; }
         public UserDB db_member { get; set; }
 
-        protected async void GetLoginAsync(string email, string password)
+        public async Task GetLoginAsync(string email, string password)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace _106_A2_M1.Model
                 }
 
                 // Call the Login method with the provided email and password
-                await Login(email, password, u_token);
+                await Login(email, password);
 
             }
             catch (Exception ex)
@@ -63,21 +63,21 @@ namespace _106_A2_M1.Model
         }
 
 
-        protected async Task Login(string email, string password, string u_token)
+        public async Task Login(string email, string password)
         {
             try
             {
                 // Validate input parameters
-                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(u_token))
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
                 {
-                    Console.WriteLine("Email, password, and user token are required for login.");
+                    Console.WriteLine("Email, password");
                     return;
                 }
 
                 // Call the LoginAsync method from SingletonClient to perform authentication
-                int loginResult = await SingletonClient.Instance.LoginAsync(email, password, u_token);
+                int loginResult = await SingletonClient.Instance.LoginAsync(email, password);
 
-                if (loginResult == 1 && u_token == "admin")
+                if (loginResult == 1)
                 {
                     // Admin authentication successful
                     Admin admin = new Admin();
@@ -86,7 +86,7 @@ namespace _106_A2_M1.Model
 
                     // Send Admin to Admin dashboard Via ModelView NAV
                 }
-                else if (loginResult == 2 && u_token == "user")
+                else if (loginResult == 2)
                 {
                     // User authentication successful
                     User user = new User();
@@ -120,7 +120,7 @@ namespace _106_A2_M1.Model
                 if (result == 1)
                 {
                     // Account creation successful, perform auto-login logic here
-                    await Login(email, password, "userAuthToken");
+                    await Login(email, password);
                     // Redirect to UserDashB Via ModelView NAV
                 }
                 else
