@@ -19,16 +19,16 @@ namespace _106_A2_M1.ViewModel
     {
         private ICommand _userSearchCommand;
         public ICommand LogoutCommand { get; }
-        public ICommand QRQueueCommand { get; }
-        public ICommand UserDirectoryCommand { get; }
-        public ICommand IssueQueueCommand { get; }
+        public ICommand NavQRQueueCommand { get; }
+        public ICommand NavUserDirectoryCommand { get; }
+        public ICommand NavIssueQueueCommand { get; }
         public ICommand MarkAsResolvedCommand { get; }
 
         private Admin _admin; // Declare an instance of the Admin class MODEL to ViewModel Pipeline
         private ObservableCollection<User> _userList; // Change the type to ObservableCollection<User>
         private ObservableCollection<Issue> _issueList;
-        private UserControl _currentDisplayFrame;
-        private string _frameTitle; // Title text for each admin frame
+        
+        
 
         public ICommand UserSearchCommand
         {
@@ -42,7 +42,7 @@ namespace _106_A2_M1.ViewModel
         }
         public ObservableCollection<User> UserList   //MODEL to ViewModel Pipeline
         {
-            get { return _userList; } // Access the ObservableCollection
+            get => _userList; // Access the ObservableCollection
             set
             {
                 _userList = value;
@@ -58,15 +58,7 @@ namespace _106_A2_M1.ViewModel
                 OnPropertyChanged(nameof(IssueList)); // Notify property changed to update the UI
             }
         }
-        public string FrameTitle
-        {
-            get { return _frameTitle; } // Access the string
-            set
-            {
-                _frameTitle = value;
-                OnPropertyChanged(nameof(FrameTitle)); // Notify property changed to update the UI
-            }
-        }
+        
 
         public AdminDashboardViewModel()
         {
@@ -82,17 +74,17 @@ namespace _106_A2_M1.ViewModel
             CurrentDisplayFrame.DataContext = this;
 
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
-            QRQueueCommand = new RelayCommand(x => 
+            NavQRQueueCommand = new RelayCommand(x => 
                 { 
                     FrameTitle = "QR Code Approval Queue";
                     NavigateToFrame(new AdminQRQueueFrame()); 
                 });
-            UserDirectoryCommand = new RelayCommand(x =>
+            NavUserDirectoryCommand = new RelayCommand(x =>
             {
                 FrameTitle = "User Directory";
                 NavigateToFrame(new AdminUserDirectoryFrame());
             });
-            IssueQueueCommand = new RelayCommand(x =>
+            NavIssueQueueCommand = new RelayCommand(x =>
             {
                 FrameTitle = "Issue Report Management";
                 NavigateToFrame(new AdminIssueManagementFrame());
@@ -100,19 +92,7 @@ namespace _106_A2_M1.ViewModel
             MarkAsResolvedCommand = new RelayCommand(x => MarkAsResolved(x));
         }
 
-        public UserControl CurrentDisplayFrame
-        {
-            get
-            {
-                return _currentDisplayFrame;
-            }
-
-            set
-            {
-                _currentDisplayFrame = value;
-                OnPropertyChanged("CurrentDisplayFrame");
-            }
-        }
+        
         private void NavigateToPage(Page destinationPage)
         {
             MainWindowVM mainVM = (MainWindowVM)Application.Current.MainWindow.DataContext;

@@ -17,8 +17,9 @@ namespace _106_A2_M1.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
-        public ICommand AdminDashboardCommand { get; set; }
-        public ICommand NewAccountCommand { get; set; }
+        public ICommand NavAdminDashboardCommand { get; set; }
+        public ICommand NavUserDashboardCommand { get; set; }
+        public ICommand NavCreateAccountCommand { get; set; }
         public ICommand WelcomeBackCommand { get; set; }
         public ICommand LoginCommand { get; set; }
         private BaseUser _user;
@@ -27,7 +28,7 @@ namespace _106_A2_M1.ViewModel
         public string _loginEmail;
         public string LoginEmail
         {
-            get { return _loginEmail; }
+            get => _loginEmail;
             set
             {
                 if (_loginEmail != value)
@@ -47,8 +48,9 @@ namespace _106_A2_M1.ViewModel
             CurrentDisplayFrame = new WelcomeBackFrame();
             CurrentDisplayFrame.DataContext = this;
 
-            AdminDashboardCommand = new RelayCommand(x => NavigateToPage(new AdminDashboardPage()));
-            NewAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
+            NavAdminDashboardCommand = new RelayCommand(x => NavigateToPage(new AdminDashboardPage()));
+            NavUserDashboardCommand = new RelayCommand(x => NavigateToPage(new UserDashboardPage()));
+            NavCreateAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
             WelcomeBackCommand = new RelayCommand(x => NavigateToFrame(new WelcomeBackFrame()));
             LoginCommand = new RelayCommand(x => PerformLogin());
         }
