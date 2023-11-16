@@ -39,7 +39,7 @@ namespace _106_A2_M1.ViewModel
         public UserDashboardViewModel()
         {
             _user = new User(); // Initialize a new User instance MODEL to ViewModel Pipeline
-                                // Access UserDB data from BaseUser in MODEL    
+            // Access UserDB data from User in MODEL    
             //UserDB userDbData = _user.UserInformation;
             //UserFullName = userDBData.first_name +" " + userDBData.last_name;
             FrameTitle = "My Vaccine Pass";

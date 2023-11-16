@@ -29,7 +29,7 @@ namespace _106_A2_M1.ViewModel
         public UserDB UserDbData 
         {     
             get { return _userDbData; }     
-            set    {         _userDbData = value;         
+            set    { _userDbData = value;         
                 OnPropertyChanged(nameof(UserDbData)); // Notify property changed
             }
         
