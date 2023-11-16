@@ -25,7 +25,7 @@
             </Grid.Effect>
             <Path Stretch="Fill"  Data="M 0,0 L 0,1 L 1,0 L 0,0" Fill="#FFFFCC00" />
             <Path Stretch="Fill"  Data="M 1,1 L 0,1 L 1,0 L 1,1" Fill="#FFFFEB99" />
-
+   
             <!-- Title -->
             <TextBlock 
                 x:Name="Title" 
@@ -37,17 +37,32 @@
                 Canvas.ZIndex="1" 
                 Margin="50,0,0,0" />
 
-            <!-- Grid for spacing -->
-            <Grid Grid.Row="0" HorizontalAlignment="Stretch" />
-
-            <!-- Unite against Covid logo -->
-            <Image 
-                Source="/Resources/CovidLogo.jpg" 
-                Stretch="Uniform" 
-                HorizontalAlignment="Right" 
-                Margin="0,5,5,5" 
-                Width="Auto" />
-
+            <!-- Admin Mode - Logout -->
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button
+                    Grid.Row="0"
+                    Content="Logout"
+                    Width="200"
+                    Height="50"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Right"
+                    Background="{x:Null}"
+                    Foreground="Black" BorderBrush="{x:Null}"
+                    Command="{Binding LogoutCommand}"/>
+                <TextBlock
+                    Grid.Row="1"
+                    Text="ADMINISTRATOR MODE"
+                    FontSize="24"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="0 0 10 10"/>
+            </Grid>
 
         </Grid>
 
@@ -69,24 +84,52 @@
                                  Height="50"
                                  FontSize="24"
                                  Foreground="Black" 
-                                 Style="{StaticResource MenuButtonTheme}" />
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding NavUserDirectoryCommand}"
+                                 IsChecked="True"/>
 
-                    <RadioButton Content="QR Code Aprroval Queue"
+                    <RadioButton Content="QR Code Approval Queue"
                                  Height="50"
                                  FontSize="24"
                                  Margin="0 50 0 0"
                                  Foreground="Black"
-                                 Style="{StaticResource MenuButtonTheme}" />
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding NavQRQueueCommand}" />
 
                     <RadioButton Content="Issue Report Management"
                                  Height="50"
                                  FontSize="24"
                                  Margin="0 50 0 0"
                                  Foreground="Black"
-                                 Style="{StaticResource MenuButtonTheme}"/>
+                                 Style="{StaticResource MenuButtonTheme}"
+                                 Command="{Binding NavIssueQueueCommand}" />
 
+                    <Grid
+                        Background="#ADAACE"
+                        Height="50"
+                        Margin="-50 75 0 0">
+                        <Grid.Effect>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="0" Opacity="0.3"/>
+                        </Grid.Effect>
+                        <TextBlock 
+                            Text="User Management"
+                            FontSize="28"
+                            FontWeight="SemiBold"
+                            Padding="65,0,0,0" 
+                            VerticalAlignment="Center"/>
+
+                    </Grid>
+                    <TextBlock
+                        Text="Select a user from the directory to begin"
+                        Margin="-50 50 0 0"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        TextWrapping="Wrap"
+                        Width="250" 
+                        TextAlignment="Center" />
 
                 </StackPanel>
+
 
 
 
@@ -111,7 +154,7 @@
 
                     <!-- Title -->
                     <TextBlock x:Name="AdminTitle" 
-                               Text="User Directory"
+                               Text="{Binding FrameTitle}"
                                FontSize="42" 
                                FontWeight="Bold" 
                                VerticalAlignment="Center" 
@@ -123,10 +166,11 @@
 
 
                 <!-- Frame that switches between different admin controls -->
-                <Frame x:Name="AdminFrame"
-                       Grid.Row="1">
+                <Frame x:Name="adminFrame"
+                       Grid.Row="1"
+                       NavigationUIVisibility="Hidden">
                     <Frame.Content>
-                        <views:AdminUserDirectoryFrame />
+                        <Binding Path="CurrentDisplayFrame" UpdateSourceTrigger="PropertyChanged"/>
                     </Frame.Content>
                 </Frame>
 
@@ -138,6 +182,38 @@
                     <DropShadowEffect BlurRadius="10" Opacity="0.3" ShadowDepth="0" />
                 </Grid.Effect>
 
+                <StackPanel>
+                    <TextBlock
+                        Text="MANAGING USER:" 
+                        Margin="0 25 0 0"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        TextAlignment="Center"/>
+                    
+                    <!-- Image Here -->
+                    <TextBlock
+                        Text="[ ! ]"
+                        Margin="0 25 0 0"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        TextAlignment="Center"/>
+
+                    <TextBlock
+                        Text="No user selected"
+                        Margin="0 25 0 0"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        TextAlignment="Center"/>
+
+                    <TextBlock
+                        Text="Select a user from the directory"
+                        Margin="0 75 0 0"
+                        FontSize="24"
+                        FontWeight="Bold"
+                        TextAlignment="Center"/>
+
+                </StackPanel>
+                
             </Grid>
         </Grid>
     </Grid>
