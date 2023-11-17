@@ -15,12 +15,7 @@ namespace _106_A2_M1.Model
         public string u_token { get; set; }
         public string image_link { get; set; }
         public int IsolationDate { get; set; }
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int DateOfBirth { get; set; }
-        public int NhiNumber { get; set; }
-
+       
         // Private field for UserType
         private int _userType = 0;
 
@@ -30,7 +25,6 @@ namespace _106_A2_M1.Model
             get { return _userType; }
             set { _userType = value; }
         }
-
 
         public UserDB _userInformation;
 
@@ -47,7 +41,8 @@ namespace _106_A2_M1.Model
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
-        public UserDB db_member { get; set; }
+        public UserDB UserDB { get; set; }
+      
 
         public async Task GetLoginAsync(string email, string password)
         {
@@ -230,7 +225,7 @@ namespace _106_A2_M1.Model
         }
 
         // Overloaded method with additional parameters
-        public virtual void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)
+        public virtual void UpdateUserDetails(string email, string firstName, string lastName, string dateOfBirth, int nhiNumber)
         {
             // Validate input parameters
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
@@ -239,12 +234,12 @@ namespace _106_A2_M1.Model
             }
 
             // Update the basic details
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
+            UserDB.email = email;
+            UserDB.first_name = firstName;
+            UserDB.last_name = lastName;
 
             // For demonstration purposes
-            Console.WriteLine($"Updated details for email: {Email}, Date of Birth: {dateOfBirth}, NHI Number: {nhiNumber}");
+            Console.WriteLine($"Updated details for email: {email}, Date of Birth: {dateOfBirth}, NHI Number: {nhiNumber}");
         }
         public void logout()
         {

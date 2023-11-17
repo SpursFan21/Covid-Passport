@@ -14,7 +14,6 @@ namespace _106_A2_M1.Model
         public List<Issue> issue_list { get; set; }
         public List<Issue> OpenIssues { get; set; }
 
-
         //field to store the users with QR status
         private List<UserDB> usersWithQR;
 
@@ -25,26 +24,10 @@ namespace _106_A2_M1.Model
         {
             user_list = new List<User>();
             issue_list = new List<Issue>();
+            usersWithQR = new List<UserDB>(); // Initialize the usersWithQR list
         }
 
-        public void TestIssueGeneration() // TESTINF PURPOSES ONLY
-        {
-            Issue issue1 = new Issue()
-            {
-                subject = "I have a problem",
-                description = "Where do I log out of my account, I have been logged in for 72 days.",
-                resolve = false
-            };
-            Issue issue2 = new Issue()
-            {
-                subject = "I too, have a problem",
-                description = "How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!",
-                resolve = false
-            };
-            issue_list.Add(issue1);
-            issue_list.Add(issue2);
-        }
-        public override void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)//TBC
+        public override void UpdateUserDetails(string email, string firstName, string lastName, string dateOfBirth, int nhiNumber)
         {
             // Validate input parameters
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
@@ -53,64 +36,40 @@ namespace _106_A2_M1.Model
             }
 
             // Update the basic details
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
+            UserDB.email = email;
+            UserDB.first_name = firstName;
+            UserDB.last_name = lastName;
 
             // Additional logic for updating Admin-specific details
-            DateOfBirth = dateOfBirth;
-            NhiNumber = nhiNumber;
+            UserDB.dob = dateOfBirth;
+            UserDB.nhi_num = nhiNumber;
 
             // For demonstration purposes
-            Console.WriteLine($"Updated details for email: {Email}, Date of Birth: {DateOfBirth}, NHI Number: {NhiNumber}");
+            Console.WriteLine($"Updated details for email: {email}, Date of Birth: {dateOfBirth}, NHI Number: {nhiNumber}");
         }
 
         // Function to manage users
-        public void ManageUser()
+        public void ManageUser() //TBC
         {
             // Your user management logic to display users in the admin dashboard
 
             // Example: Display a list of users
-            foreach (UserDB user in _userList)
+            System.Collections.IList list = user_list;
+            for (int i = 0; i < list.Count; i++)
             {
+                UserDB user = (UserDB)list[i];
                 Console.WriteLine($"User: {user.id}, Email: {user.email}");
             }
         }
 
-        // Method to fetch user data asynchronously
-        public async Task FetchUserDataAsync()
+        public void GetUserData()
         {
-            // Fetch user data from the backend
-            List<UserDB> userData = await SingletonClient.Instance.GetUserDataAsync();
-
-            // Populate the user list in BaseUser
-            _userList = userData;
+            //TBC
         }
 
-        public void DeleteVaccine()
+        public void DeleteVaccine() //TBC
         {
-            // Allow the admin to select a user and perform action
-            Console.WriteLine("Enter the user ID to manage:");
-            string selectedUserId = Console.ReadLine();
-
-            // Find the selected user
-            User selectedUser = user_list.FirstOrDefault(u => u.id == selectedUserId);
-
-            if (selectedUser != null)
-            {
-                // Example: Call the deleteVaccination function for the selected user
-                Console.WriteLine("Enter the dose ID to delete:");
-                string doseIdToDelete = Console.ReadLine();
-
-                Console.WriteLine("Enter the dose type to delete (first/second):");
-                string doseTypeToDelete = Console.ReadLine();
-
-                selectedUser.deleteVaccination(doseIdToDelete, doseTypeToDelete);
-            }
-            else
-            {
-                Console.WriteLine($"User with ID {selectedUserId} not found.");
-            }
+           
         }
 
 
@@ -249,100 +208,96 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-/*
-        public async Task ApproveQRAsync()
+        /*
+                public async Task ApproveQRAsync()
+                {
+                    try
+                    {
+                        // Allow the admin to select a user to approve a QR code by entering the email
+                        Console.WriteLine("Enter the user email to approve QR code:");
+                        string selectedUserEmail = Console.ReadLine();
+
+                        // Find the selected user by email in the existing list
+                        UserDB selectedUser = usersWithQR.FirstOrDefault(u => u.email == selectedUserEmail);
+
+                        if (selectedUser != null)
+                        {
+                            // Update the QR status to 2 (approved)
+                            selectedUser.qr_status = 2;
+
+                            Console.WriteLine($"QR code approved for user with email {selectedUserEmail}");
+
+                            // Retrieve the QR code image URL asynchronously
+                            await RetrieveQRUrlAsync(selectedUser);
+
+                            // Retrieve the QR code for the selected user asynchronously
+                            await RetrieveQRCode(selectedUser);
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"User with email {selectedUserEmail} not found in the list.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An error occurred: {ex.Message}");
+                    }
+                }
+
+
+                public async Task RetrieveQRUrlAsync(UserDB selectedUser)
+                {
+                    try
+                    {
+                        // Use the SingletonClient to get the QR code image URL for the selected user
+                        string qrCodeImageUrl = await SingletonClient.Instance.GetQRCodeImageUrlAsync(selectedUser.id);
+
+                        if (qrCodeImageUrl != null)
+                        {
+                            Console.WriteLine($"QR code image URL for user with email {selectedUser.email}: {qrCodeImageUrl}");
+                            // Example: Open the QR code image URL in the view or download the image as needed
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Error retrieving QR code image URL for user with email {selectedUser.email}.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An error occurred: {ex.Message}");
+                    }
+                }
+
+                // Function to retrieve QR code and store the image link
+                public async Task RetrieveQRCode(UserDB selectedUser)
+                {
+                    try
+                    {
+                        // Use the SingletonClient to get the QR code image URL for the selected user
+                        string qrCodeImageUrl = await SingletonClient.Instance.GetQRCodeImageUrlAsync(selectedUser.id);
+
+                        if (qrCodeImageUrl != null)
+                        {
+                            // Store the QR code image URL
+                            QrCodeImageUrl = qrCodeImageUrl;
+
+                            Console.WriteLine($"QR code image URL for user with email {selectedUser.email}: {qrCodeImageUrl}");
+                            // Example: Display the QR code image URL in the view or download the image as needed
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Error retrieving QR code image URL for user with email {selectedUser.email}.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"An error occurred: {ex.Message}");
+                    }
+                }
+        */
+        public void DeleteQR(string selectedUserId)
         {
-            try
-            {
-                // Allow the admin to select a user to approve a QR code by entering the email
-                Console.WriteLine("Enter the user email to approve QR code:");
-                string selectedUserEmail = Console.ReadLine();
-
-                // Find the selected user by email in the existing list
-                UserDB selectedUser = usersWithQR.FirstOrDefault(u => u.email == selectedUserEmail);
-
-                if (selectedUser != null)
-                {
-                    // Update the QR status to 2 (approved)
-                    selectedUser.qr_status = 2;
-
-                    Console.WriteLine($"QR code approved for user with email {selectedUserEmail}");
-
-                    // Retrieve the QR code image URL asynchronously
-                    await RetrieveQRUrlAsync(selectedUser);
-
-                    // Retrieve the QR code for the selected user asynchronously
-                    await RetrieveQRCode(selectedUser);
-
-                }
-                else
-                {
-                    Console.WriteLine($"User with email {selectedUserEmail} not found in the list.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
-
-        public async Task RetrieveQRUrlAsync(UserDB selectedUser)
-        {
-            try
-            {
-                // Use the SingletonClient to get the QR code image URL for the selected user
-                string qrCodeImageUrl = await SingletonClient.Instance.GetQRCodeImageUrlAsync(selectedUser.id);
-
-                if (qrCodeImageUrl != null)
-                {
-                    Console.WriteLine($"QR code image URL for user with email {selectedUser.email}: {qrCodeImageUrl}");
-                    // Example: Open the QR code image URL in the view or download the image as needed
-                }
-                else
-                {
-                    Console.WriteLine($"Error retrieving QR code image URL for user with email {selectedUser.email}.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
-        // Function to retrieve QR code and store the image link
-        public async Task RetrieveQRCode(UserDB selectedUser)
-        {
-            try
-            {
-                // Use the SingletonClient to get the QR code image URL for the selected user
-                string qrCodeImageUrl = await SingletonClient.Instance.GetQRCodeImageUrlAsync(selectedUser.id);
-
-                if (qrCodeImageUrl != null)
-                {
-                    // Store the QR code image URL
-                    QrCodeImageUrl = qrCodeImageUrl;
-
-                    Console.WriteLine($"QR code image URL for user with email {selectedUser.email}: {qrCodeImageUrl}");
-                    // Example: Display the QR code image URL in the view or download the image as needed
-                }
-                else
-                {
-                    Console.WriteLine($"Error retrieving QR code image URL for user with email {selectedUser.email}.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-*/
-        public void DeleteQR()
-        {
-            // Allow the admin to select a user to delete the QR code
-            Console.WriteLine("Enter the user ID to delete QR code:");
-            string selectedUserId = Console.ReadLine();
-
             // Find the selected user
             BaseUser selectedUser = user_list.FirstOrDefault(u => u.UserDB.id == selectedUserId);
 
@@ -373,6 +328,7 @@ namespace _106_A2_M1.Model
             }
         }
 
+
         private bool DeleteQRCodeFromBackend(string userId)
         {
             // Mock backend response indicating success or failure
@@ -380,41 +336,12 @@ namespace _106_A2_M1.Model
             return true;
         }
 
-        public void DenyQR()
+        public void DeleteQR()
         {
-            // Example: Allow the admin to select a user to deny the QR code
-            Console.WriteLine("Enter the user ID to deny QR code:");
-            string selectedUserId = Console.ReadLine();
-
-            // Find the selected user
-            BaseUser selectedUser = user_list.FirstOrDefault(u => u.id == selectedUserId);
-
-            if (selectedUser != null)
-            {
-                // Example: Call the backend to deny the QR code for the selected user
-                // You would typically make an HTTP request to the backend here.
-                // The specific API endpoint and payload depend on your backend implementation.
-
-                // Mock response for demonstration purposes
-                bool isDenied = DenyQRCodeInBackend(selectedUser.id);
-
-                if (isDenied)
-                {
-                    // Update the user's qr_status to 0
-                    selectedUser.db_member.qr_status = 0;
-
-                    Console.WriteLine($"QR code denied for user with ID {selectedUserId}");
-                }
-                else
-                {
-                    Console.WriteLine($"Failed to deny QR code for user with ID {selectedUserId}");
-                }
-            }
-            else
-            {
-                Console.WriteLine($"User with ID {selectedUserId} not found.");
-            }
+            //TBC
         }
+
+
 
         private bool DenyQRCodeInBackend(string userId)
         {

@@ -10,7 +10,7 @@ namespace _106_A2_M1.Model
     public class User : BaseUser
     {
         public string Password { get; set; }
-        public UserDB UserDB { get; set; }
+      
 
         public async Task RequestQRAsync()
         {
@@ -33,9 +33,9 @@ namespace _106_A2_M1.Model
             }
 
             // Update the basic details
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
+            UserDB.email = email;
+            UserDB.first_name = firstName;
+            UserDB.last_name = lastName;
 
             // Validate current password (replace this with your actual validation logic)
             if (!ValidateCurrentPassword(currentPassword))
@@ -47,7 +47,7 @@ namespace _106_A2_M1.Model
 
             // Custom logic for updating the password in the User class
             Password = newPassword;
-            Console.WriteLine($"Updated password for email: {Email}");
+            Console.WriteLine($"Updated password for email: {email}");
         }
 
         private bool ValidateCurrentPassword(string currentPassword)
