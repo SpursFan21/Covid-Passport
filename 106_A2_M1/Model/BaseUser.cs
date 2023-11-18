@@ -164,34 +164,6 @@ namespace _106_A2_M1.Model
 
             return testId;
         }
-        public async Task ReportIssueAsync(string subject, string description)
-        {
-            try
-            {
-                // Validate input parameters
-                if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(description))
-                {
-                    throw new ArgumentException("Subject and description cannot be null or empty.");
-                }
-
-                // Create a new Issue instance with the provided data
-                Issue newIssue = new Issue
-                {
-                    subject = subject,
-                    description = description,
-                };
-
-                // Use the SingletonClient to report the issue
-                await SingletonClient.Instance.ReportIssueAsync(newIssue);
-
-                // For demonstration purposes
-                Console.WriteLine($"Reported issue with subject: {subject}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while reporting the issue: {ex.Message}");
-            }
-        }
 
         // Overloaded method with additional parameters
         public virtual void UpdateUserDetails(string email, string firstName, string lastName, string dateOfBirth, int nhiNumber)

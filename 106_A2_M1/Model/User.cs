@@ -62,7 +62,7 @@ namespace _106_A2_M1.Model
             throw new NotImplementedException();
         }
 
-        public new async Task ReportIssueAsync(string subject, string description)
+        public async Task ReportIssueAsync(string subject, string description)
         {
             try
             {
@@ -92,7 +92,5 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-
-
     }
 }

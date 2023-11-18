@@ -390,26 +390,59 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public void UpdateIssue()
+        public async Task CloseIssueAsync(string issueId)
         {
-            Console.WriteLine("Enter the issue ID to update:");
-            string issueIdToUpdate = Console.ReadLine();
-
-            // Find the issue
-            Issue selectedIssue = issue_list.FirstOrDefault(issue => issue.issue_id == issueIdToUpdate);
-
-            if (selectedIssue != null)
+            try
             {
-                // Update the resolve status
-                selectedIssue.resolve = true;
+                // Find the issue in the issue list by issueId
+                Issue selectedIssue = issue_list.FirstOrDefault(issue => issue.issue_id == issueId);
 
-                Console.WriteLine($"Issue with ID {issueIdToUpdate} has been resolved.");
+                if (selectedIssue != null)
+                {
+                    // Make a request to the backend to close the issue
+                    bool isClosed = await CloseIssueInBackend(selectedIssue.issue_id);
+
+                    if (isClosed)
+                    {
+                        // Update the issue's closed_date with Unix timestamp
+                        selectedIssue.closed_date = (int)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
+                        Console.WriteLine($"Issue with ID {issueId} closed successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to close issue with ID {issueId} in the backend.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Issue with ID {issueId} not found.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"Issue with ID {issueIdToUpdate} not found.");
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+
+
+        public async Task<bool> CloseIssueInBackend(string issueId)
+        {
+            try
+            {
+                // Use SingletonClient to close the issue through a PUT request
+                bool isClosed = await SingletonClient.Instance.CloseIssueInBackendAsync(issueId);
+
+                return isClosed;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
+        }
+
+
 
 
     }

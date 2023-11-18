@@ -381,43 +381,6 @@ namespace _106_A2_M1.Model
 
         */
 
-        public async Task ReportIssueAsync(Issue newIssue)
-        {
-            try
-            {
-                // Validate input parameters
-                if (newIssue == null)
-                {
-                    throw new ArgumentNullException(nameof(newIssue));
-                }
-
-                // Construct the URL for the POST request
-                string apiUrl = "https://cse106-backend.d3rpp.dev/api/issues/create";
-
-                // Serialize the newIssue object to JSON manually
-                string jsonContent = JsonConvert.SerializeObject(newIssue);
-
-                // Create StringContent with JSON content
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                // Make a POST request to send the new Issue instance to the backend
-                HttpResponseMessage response = await this._client.PostAsync(apiUrl, content);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    Console.WriteLine($"Issue reported successfully with subject: {newIssue.subject}");
-                }
-                else
-                {
-                    Console.WriteLine($"Error reporting issue: {response.StatusCode} - {response.ReasonPhrase}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while reporting the issue: {ex.Message}");
-            }
-        }
-
         public async Task<List<Issue>> GetOpenIssuesAsync()
         {
             try
@@ -484,8 +447,38 @@ namespace _106_A2_M1.Model
             }
         }
 
-        // Dispose method to clean up resources when the application exits
-        public void Dispose()
+        public async Task<bool> CloseIssueInBackendAsync(string issueId)
+        {
+            try
+            {
+                // Prepare the URL for closing the issue
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/issues/{issueId}/close";
+
+                // Make a PUT request to close the issue
+                HttpResponseMessage response = await _client.PutAsync(apiUrl, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Issue closure successful
+                    Console.WriteLine($"Issue with ID {issueId} closed in the backend.");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to close issue with ID {issueId} in the backend: {response.StatusCode} - {response.ReasonPhrase}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
+        }
+
+
+            // Dispose method to clean up resources when the application exits
+            public void Dispose()
         {
             this._client.Dispose();
         }
