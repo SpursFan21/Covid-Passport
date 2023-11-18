@@ -110,7 +110,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-       
         protected void getIsolationDate(CovidTest covidTest)
         {
             if (covidTest != null)

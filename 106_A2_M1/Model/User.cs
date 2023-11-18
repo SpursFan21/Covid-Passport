@@ -59,5 +59,10 @@ namespace _106_A2_M1.Model
         {
             throw new NotImplementedException();
         }
+
+        public void ReportIssue()
+        {
+
+        }
     }
 }

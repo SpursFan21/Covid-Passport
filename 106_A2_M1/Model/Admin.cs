@@ -269,7 +269,7 @@ namespace _106_A2_M1.Model
                     }
                 }
 
-                // Function to retrieve QR code and store the image link
+                //Function to retrieve QR code and store the image link
                 public async Task RetrieveQRCode(UserDB selectedUser)
                 {
                     try
@@ -296,16 +296,14 @@ namespace _106_A2_M1.Model
                     }
                 }
         */
-        public void DeleteQR(string selectedUserId)
+        public void DeleteQR(string selectedUserId) //TBC
         {
             // Find the selected user
             BaseUser selectedUser = user_list.FirstOrDefault(u => u.UserDB.id == selectedUserId);
 
             if (selectedUser != null)
             {
-                // Example: Call the backend to delete the QR code for the selected user
-                // You would typically make an HTTP request to the backend here.
-                // The specific API endpoint and payload depend on your backend implementation.
+                // Call the backend to delete the QR code for the selected user
 
                 // Mock response
                 bool isDeleted = DeleteQRCodeFromBackend(selectedUser.UserDB.id);
@@ -340,8 +338,6 @@ namespace _106_A2_M1.Model
         {
             //TBC
         }
-
-
 
         private bool DenyQRCodeInBackend(string userId)
         {
