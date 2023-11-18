@@ -476,9 +476,34 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<bool> DeleteIssueInBackend(string issueId)
+        {
+            try
+            {
+                // Make a DELETE request to the backend to delete the issue
+                HttpResponseMessage response = await _client.DeleteAsync($"https://cse106-backend.d3rpp.dev/api/issues/{issueId}");
 
-            // Dispose method to clean up resources when the application exits
-            public void Dispose()
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Issue with ID {issueId} deleted in the backend successfully.");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to delete issue with ID {issueId} in the backend: {response.StatusCode} - {response.ReasonPhrase}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
+        }
+
+
+        // Dispose method to clean up resources when the application exits
+        public void Dispose()
         {
             this._client.Dispose();
         }

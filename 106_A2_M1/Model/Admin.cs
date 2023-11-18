@@ -442,6 +442,36 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task DeleteIssueAsync(string issueId)
+        {
+            try
+            {
+                // Find the issue in the issue list by issueId
+                Issue selectedIssue = issue_list.FirstOrDefault(issue => issue.issue_id == issueId);
+
+                if (selectedIssue != null)
+                {
+                    // Remove the selected issue from the list
+                    issue_list.Remove(selectedIssue);
+
+                    // Use SingletonClient to delete the issue through a DELETE request
+                    await SingletonClient.Instance.DeleteIssueInBackend(issueId);
+
+                    Console.WriteLine($"Issue with ID {issueId} deleted successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"Issue with ID {issueId} not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+
+
 
 
 
