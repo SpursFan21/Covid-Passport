@@ -10,7 +10,9 @@ namespace _106_A2_M1.Model
     public class User : BaseUser
     {
         public string Password { get; set; }
-        public UserDB UserDB { get; set; }
+
+        private List<Issue> userIssues;
+
 
         public async Task RequestQRAsync()
         {
@@ -33,9 +35,9 @@ namespace _106_A2_M1.Model
             }
 
             // Update the basic details
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
+            UserDB.email = email;
+            UserDB.first_name = firstName;
+            UserDB.last_name = lastName;
 
             // Validate current password (replace this with your actual validation logic)
             if (!ValidateCurrentPassword(currentPassword))
@@ -47,7 +49,7 @@ namespace _106_A2_M1.Model
 
             // Custom logic for updating the password in the User class
             Password = newPassword;
-            Console.WriteLine($"Updated password for email: {Email}");
+            Console.WriteLine($"Updated password for email: {email}");
         }
 
         private bool ValidateCurrentPassword(string currentPassword)
@@ -58,6 +60,37 @@ namespace _106_A2_M1.Model
         internal static void SetPassword(string value)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task ReportIssueAsync(string subject, string description)
+        {
+            try
+            {
+                // Assuming you have a list of issues in your User class
+                if (userIssues == null)
+                {
+                    userIssues = new List<Issue>();
+                }
+
+                // Create a new issue with subject and description
+                Issue newIssue = new Issue
+                {
+                    subject = subject,
+                    description = description
+                };
+
+                // Add the new issue to the list
+                userIssues.Add(newIssue);
+
+                // Use SingletonClient to report the issue through a POST request
+                await SingletonClient.Instance.ReportIssueAsync(subject, description);
+
+                Console.WriteLine("Issue reported successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
     }
 }

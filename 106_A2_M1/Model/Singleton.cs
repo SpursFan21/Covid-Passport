@@ -173,7 +173,7 @@ namespace _106_A2_M1.Model
             public int vaccine_status { get; set; }
         }
 
-        public async Task<int> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
+        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
         {
             try
             {
@@ -188,45 +188,46 @@ namespace _106_A2_M1.Model
                     NhiNumber = nhiNumber
                 };
 
-                // Convert the data to StringContent
-                var stringContent = new StringContent(userData.ToJSONString(), Encoding.UTF8, "application/json");
+                // Convert the data to a JSON string using JsonConvert.SerializeObject
+                string jsonString = JsonConvert.SerializeObject(userData);
+
+                // Convert the JSON string to StringContent
+                var stringContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
                 // Make a POST request to create a new account
                 HttpResponseMessage response = await _client.PostAsync("https://cse106-backend.d3rpp.dev/auth/sign-up", stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Account creation successful
-                    return 1;
+                    // Read the response content and deserialize it into UserDB
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    UserDB user = JsonConvert.DeserializeObject<UserDB>(responseContent);
+
+                    // Account creation successful, return the UserDB instance
+                    return user;
                 }
                 else
                 {
                     Console.WriteLine($"Error creating account: {response.StatusCode} - {response.ReasonPhrase}");
-                    return 0;
+                    return null;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-                return 0;
+                return null;
             }
         }
 
-        public class UserData
+
+        public class UserData // stroage for data generated in create account to be shipped to backend
         {
-            // Define properties for user data
             public string Email { get; set; }
             public string Password { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public int DateOfBirth { get; set; }
             public int NhiNumber { get; set; }
-
-            // Method to convert the object to a JSON string
-            public string ToJSONString()
-            {
-                return JsonConvert.SerializeObject(this);
-            }
         }
 
         public async Task RequestQRCodeAsync()
@@ -279,7 +280,7 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
-        /*
+
                 public async Task<HttpResponseMessage> ApproveQRCodeAsync(string userId)
                 {
                     try
@@ -304,118 +305,70 @@ namespace _106_A2_M1.Model
                     catch (Exception ex)
                     {
                         Console.WriteLine($"An error occurred while approving QR code: {ex.Message}");
-                        return null; // Or handle the error in a way that suits your application
-                    }
-                }
-
-                public async Task<List<string>> GetQRCodeUrlsAsync()
-                {
-                    try
-                    {
-                        // Construct the URL for the GET request
-                        string apiUrl = "https://cse106-backend.d3rpp.dev/api/qrcodes";
-
-                        // Make a GET request to retrieve the list of QR code image URLs
-                        HttpResponseMessage response = await this._client.GetAsync(apiUrl);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            // Read the response content as a string
-                            string content = await response.Content.ReadAsStringAsync();
-
-                            // Deserialize the string to a List<string>
-                            List<string> qrCodeUrls = JsonConvert.DeserializeObject<List<string>>(content);
-
-                            return qrCodeUrls;
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Error retrieving QR code URLs: {response.StatusCode} - {response.ReasonPhrase}");
-                            return null;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"An error occurred while retrieving QR code URLs: {ex.Message}");
-                        return null; // Or handle the error in a way that suits your application
-                    }
-                }
-
-
-                public async Task<string> GetQRCodeImageUrlAsync(string userId)
-                {
-                    try
-                    {
-                        // Use the SingletonClient to get the list of QR code image URLs
-                        List<string> qrCodeUrls = await GetQRCodeUrlsAsync();
-
-                        if (qrCodeUrls != null && qrCodeUrls.Any())
-                        {
-                            // Find the URL for the specific user
-                            string imageUrl = qrCodeUrls.FirstOrDefault(url => url.Contains(userId));
-
-                            if (!string.IsNullOrEmpty(imageUrl))
-                            {
-                                Console.WriteLine($"QR code image URL for user with ID {userId}: {imageUrl}");
-                                return imageUrl;
-                            }
-                            else
-                            {
-                                Console.WriteLine($"QR code image URL not found for user with ID {userId}.");
-                                return null;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error retrieving QR code URLs.");
-                            return null;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"An error occurred while retrieving QR code image URL: {ex.Message}");
                         return null;
                     }
                 }
 
-        */
-
-        public async Task ReportIssueAsync(Issue newIssue)
+        public async Task<string> RetrieveQRCodeImageURLAsync(string userId)
         {
             try
             {
-                // Validate input parameters
-                if (newIssue == null)
-                {
-                    throw new ArgumentNullException(nameof(newIssue));
-                }
+                // Construct the URL for the GET request including the userId
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/qrcodes/{userId}";
 
-                // Construct the URL for the POST request
-                string apiUrl = "https://cse106-backend.d3rpp.dev/api/issues/create";
-
-                // Serialize the newIssue object to JSON manually
-                string jsonContent = JsonConvert.SerializeObject(newIssue);
-
-                // Create StringContent with JSON content
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-                // Make a POST request to send the new Issue instance to the backend
-                HttpResponseMessage response = await this._client.PostAsync(apiUrl, content);
+                // Make a GET request to retrieve the QR code image URL
+                HttpResponseMessage response = await this._client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"Issue reported successfully with subject: {newIssue.subject}");
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a string (assuming the URL is a string)
+                    string qrCodeUrl = JsonConvert.DeserializeObject<string>(content);
+
+                    return qrCodeUrl;
                 }
                 else
                 {
-                    Console.WriteLine($"Error reporting issue: {response.StatusCode} - {response.ReasonPhrase}");
+                    Console.WriteLine($"Error retrieving QR code URL: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while reporting the issue: {ex.Message}");
+                Console.WriteLine($"An error occurred while retrieving QR code URL: {ex.Message}");
+                return null;
             }
         }
+
+        public async Task<byte[]> RetrieveQRCodeImageAsync(string imageUrl)
+        {
+            try
+            {
+                // Make a GET request to retrieve the QR code image
+                HttpResponseMessage response = await _client.GetAsync(imageUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a byte array
+                    byte[] imageData = await response.Content.ReadAsByteArrayAsync();
+
+                    return imageData;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code image: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving QR code image: {ex.Message}");
+                return null;
+            }
+        }
+
 
         public async Task<List<Issue>> GetOpenIssuesAsync()
         {
@@ -446,6 +399,123 @@ namespace _106_A2_M1.Model
             {
                 Console.WriteLine($"An error occurred while retrieving open issues: {ex.Message}");
                 return null; // handle the error
+            }
+        }
+
+
+        public async Task ReportIssueAsync(string subject, string description)
+        {
+            try
+            {
+                // Create a string containing the issue data
+                Issue issueData = new Issue
+                {
+                    subject = subject,
+                    description = description
+                };
+
+                // Convert the data to StringContent
+                var stringContent = new StringContent(JsonConvert.SerializeObject(issueData), Encoding.UTF8, "application/json");
+
+                // Make a POST request to report a new issue
+                HttpResponseMessage response = await _client.PostAsync("https://cse106-backend.d3rpp.dev/api/issues/create", stringContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Issue reporting successful
+                    Console.WriteLine("Issue reported successfully!");
+                }
+                else
+                {
+                    Console.WriteLine($"Error reporting issue: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task<bool> CloseIssueInBackendAsync(string issueId)
+        {
+            try
+            {
+                // Prepare the URL for closing the issue
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/issues/{issueId}/close";
+
+                // Make a PUT request to close the issue
+                HttpResponseMessage response = await _client.PutAsync(apiUrl, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Issue closure successful
+                    Console.WriteLine($"Issue with ID {issueId} closed in the backend.");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to close issue with ID {issueId} in the backend: {response.StatusCode} - {response.ReasonPhrase}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteIssueInBackend(string issueId)
+        {
+            try
+            {
+                // Make a DELETE request to the backend to delete the issue
+                HttpResponseMessage response = await _client.DeleteAsync($"https://cse106-backend.d3rpp.dev/api/issues/{issueId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Issue with ID {issueId} deleted in the backend successfully.");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to delete issue with ID {issueId} in the backend: {response.StatusCode} - {response.ReasonPhrase}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<Issue> GetIssueByIDAsync(string issueId)
+        {
+            try
+            {
+                // Make a GET request to the backend to retrieve the issue by ID
+                HttpResponseMessage response = await _client.GetAsync($"https://cse106-backend.d3rpp.dev/api/issues/{issueId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content and deserialize it into an Issue object
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    Issue retrievedIssue = JsonConvert.DeserializeObject<Issue>(responseContent);
+
+                    Console.WriteLine($"Issue with ID {issueId} retrieved successfully.");
+                    return retrievedIssue;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving issue with ID {issueId}: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
             }
         }
 
