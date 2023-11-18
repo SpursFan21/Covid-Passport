@@ -280,7 +280,7 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
-        /*
+
                 public async Task<HttpResponseMessage> ApproveQRCodeAsync(string userId)
                 {
                     try
@@ -305,81 +305,70 @@ namespace _106_A2_M1.Model
                     catch (Exception ex)
                     {
                         Console.WriteLine($"An error occurred while approving QR code: {ex.Message}");
-                        return null; // Or handle the error in a way that suits your application
-                    }
-                }
-
-                public async Task<List<string>> GetQRCodeUrlsAsync()
-                {
-                    try
-                    {
-                        // Construct the URL for the GET request
-                        string apiUrl = "https://cse106-backend.d3rpp.dev/api/qrcodes";
-
-                        // Make a GET request to retrieve the list of QR code image URLs
-                        HttpResponseMessage response = await this._client.GetAsync(apiUrl);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            // Read the response content as a string
-                            string content = await response.Content.ReadAsStringAsync();
-
-                            // Deserialize the string to a List<string>
-                            List<string> qrCodeUrls = JsonConvert.DeserializeObject<List<string>>(content);
-
-                            return qrCodeUrls;
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Error retrieving QR code URLs: {response.StatusCode} - {response.ReasonPhrase}");
-                            return null;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"An error occurred while retrieving QR code URLs: {ex.Message}");
-                        return null; // Or handle the error in a way that suits your application
-                    }
-                }
-
-
-                public async Task<string> GetQRCodeImageUrlAsync(string userId)
-                {
-                    try
-                    {
-                        // Use the SingletonClient to get the list of QR code image URLs
-                        List<string> qrCodeUrls = await GetQRCodeUrlsAsync();
-
-                        if (qrCodeUrls != null && qrCodeUrls.Any())
-                        {
-                            // Find the URL for the specific user
-                            string imageUrl = qrCodeUrls.FirstOrDefault(url => url.Contains(userId));
-
-                            if (!string.IsNullOrEmpty(imageUrl))
-                            {
-                                Console.WriteLine($"QR code image URL for user with ID {userId}: {imageUrl}");
-                                return imageUrl;
-                            }
-                            else
-                            {
-                                Console.WriteLine($"QR code image URL not found for user with ID {userId}.");
-                                return null;
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Error retrieving QR code URLs.");
-                            return null;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"An error occurred while retrieving QR code image URL: {ex.Message}");
                         return null;
                     }
                 }
 
-        */
+        public async Task<string> RetrieveQRCodeImageURLAsync(string userId)
+        {
+            try
+            {
+                // Construct the URL for the GET request including the userId
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/qrcodes/{userId}";
+
+                // Make a GET request to retrieve the QR code image URL
+                HttpResponseMessage response = await this._client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a string (assuming the URL is a string)
+                    string qrCodeUrl = JsonConvert.DeserializeObject<string>(content);
+
+                    return qrCodeUrl;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code URL: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving QR code URL: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<byte[]> RetrieveQRCodeImageAsync(string imageUrl)
+        {
+            try
+            {
+                // Make a GET request to retrieve the QR code image
+                HttpResponseMessage response = await _client.GetAsync(imageUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a byte array
+                    byte[] imageData = await response.Content.ReadAsByteArrayAsync();
+
+                    return imageData;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code image: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving QR code image: {ex.Message}");
+                return null;
+            }
+        }
+
 
         public async Task<List<Issue>> GetOpenIssuesAsync()
         {
