@@ -173,7 +173,7 @@ namespace _106_A2_M1.Model
             public int vaccine_status { get; set; }
         }
 
-        public async Task<int> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
+        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
         {
             try
             {
@@ -188,45 +188,46 @@ namespace _106_A2_M1.Model
                     NhiNumber = nhiNumber
                 };
 
-                // Convert the data to StringContent
-                var stringContent = new StringContent(userData.ToJSONString(), Encoding.UTF8, "application/json");
+                // Convert the data to a JSON string using JsonConvert.SerializeObject
+                string jsonString = JsonConvert.SerializeObject(userData);
+
+                // Convert the JSON string to StringContent
+                var stringContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
                 // Make a POST request to create a new account
                 HttpResponseMessage response = await _client.PostAsync("https://cse106-backend.d3rpp.dev/auth/sign-up", stringContent);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Account creation successful
-                    return 1;
+                    // Read the response content and deserialize it into UserDB
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    UserDB user = JsonConvert.DeserializeObject<UserDB>(responseContent);
+
+                    // Account creation successful, return the UserDB instance
+                    return user;
                 }
                 else
                 {
                     Console.WriteLine($"Error creating account: {response.StatusCode} - {response.ReasonPhrase}");
-                    return 0;
+                    return null;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-                return 0;
+                return null;
             }
         }
 
-        public class UserData
+
+        public class UserData // stroage for data generated in create account to be shipped to backend
         {
-            // Define properties for user data
             public string Email { get; set; }
             public string Password { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public int DateOfBirth { get; set; }
             public int NhiNumber { get; set; }
-
-            // Method to convert the object to a JSON string
-            public string ToJSONString()
-            {
-                return JsonConvert.SerializeObject(this);
-            }
         }
 
         public async Task RequestQRCodeAsync()

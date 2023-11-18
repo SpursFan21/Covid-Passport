@@ -35,8 +35,6 @@ namespace _106_A2_M1.Model
             set { _userInformation = value; }
         }
 
-        public string email { get; set; }
-
         //data objects
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
@@ -112,35 +110,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        protected async Task<int> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
-        {
-            try
-            {
-                // Use SingletonClient to create a new account
-                SingletonClient singletonClient = SingletonClient.Instance;
-                int result = await singletonClient.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNumber);
-
-                // Redirect auto-login logic and navigate to UserDashB based on the result
-                if (result == 1)
-                {
-                    // Account creation successful, perform auto-login logic here
-                    await Login(email, password);
-                    // Redirect to UserDashB Via ModelView NAV
-                }
-                else
-                {
-                    Console.WriteLine("Account creation failed!");
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return 0; // Indicate failure due to an exception
-            }
-        }
-
+       
         protected void getIsolationDate(CovidTest covidTest)
         {
             if (covidTest != null)
