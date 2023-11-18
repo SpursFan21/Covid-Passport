@@ -334,11 +334,6 @@ namespace _106_A2_M1.Model
             return true;
         }
 
-        public void DeleteQR()
-        {
-            //TBC
-        }
-
         private bool DenyQRCodeInBackend(string userId)
         {
             // Mock backend response indicating success or failure
@@ -470,10 +465,34 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<Issue> GetIssueByIDAsync(string issueId)
+        {
+            try
+            {
+                // Use SingletonClient to retrieve the issue by ID asynchronously
+                Issue retrievedIssue = await SingletonClient.Instance.GetIssueByIDAsync(issueId);
 
-
-
-
-
+                if (retrievedIssue != null)
+                {
+                    Console.WriteLine($"Found issue with ID {issueId}:");
+                    Console.WriteLine($"Subject: {retrievedIssue.subject}");
+                    Console.WriteLine($"Description: {retrievedIssue.description}");
+                    Console.WriteLine($"Open Date: {retrievedIssue.open_date}");
+                    Console.WriteLine($"Closed Date: {retrievedIssue.closed_date}");
+                    Console.WriteLine($"Resolved: {retrievedIssue.resolve}");
+                    return retrievedIssue;
+                }
+                else
+                {
+                    Console.WriteLine($"Issue with ID {issueId} not found.");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

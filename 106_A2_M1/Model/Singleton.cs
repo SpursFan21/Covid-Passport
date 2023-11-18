@@ -501,6 +501,36 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<Issue> GetIssueByIDAsync(string issueId)
+        {
+            try
+            {
+                // Make a GET request to the backend to retrieve the issue by ID
+                HttpResponseMessage response = await _client.GetAsync($"https://cse106-backend.d3rpp.dev/api/issues/{issueId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content and deserialize it into an Issue object
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    Issue retrievedIssue = JsonConvert.DeserializeObject<Issue>(responseContent);
+
+                    Console.WriteLine($"Issue with ID {issueId} retrieved successfully.");
+                    return retrievedIssue;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving issue with ID {issueId}: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
+
 
         // Dispose method to clean up resources when the application exits
         public void Dispose()
