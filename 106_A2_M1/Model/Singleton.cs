@@ -451,6 +451,38 @@ namespace _106_A2_M1.Model
         }
 
 
+        public async Task ReportIssueAsync(string subject, string description)
+        {
+            try
+            {
+                // Create a string containing the issue data
+                Issue issueData = new Issue
+                {
+                    subject = subject,
+                    description = description
+                };
+
+                // Convert the data to StringContent
+                var stringContent = new StringContent(JsonConvert.SerializeObject(issueData), Encoding.UTF8, "application/json");
+
+                // Make a POST request to report a new issue
+                HttpResponseMessage response = await _client.PostAsync("https://cse106-backend.d3rpp.dev/api/issues/create", stringContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Issue reporting successful
+                    Console.WriteLine("Issue reported successfully!");
+                }
+                else
+                {
+                    Console.WriteLine($"Error reporting issue: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
 
         // Dispose method to clean up resources when the application exits
         public void Dispose()
