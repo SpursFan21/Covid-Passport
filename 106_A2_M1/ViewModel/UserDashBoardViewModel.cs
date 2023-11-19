@@ -21,18 +21,18 @@ namespace _106_A2_M1.ViewModel
         public ICommand AddTestResultCommand { get; }
         public ICommand LogoutCommand { get; }
 
-
+        public string UserFullName { get; private set; }
         private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
-        private UserDB _userDB;
+        private UserDB _userDB; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
 
         public string FirstName
         {
-            get => _user.UserDB.first_name;
+            get => User.UserDB.first_name;
             set
             {
-                if (_user.UserDB.first_name != value)
+                if (User.UserDB.first_name != value)
                 {
-                    _user.UserDB.first_name = value;
+                    User.UserDB.first_name = value;
                     OnPropertyChanged(nameof(FirstName));
                 }
             }
@@ -40,12 +40,12 @@ namespace _106_A2_M1.ViewModel
 
         public string LastName
         {
-            get => _user.UserDB.last_name;
+            get => User.UserDB.last_name;
             set
             {
-                if (_user.UserDB.last_name != value)
+                if (User.UserDB.last_name != value)
                 {
-                    _user.UserDB.last_name = value;
+                    User.UserDB.last_name = value;
                     OnPropertyChanged(nameof(LastName));
                 }
             }
@@ -53,12 +53,12 @@ namespace _106_A2_M1.ViewModel
 
         public string UserDOB
         {
-            get => _user.UserDB.dob;
+            get => User.UserDB.dob;
             set
             {
-                if (_user.UserDB.dob != value)
+                if (User.UserDB.dob != value)
                 {
-                    _user.UserDB.dob = value;
+                    User.UserDB.dob = value;
                     OnPropertyChanged(nameof(UserDOB));
                 }
             }
@@ -66,12 +66,12 @@ namespace _106_A2_M1.ViewModel
 
         public string UserEmail
         {
-            get => _user.UserDB.email;
+            get => User.UserDB.email;
             set
             {
-                if (_user.UserDB.email != value)
+                if (User.UserDB.email != value)
                 {
-                    _user.UserDB.email = value;
+                    User.UserDB.email = value;
                     OnPropertyChanged(nameof(UserEmail));
                 }
             }
@@ -79,18 +79,29 @@ namespace _106_A2_M1.ViewModel
 
         public int UserNHI
         {
-            get => _user.UserDB.nhi_num;
+            get => User.UserDB.nhi_num;
             set
             {
-                if (_user.UserDB.nhi_num != value)
+                if (User.UserDB.nhi_num != value)
                 {
-                    _user.UserDB.nhi_num = value;
+                    User.UserDB.nhi_num = value;
                     OnPropertyChanged(nameof(UserNHI));
                 }
             }
         }
 
-        public string UserFullName { get; private set; }
+        public int QRStatus
+        {
+            get => User.UserDB.qr_status;
+            set
+            {
+                if(User.UserDB.qr_status != value)
+                {
+                    User.UserDB.qr_status = value;
+                    OnPropertyChanged(nameof(QRStatus));
+                }
+            }
+        }
 
 
 
@@ -107,17 +118,12 @@ namespace _106_A2_M1.ViewModel
         public UserDashboardViewModel()
         {
             _user = new User(); // Initialize a new User instance MODEL to ViewModel Pipeline
-            // Access UserDB data from User in MODEL    
-            //UserDB userDbData = _user.UserInformation;
-            //UserFullName = userDBData.first_name +" " + userDBData.last_name;
-            _userDB = new UserDB();
-            generateUserData("Hank", "Schrader", "31 Aug 1970", "hank@DIA.com", 1234567);
             UpdateUserFullName();
-
 
             FrameTitle = "My Vaccine Pass";
             NavigateToFrame(new UserMyVaccinePassFrame());
 
+            // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
             NavMyRecordsCommand = new RelayCommand(x =>
             {
@@ -130,6 +136,7 @@ namespace _106_A2_M1.ViewModel
                 NavigateToFrame(new UserMyVaccinePassFrame());
             });
             
+            // Test list for TESTING PURPOSES ONLY
             TestList = new ObservableCollection<CovidTest>();
             generateTest(10102023, false, "RAT");
             generateTest(02022023, true, "PCR");
@@ -154,15 +161,6 @@ namespace _106_A2_M1.ViewModel
             TestList.Add(test);
         }
 
-        private void generateUserData(string fname, string lname, string dob, string email, int nhi)
-        {
-            _userDB.first_name = fname;
-            _userDB.last_name = lname;
-            _userDB.dob = dob;
-            _userDB.email = email;
-            _userDB.nhi_num = nhi;
-            _user.UserDB = _userDB;
-        }
 
         private void UpdateUserFullName()
         {

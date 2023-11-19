@@ -4,9 +4,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       xmlns:local="clr-namespace:_106_A2_M1.View.Pages"
-      xmlns:views="clr-namespace:_106_A2_M1.View"
+      xmlns:views="clr-namespace:_106_A2_M1.View.UserFrames"
       xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
@@ -15,6 +15,17 @@
     <Page.DataContext>
         <vm:UserDashboardViewModel />
     </Page.DataContext>
+    <Page.Resources>
+        <DataTemplate DataType="{x:Type views:UserMyVaccinePassFrame_QR0}">
+            <views:UserMyVaccinePassFrame_QR0 />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type views:UserMyVaccinePassFrame_QR1}">
+            <views:UserMyVaccinePassFrame_QR1 />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type views:UserMyVaccinePassFrame_QR2}">
+            <views:UserMyVaccinePassFrame_QR2 />
+        </DataTemplate>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />

@@ -122,8 +122,14 @@
     <Compile Include="View\UserFrames\UserMyRecordsFrame.xaml.cs">
       <DependentUpon>UserMyRecordsFrame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserFrames\UserMyVaccinePassFrame.xaml.cs">
-      <DependentUpon>UserMyVaccinePassFrame.xaml</DependentUpon>
+    <Compile Include="View\UserFrames\UserMyVaccinePassFrame-QR0.xaml.cs">
+      <DependentUpon>UserMyVaccinePassFrame-QR0.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserFrames\UserMyVaccinePassFrame-QR1.xaml.cs">
+      <DependentUpon>UserMyVaccinePassFrame-QR1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserFrames\UserMyVaccinePassFrame-QR2.xaml.cs">
+      <DependentUpon>UserMyVaccinePassFrame-QR2.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -181,7 +187,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserFrames\UserMyVaccinePassFrame.xaml">
+    <Page Include="View\UserFrames\UserMyVaccinePassFrame-QR0.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserFrames\UserMyVaccinePassFrame-QR1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserFrames\UserMyVaccinePassFrame-QR2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
