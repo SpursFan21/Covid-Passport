@@ -116,7 +116,7 @@ namespace _106_A2_M1.Model
                 return 0;
             }
         }
-        private async Task<UserDB> GetUserInformationAsync()
+        public async Task<UserDB> GetUserInformationAsync()
         {
             try
             {

@@ -110,6 +110,24 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<UserDB> RetrieveUserInformationAsync()
+        {
+            try
+            {
+                // Call the private method in SingletonClient to get user information
+                UserDB userDB = await SingletonClient.Instance.GetUserInformationAsync();
+
+                // You can perform additional actions here if needed
+
+                return userDB;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving user information: {ex.Message}");
+                return null;
+            }
+        }
+
         public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, string nhiNum)
         {
             try
