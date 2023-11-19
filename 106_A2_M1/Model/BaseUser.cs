@@ -11,17 +11,11 @@ namespace _106_A2_M1.Model
     {
 
         //unique data members
-        public string id { get; set; }
         public int account_type { get; set; }
         public string u_token { get; set; }
         public string image_link { get; set; }
         public int IsolationDate { get; set; }
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int DateOfBirth { get; set; }
-        public int NhiNumber { get; set; }
-
+       
         // Private field for UserType
         private int _userType = 0;
 
@@ -32,13 +26,21 @@ namespace _106_A2_M1.Model
             set { _userType = value; }
         }
 
-        public string email { get; set; }
+        public UserDB _userInformation;
+
+        // Expose UserDB through a property
+        public UserDB UserInformation
+        {
+            get { return _userInformation; }
+            set { _userInformation = value; }
+        }
 
         //data objects
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
-        public UserDB db_member { get; set; }
+        public UserDB UserDB { get; set; }
+      
 
         public async Task GetLoginAsync(string email, string password)
         {
@@ -108,35 +110,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-        protected async Task<int> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
-        {
-            try
-            {
-                // Use SingletonClient to create a new account
-                SingletonClient singletonClient = SingletonClient.Instance;
-                int result = await singletonClient.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNumber);
-
-                // Redirect auto-login logic and navigate to UserDashB based on the result
-                if (result == 1)
-                {
-                    // Account creation successful, perform auto-login logic here
-                    await Login(email, password);
-                    // Redirect to UserDashB Via ModelView NAV
-                }
-                else
-                {
-                    Console.WriteLine("Account creation failed!");
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return 0; // Indicate failure due to an exception
-            }
-        }
-
         protected void getIsolationDate(CovidTest covidTest)
         {
             if (covidTest != null)
@@ -191,37 +164,9 @@ namespace _106_A2_M1.Model
 
             return testId;
         }
-        public async Task ReportIssueAsync(string subject, string description)
-        {
-            try
-            {
-                // Validate input parameters
-                if (string.IsNullOrEmpty(subject) || string.IsNullOrEmpty(description))
-                {
-                    throw new ArgumentException("Subject and description cannot be null or empty.");
-                }
-
-                // Create a new Issue instance with the provided data
-                Issue newIssue = new Issue
-                {
-                    subject = subject,
-                    description = description,
-                };
-
-                // Use the SingletonClient to report the issue
-                await SingletonClient.Instance.ReportIssueAsync(newIssue);
-
-                // For demonstration purposes
-                Console.WriteLine($"Reported issue with subject: {subject}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while reporting the issue: {ex.Message}");
-            }
-        }
 
         // Overloaded method with additional parameters
-        public virtual void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, int nhiNumber)
+        public virtual void UpdateUserDetails(string email, string firstName, string lastName, string dateOfBirth, int nhiNumber)
         {
             // Validate input parameters
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
@@ -230,12 +175,12 @@ namespace _106_A2_M1.Model
             }
 
             // Update the basic details
-            Email = email;
-            FirstName = firstName;
-            LastName = lastName;
+            UserDB.email = email;
+            UserDB.first_name = firstName;
+            UserDB.last_name = lastName;
 
             // For demonstration purposes
-            Console.WriteLine($"Updated details for email: {Email}, Date of Birth: {dateOfBirth}, NHI Number: {nhiNumber}");
+            Console.WriteLine($"Updated details for email: {email}, Date of Birth: {dateOfBirth}, NHI Number: {nhiNumber}");
         }
         public void logout()
         {

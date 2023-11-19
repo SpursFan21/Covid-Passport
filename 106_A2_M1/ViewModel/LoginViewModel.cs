@@ -64,6 +64,7 @@ namespace _106_A2_M1.ViewModel
             LoginCommand = new RelayCommand(async x => await PerformLogin());
         }
 
+        
         private void NavigateToPage(Page destinationPage)
         {
             MainWindowVM mainVM = (MainWindowVM)Application.Current.MainWindow.DataContext;
@@ -143,55 +144,6 @@ namespace _106_A2_M1.ViewModel
                 // model.HandlePassword(password); // Call a method in Model
             }
         }
- 
-        public string Id
-        {
-            get { return _baseUser.id; }
-            set
-            {
-                if (_baseUser.id != value)
-                {
-                    _baseUser.id = value;
-                    OnPropertyChanged(nameof(Id));
-                }
-            }
-        }
 
-        public int AccountType
-        {
-            get { return _baseUser.account_type; }
-            set
-            {
-                if (_baseUser.account_type != value)
-                {
-                    _baseUser.account_type = value;
-                    OnPropertyChanged(nameof(AccountType));
-                }
-            }
-        }
-        public string u_token
-        {
-            get { return _baseUser.u_token; }
-            set
-            {
-                if (_baseUser.u_token != value)
-                {
-                    _baseUser.u_token = value;
-                    OnPropertyChanged(nameof(_baseUser.u_token));
-                }
-            }
-        }
-        public string image_link
-        {
-            get { return _baseUser.image_link; }
-            set
-            {
-                if (_baseUser.image_link != value)
-                {
-                    _baseUser.image_link = value;
-                    OnPropertyChanged(nameof(_baseUser.image_link));
-                }
-            }
-        }
     }
 }
