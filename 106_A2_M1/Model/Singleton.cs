@@ -116,7 +116,7 @@ namespace _106_A2_M1.Model
                 return 0;
             }
         }
-        private async Task<UserDB> GetUserInformationAsync()
+        public async Task<UserDB> GetUserInformationAsync()
         {
             try
             {
@@ -166,14 +166,14 @@ namespace _106_A2_M1.Model
             public string email { get; set; }
             public string family_name { get; set; }
             public string given_name { get; set; }
-            public string dob_ts { get; set; }
+            public int dob_ts { get; set; }
             public int? qrcode_status { get; set; }
             public int issue_count { get; set; }
             public int test_count { get; set; }
             public int vaccine_status { get; set; }
         }
 
-        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
+        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, string nhiNum)
         {
             try
             {
@@ -185,7 +185,7 @@ namespace _106_A2_M1.Model
                     FirstName = firstName,
                     LastName = lastName,
                     DateOfBirth = dob,
-                    NhiNumber = nhiNumber
+                    NhiNumber = nhiNum
                 };
 
                 // Convert the data to a JSON string using JsonConvert.SerializeObject
@@ -227,7 +227,7 @@ namespace _106_A2_M1.Model
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public int DateOfBirth { get; set; }
-            public int NhiNumber { get; set; }
+            public string NhiNumber { get; set; }
         }
 
         public async Task RequestQRCodeAsync()
