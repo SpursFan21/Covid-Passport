@@ -110,6 +110,11 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task CreateAccount()
+        {
+
+        }
+
         protected void getIsolationDate(CovidTest covidTest)
         {
             if (covidTest != null)

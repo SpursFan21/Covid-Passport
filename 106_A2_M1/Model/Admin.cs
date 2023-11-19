@@ -222,6 +222,8 @@ namespace _106_A2_M1.Model
                 if (response != null && response.IsSuccessStatusCode)
                 {
                     Console.WriteLine($"QR Code for user with ID {userId} approved successfully.");
+                    await RetrieveQRCodeImageURLAsync(userId);
+                    await RetrieveQRCodeImageAsync(userId);
                 }
                 else
                 {
