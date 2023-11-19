@@ -24,6 +24,17 @@ namespace _106_A2_M1.ViewModel
         public ICommand LoginCommand { get; set; }
         private BaseUser _baseUser;
 
+        // ViewModel property to access UserDB data
+        private UserDB _userDbData; 
+        public UserDB UserDbData 
+        {     
+            get { return _userDbData; }     
+            set    { _userDbData = value;         
+                OnPropertyChanged(nameof(UserDbData)); // Notify property changed
+            }
+        
+        }
+        
         public string _loginEmail;
         public string LoginEmail
         {
@@ -42,13 +53,12 @@ namespace _106_A2_M1.ViewModel
         public LoginViewModel()
         {
             _baseUser = new BaseUser();
-
             // Set the default frame to WelcomeBackFrame
             CurrentDisplayFrame = new WelcomeBackFrame();
             CurrentDisplayFrame.DataContext = this;
 
-            NavAdminDashboardCommand = new RelayCommand(x => NavigateToPage(new AdminDashboardPage()));
-            NavUserDashboardCommand = new RelayCommand(x => NavigateToPage(new UserDashboardPage()));
+            NavAdminDashboardCommand = new RelayCommand(async x => await PerformAdminLogin());
+            NavUserDashboardCommand = new RelayCommand(async x => await PerformUserLogin());
             NavCreateAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
             WelcomeBackCommand = new RelayCommand(x => NavigateToFrame(new WelcomeBackFrame()));
             LoginCommand = new RelayCommand(async x => await PerformLogin());
@@ -69,11 +79,24 @@ namespace _106_A2_M1.ViewModel
 
         public async Task PerformLogin()
         {
-            MessageBox.Show("Password entered: " + LoginPassword);
             await _baseUser.GetLoginAsync(LoginEmail, LoginPassword);
             SetUserType();
+            
         }
 
+        public async Task PerformAdminLogin()
+        {
+            await _baseUser.GetLoginAsync("admin@admin.com", "gaming");
+            SetUserType();
+
+        }
+
+        public async Task PerformUserLogin()
+        {
+            await _baseUser.GetLoginAsync("test@me.com", "gamer");
+            SetUserType();
+
+        }
         public void SetUserType()
         {
             if (_baseUser.UserType == 1)

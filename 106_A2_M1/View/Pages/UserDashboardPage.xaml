@@ -215,8 +215,7 @@
                         Text="{Binding UserEmail}"
                         Margin="50 3 0 0"
                         FontSize="24"
-                        FontWeight="Bold"
-                        TextAlignment="Center"/>
+                        FontWeight="Bold" />
 
                     <TextBlock
                         Text="NHI NUMBER"
@@ -229,8 +228,7 @@
                         Text="{Binding UserNHI}"
                         Margin="50 3 0 0"
                         FontSize="24"
-                        FontWeight="Bold"
-                        TextAlignment="Center"/>
+                        FontWeight="Bold" />
 
                 </StackPanel>
 

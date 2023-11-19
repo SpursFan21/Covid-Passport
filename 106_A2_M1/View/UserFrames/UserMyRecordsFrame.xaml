@@ -4,9 +4,165 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:_106_A2_M1.View.UserFrames"
+             xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
+             xmlns:converters="clr-namespace:_106_A2_M1.Converters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Hello there" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+             d:DesignHeight="830" d:DesignWidth="1120">
+    <UserControl.Resources>
+        <converters:BoolToResolvedColorConverter x:Key="BoolToResolvedColorConverter" />
+        <converters:BoolToResolvedTextConverter x:Key="BoolToResolvedTextConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Margin="50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Vaccination Status" Grid.Row="0" FontSize="24" FontWeight="Bold"/>
+        <Grid Grid.Row="1" Margin="0 25 0 0" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" HorizontalAlignment="Center">
+                <materialDesign:Card Width="400" >
+                    <StackPanel Margin="25 15">
+                        <TextBlock
+                            Text="Vaccination Dose 1" 
+                            FontWeight="Bold" 
+                            FontSize="24" />
+                        <StackPanel
+                            Visibility="Visible">
+                            <TextBlock
+                                Text="DATE ADMINISTERED"
+                                Margin="0 10 0 0"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="01 Jan 2023"
+                                FontWeight="Bold"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="MANUFACTURER"
+                                Margin="0 5 0 0"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="Pfizer-BioNTech" 
+                                FontWeight="Bold"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="PLACE ADMINISTERED"
+                                Margin="0 5 0 0"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="New Zealand" 
+                                FontWeight="Bold"
+                                FontSize="16" />
+                        </StackPanel>
+                        <TextBlock
+                            Text="PENDING ADMINISTRATION"
+                            Margin="0 -80 0 0"
+                            FontSize="16"
+                            Visibility="Hidden" />
+                    </StackPanel>
+                </materialDesign:Card>
+            </Grid>
+
+            <Grid Grid.Column="1" HorizontalAlignment="Center">
+                <materialDesign:Card Width="400" >
+                    <StackPanel Margin="25 15">
+                        <TextBlock
+                            Text="Vaccination Dose 2" 
+                            FontWeight="Bold" 
+                            FontSize="24" />
+                        <StackPanel
+                            Visibility="Hidden">
+                            <TextBlock
+                                Text="DATE ADMINISTERED"
+                                Margin="0 10 0 0"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="01 Jan 2023"
+                                FontWeight="Bold"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="MANUFACTURER"
+                                Margin="0 5 0 0"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="Pfizer-BioNTech" 
+                                FontWeight="Bold"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="PLACE ADMINISTERED"
+                                Margin="0 5 0 0"
+                                FontSize="16" />
+                            <TextBlock
+                                Text="New Zealand" 
+                                FontWeight="Bold"
+                                FontSize="16" />
+                        </StackPanel>
+                        <TextBlock
+                            Text="PENDING ADMINISTRATION"
+                            Margin="0 -85 0 0"
+                            FontSize="16"
+                            Visibility="Visible" />
+                    </StackPanel>
+                </materialDesign:Card>
+            </Grid>
+        </Grid>
+        
+        <Grid Grid.Row="2" Margin="0 25 0 0">
+            <TextBlock
+                Text="Test History"
+                FontSize="24"
+                FontWeight="Bold" />
+        </Grid>
+
+        <ListView x:Name="testPanel" Grid.Row="3" Margin="0 15 0 0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding TestList}">
+            <!--ItemsSource="{Binding TestList}"-->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <materialDesign:Card Background="White" Padding="15" Margin="0 0 0 10">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <!-- Left column -->
+                                <TextBlock Text="TEST DATE" FontSize="16" Foreground="Black"/>
+                                <TextBlock Text="{Binding Path=test_date}" FontWeight="Bold" FontSize="16"/>
+
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <!-- Right column -->
+                                <TextBlock Text="RESULT" FontSize="16" Foreground="Black"/>
+                                <TextBlock Text="{Binding Path=result}" FontWeight="Bold" FontSize="16"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <!-- Right column -->
+                                <TextBlock Text="TEST TYPE" FontSize="16" Foreground="Black"/>
+                                <TextBlock Text="{Binding Path=test_type}" FontWeight="Bold" FontSize="16"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3">
+                                <!-- Right column -->
+                                <TextBlock Text="ISOLATE UNTIL" FontSize="16" Foreground="Black"/>
+                                <TextBlock Text="10012023" FontWeight="Bold" FontSize="16"/>
+                            </StackPanel>
+                        </Grid>
+                    </materialDesign:Card>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>
