@@ -26,20 +26,19 @@ namespace _106_A2_M1.Model
             set { _userType = value; }
         }
 
-        public UserDB _userInformation;
+        public UserDB _userDB;
 
         // Expose UserDB through a property
-        public UserDB UserInformation
+        public UserDB UserDB
         {
-            get { return _userInformation; }
-            set { _userInformation = value; }
+            get { return _userDB; }
+            set { _userDB = value; }
         }
 
         //data objects
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
-        public UserDB UserDB { get; set; }
       
 
         public async Task GetLoginAsync(string email, string password)
