@@ -166,14 +166,14 @@ namespace _106_A2_M1.Model
             public string email { get; set; }
             public string family_name { get; set; }
             public string given_name { get; set; }
-            public string dob_ts { get; set; }
+            public int dob_ts { get; set; }
             public int? qrcode_status { get; set; }
             public int issue_count { get; set; }
             public int test_count { get; set; }
             public int vaccine_status { get; set; }
         }
 
-        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, string dob, int nhiNum)
+        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, string nhiNum)
         {
             try
             {
@@ -226,8 +226,8 @@ namespace _106_A2_M1.Model
             public string Password { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
-            public string DateOfBirth { get; set; }
-            public int NhiNumber { get; set; }
+            public int DateOfBirth { get; set; }
+            public string NhiNumber { get; set; }
         }
 
         public async Task RequestQRCodeAsync()

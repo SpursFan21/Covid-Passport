@@ -110,18 +110,18 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, string dob, int nhiNum)
+        public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, string nhiNum)
         {
             try
             {
                 // Validate input parameters
-                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(dob))
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
                 {
-                    throw new ArgumentException("Email, first name, last name, and date of birth cannot be null or empty.");
+                    throw new ArgumentException("Email, first name, and last name cannot be null or empty.");
                 }
+
                 // Call the CreateAccountAsync method in SingletonClient
                 UserDB user = await SingletonClient.Instance.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNum);
-
 
                 // Set the unique data member using the class name
                 BaseUser.password = password;
@@ -133,7 +133,7 @@ namespace _106_A2_M1.Model
                 userDB.email = email;
                 userDB.first_name = firstName;
                 userDB.last_name = lastName;
-                userDB.dob = dob;
+                userDB.dob = dob; // Assuming dob is already an int
                 userDB.nhi_num = nhiNum;
 
                 // Perform any additional logic for account creation
@@ -144,8 +144,6 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-
-
 
         protected void getIsolationDate(CovidTest covidTest)
         {

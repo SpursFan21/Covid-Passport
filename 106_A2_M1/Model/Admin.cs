@@ -30,7 +30,7 @@ namespace _106_A2_M1.Model
             usersWithQR = new List<UserDB>(); // Initialize the usersWithQR list
         }
 
-        public override void UpdateUserDetails(string email, string firstName, string lastName, string dateOfBirth, int nhiNumber)
+        public void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, string nhiNumber)
         {
             // Validate input parameters
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
