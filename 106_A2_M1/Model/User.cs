@@ -9,10 +9,7 @@ namespace _106_A2_M1.Model
 {
     public class User : BaseUser
     {
-        public string Password { get; set; }
-
         private List<Issue> userIssues;
-
 
         public async Task RequestQRAsync()
         {
@@ -48,14 +45,14 @@ namespace _106_A2_M1.Model
             //ship to backend TBC
 
             // Custom logic for updating the password in the User class
-            Password = newPassword;
+            password = newPassword;
             Console.WriteLine($"Updated password for email: {email}");
         }
 
         private bool ValidateCurrentPassword(string currentPassword)
         {
             // Replace this with actual password validation logic
-            return Password == currentPassword;
+            return password == currentPassword;
         }
         internal static void SetPassword(string value)
         {

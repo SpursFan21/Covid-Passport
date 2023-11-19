@@ -15,7 +15,8 @@ namespace _106_A2_M1.Model
         public string u_token { get; set; }
         public string image_link { get; set; }
         public int IsolationDate { get; set; }
-       
+        public static string password { get; set; }
+
         // Private field for UserType
         private int _userType = 0;
 
@@ -109,10 +110,39 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task CreateAccount()
+        public async Task CreateAccount(string email, string password, string firstName, string lastName, string dob, int nhiNum)
         {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(dob))
+                {
+                    throw new ArgumentException("Email, first name, last name, and date of birth cannot be null or empty.");
+                }
 
+                // Set the unique data member using the class name
+                BaseUser.password = password;
+
+                // Create an instance of UserDB
+                UserDB userDB = new UserDB();
+
+                // Store the user information in UserDB
+                userDB.email = email;
+                userDB.first_name = firstName;
+                userDB.last_name = lastName;
+                userDB.dob = dob;
+                userDB.nhi_num = nhiNum;
+
+                // Perform any additional logic for account creation
+                Console.WriteLine("Account created successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
+
+
 
         protected void getIsolationDate(CovidTest covidTest)
         {
