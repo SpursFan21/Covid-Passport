@@ -15,7 +15,7 @@ namespace _106_A2_M1.Model
         public string u_token { get; set; }
         public string image_link { get; set; }
         public int IsolationDate { get; set; }
-        public string password { get; set; }
+        public static string password { get; set; }
 
         // Private field for UserType
         private int _userType = 0;
