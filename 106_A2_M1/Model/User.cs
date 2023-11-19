@@ -11,11 +11,6 @@ namespace _106_A2_M1.Model
     {
         private List<Issue> userIssues;
 
-        public void GetUserDb()
-        {
-
-        }
-
         public async Task RequestQRAsync()
         {
             // Update qr_status to 1 which means they want QR aproval from Admin

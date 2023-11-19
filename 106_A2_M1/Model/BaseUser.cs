@@ -120,17 +120,18 @@ namespace _106_A2_M1.Model
                     throw new ArgumentException("Email, first name, last name, and date of birth cannot be null or empty.");
                 }
 
-                // You can perform additional validation if needed
-
-                //unique data member
+                // Set the unique data member using the class name
                 BaseUser.password = password;
 
+                // Create an instance of UserDB
+                UserDB userDB = new UserDB();
+
                 // Store the user information in UserDB
-                UserDB.email = email;
-                UserDB.first_name = firstName;
-                UserDB.last_name = lastName;
-                UserDB.dob = dob;
-                UserDB.nhi_num = nhiNum;
+                userDB.email = email;
+                userDB.first_name = firstName;
+                userDB.last_name = lastName;
+                userDB.dob = dob;
+                userDB.nhi_num = nhiNum;
 
                 // Perform any additional logic for account creation
                 Console.WriteLine("Account created successfully!");
@@ -140,6 +141,8 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+
+
 
         protected void getIsolationDate(CovidTest covidTest)
         {
