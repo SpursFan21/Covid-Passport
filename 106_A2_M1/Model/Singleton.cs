@@ -173,7 +173,7 @@ namespace _106_A2_M1.Model
             public int vaccine_status { get; set; }
         }
 
-        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, int nhiNumber)
+        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, string dob, int nhiNum)
         {
             try
             {
@@ -185,7 +185,7 @@ namespace _106_A2_M1.Model
                     FirstName = firstName,
                     LastName = lastName,
                     DateOfBirth = dob,
-                    NhiNumber = nhiNumber
+                    NhiNumber = nhiNum
                 };
 
                 // Convert the data to a JSON string using JsonConvert.SerializeObject
@@ -226,7 +226,7 @@ namespace _106_A2_M1.Model
             public string Password { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
-            public int DateOfBirth { get; set; }
+            public string DateOfBirth { get; set; }
             public int NhiNumber { get; set; }
         }
 

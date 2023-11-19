@@ -110,7 +110,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task CreateAccount(string email, string password, string firstName, string lastName, string dob, int nhiNum)
+        public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, string dob, int nhiNum)
         {
             try
             {
@@ -119,6 +119,9 @@ namespace _106_A2_M1.Model
                 {
                     throw new ArgumentException("Email, first name, last name, and date of birth cannot be null or empty.");
                 }
+                // Call the CreateAccountAsync method in SingletonClient
+                UserDB user = await SingletonClient.Instance.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNum);
+
 
                 // Set the unique data member using the class name
                 BaseUser.password = password;
