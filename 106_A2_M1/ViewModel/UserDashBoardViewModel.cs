@@ -24,6 +24,7 @@ namespace _106_A2_M1.ViewModel
         public string UserFullName { get; private set; }
         private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
         private UserDB _userDB; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
+        private BaseUser _baseUser;
         private Dictionary<string, object> _userData;
 
         public Dictionary<string, object> UserData
@@ -38,15 +39,15 @@ namespace _106_A2_M1.ViewModel
                 }
             }
         }
-        /*
+        
         public string FirstName
         {
-            get => User.UserDB.first_name;
+            get => _userDB.first_name;
             set
             {
-                if (User.UserDB.first_name != value)
+                if (_userDB.first_name != value)
                 {
-                    User.UserDB.first_name = value;
+                    _userDB.first_name = value;
                     OnPropertyChanged(nameof(FirstName));
                 }
             }
@@ -54,25 +55,25 @@ namespace _106_A2_M1.ViewModel
 
         public string LastName
         {
-            get => User.UserDB.last_name;
+            get => _userDB.last_name;
             set
             {
-                if (User.UserDB.last_name != value)
+                if (_userDB.last_name != value)
                 {
-                    User.UserDB.last_name = value;
+                    _userDB.last_name = value;
                     OnPropertyChanged(nameof(LastName));
                 }
             }
         }
 
-        public string UserDOB
+        public int UserDOB
         {
-            get => User.UserDB.dob;
+            get => _userDB.dob;
             set
             {
-                if (User.UserDB.dob != value)
+                if (_userDB.dob != value)
                 {
-                    User.UserDB.dob = value;
+                    _userDB.dob = value;
                     OnPropertyChanged(nameof(UserDOB));
                 }
             }
@@ -80,25 +81,25 @@ namespace _106_A2_M1.ViewModel
 
         public string UserEmail
         {
-            get => User.UserDB.email;
+            get => _userDB.email;
             set
             {
-                if (User.UserDB.email != value)
+                if (_userDB.email != value)
                 {
-                    User.UserDB.email = value;
+                    _userDB.email = value;
                     OnPropertyChanged(nameof(UserEmail));
                 }
             }
         }
 
-        public int UserNHI
+        public string UserNHI
         {
-            get => User.UserDB.nhi_num;
+            get => _userDB.nhi_num;
             set
             {
-                if (User.UserDB.nhi_num != value)
+                if (_userDB.nhi_num != value)
                 {
-                    User.UserDB.nhi_num = value;
+                    _userDB.nhi_num = value;
                     OnPropertyChanged(nameof(UserNHI));
                 }
             }
@@ -106,18 +107,18 @@ namespace _106_A2_M1.ViewModel
 
         public int QRStatus
         {
-            get => User.UserDB.qr_status;
+            get => _userDB.qr_status;
             set
             {
-                if(User.UserDB.qr_status != value)
+                if(_userDB.qr_status != value)
                 {
-                    User.UserDB.qr_status = value;
+                    _userDB.qr_status = value;
                     OnPropertyChanged(nameof(QRStatus));
                 }
             }
         }
 
-    */
+    
 
         private ObservableCollection<CovidTest> _testList = new ObservableCollection<CovidTest>();
         public ObservableCollection<CovidTest> TestList
@@ -133,8 +134,8 @@ namespace _106_A2_M1.ViewModel
         {
             _user = new User(); // Initialize a new User instance MODEL to ViewModel Pipeline
             _userDB = new UserDB(); // Might not need these
-
-            UserData = _GetUserData(); // Loads userDb into this instance
+            _baseUser = new BaseUser();
+            InitializeAsync(); // Loads userDb into this instance
             /*
             int id = (int)UserData[nameof(id)];
             string email = (string)UserData[nameof(email)];
@@ -196,9 +197,14 @@ namespace _106_A2_M1.ViewModel
             //OnPropertyChanged(nameof(UserFullName));
         }
 
-        private Dictionary<string, object> _GetUserData()
+        private async void InitializeAsync()
         {
-            return _userDB.GetUserData();
+            await GetUserDataAsync();
+        }
+
+        private async Task GetUserDataAsync()
+        {
+            _userDB = await _baseUser.RetrieveUserInformationAsync();
         }
     }
 }
