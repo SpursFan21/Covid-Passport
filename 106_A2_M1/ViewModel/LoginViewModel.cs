@@ -139,9 +139,7 @@ namespace _106_A2_M1.ViewModel
                 var passwordBox = (PasswordBox)sender;
                 string password = passwordBox.Password;
 
-                // Assuming you have an instance of your ViewModel (viewModel) or Model (model)
-                // viewModel.HandlePassword(password); // Call a method in ViewModel
-                // model.HandlePassword(password); // Call a method in Model
+                
             }
         }
 

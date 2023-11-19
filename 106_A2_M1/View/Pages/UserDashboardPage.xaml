@@ -196,7 +196,7 @@
                         TextAlignment="Center"/>
 
                     <TextBlock
-                        Text="{Binding UserFullName}"
+                        Text="{Binding Path=UserData[first_name]}"
                         Margin="0 25 0 0"
                         FontSize="24"
                         FontWeight="Bold"
@@ -210,7 +210,7 @@
                         />
 
                     <TextBlock
-                        Text="{Binding UserDOB}"
+                        Text="{Binding Path=UserData[dob]}"
                         Margin="50 3 0 0"
                         FontSize="24"
                         FontWeight="Bold"/>
@@ -223,7 +223,7 @@
                         />
 
                     <TextBlock
-                        Text="{Binding UserEmail}"
+                        Text="{Binding Path=UserData[email]}"
                         Margin="50 3 0 0"
                         FontSize="24"
                         FontWeight="Bold" />
@@ -236,7 +236,7 @@
                         />
 
                     <TextBlock
-                        Text="{Binding UserNHI}"
+                        Text="{Binding Path=UserData[nhi_num]}"
                         Margin="50 3 0 0"
                         FontSize="24"
                         FontWeight="Bold" />

@@ -24,7 +24,21 @@ namespace _106_A2_M1.ViewModel
         public string UserFullName { get; private set; }
         private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
         private UserDB _userDB; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
+        private Dictionary<string, object> _userData;
 
+        public Dictionary<string, object> UserData
+        {
+            get => _userData;
+            set
+            {
+                if(_userData != value)
+                {
+                    _userData = value;
+                    OnPropertyChanged(nameof(UserData));
+                }
+            }
+        }
+        /*
         public string FirstName
         {
             get => User.UserDB.first_name;
@@ -103,7 +117,7 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-
+    */
 
         private ObservableCollection<CovidTest> _testList = new ObservableCollection<CovidTest>();
         public ObservableCollection<CovidTest> TestList
@@ -118,10 +132,25 @@ namespace _106_A2_M1.ViewModel
         public UserDashboardViewModel()
         {
             _user = new User(); // Initialize a new User instance MODEL to ViewModel Pipeline
-            UpdateUserFullName();
+            _userDB = new UserDB(); // Might not need these
+
+            UserData = _GetUserData(); // Loads userDb into this instance
+            /*
+            int id = (int)UserData[nameof(id)];
+            string email = (string)UserData[nameof(email)];
+            string first_name = (string)UserData[nameof(first_name)];
+            string last_name = (string)UserData[nameof(last_name)];
+            DateTime dob = (DateTime)UserData[nameof(dob)];
+            string nhi_num = (string)UserData[nameof(nhi_num)];
+            bool qr_status = (bool)UserData[nameof(qr_status)];
+            int issue_ct = (int)UserData[nameof(issue_ct)];
+            int test_ct = (int)UserData[nameof(test_ct)];
+            string vaccine_status = (string)UserData[nameof(vaccine_status)];
+            UpdateUserFullName(); 
+            */
 
             FrameTitle = "My Vaccine Pass";
-            NavigateToFrame(new UserMyVaccinePassFrame());
+            NavigateToFrame(new UserMyVaccinePassFrame_QR0());
 
             // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
@@ -133,7 +162,7 @@ namespace _106_A2_M1.ViewModel
             NavMyVaccinePassCommand = new RelayCommand(x =>
             {
                 FrameTitle = "My Vaccine Pass";
-                NavigateToFrame(new UserMyVaccinePassFrame());
+                NavigateToFrame(new UserMyVaccinePassFrame_QR0());
             });
             
             // Test list for TESTING PURPOSES ONLY
@@ -161,11 +190,15 @@ namespace _106_A2_M1.ViewModel
             TestList.Add(test);
         }
 
-
         private void UpdateUserFullName()
         {
-            UserFullName = $"{FirstName} {LastName}";
-            OnPropertyChanged(nameof(UserFullName));
+            //UserFullName = $"{FirstName} {LastName}";
+            //OnPropertyChanged(nameof(UserFullName));
+        }
+
+        private Dictionary<string, object> _GetUserData()
+        {
+            return _userDB.GetUserData();
         }
     }
 }
