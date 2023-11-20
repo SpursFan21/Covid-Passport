@@ -668,6 +668,38 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<List<CovidTest>> GetUserTestsAsync(string id) // Admin Call
+        {
+            try
+            {
+                // Construct the URL for the GET request to retrieve tests for a specific user
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/tests/get_user/{id}";
+
+                // Make a GET request to retrieve the test information for the selected user
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a List<CovidTest> object
+                    List<CovidTest> userTests = JsonConvert.DeserializeObject<List<CovidTest>>(content);
+
+                    return userTests;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving user test information: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving user test information: {ex.Message}");
+                return null;
+            }
+        }
 
 
 

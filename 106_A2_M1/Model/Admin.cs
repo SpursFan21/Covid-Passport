@@ -567,5 +567,41 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+
+        public async Task<List<CovidTest>> GetUserTestsAsync(string id)
+        {
+            try
+            {
+                // Use SingletonClient to get user test information through a GET request
+                List<CovidTest> userTests = await SingletonClient.Instance.GetUserTestsAsync(id);
+
+                if (userTests != null && userTests.Count > 0)
+                {
+                    Console.WriteLine("User Test Information:");
+
+                    foreach (var test in userTests)
+                    {
+                        Console.WriteLine($"Test ID: {test.test_id}");
+                        Console.WriteLine($"Test Date: {test.test_date}");
+                        Console.WriteLine($"Result: {test.result}");
+                        Console.WriteLine($"Test Type: {test.test_type}");
+                        Console.WriteLine();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No test information available for the user.");
+                }
+
+                return userTests;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
+
     }
 }
