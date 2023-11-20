@@ -162,12 +162,13 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-        public async Task GetVaccinationsAsync()
+
+        public async Task GetUserVaccinationsAsync()
         {
             try
             {
                 // Use SingletonClient to get vaccination information through a GET request
-                List<Vaccine> vaccinationData = await SingletonClient.Instance.GetVaccinationsAsync();
+                List<Vaccine> vaccinationData = await SingletonClient.Instance.GetUserVaccinationsAsync();
 
                 if (vaccinationData != null && vaccinationData.Count > 0)
                 {
@@ -209,7 +210,6 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-
 
 
     }
