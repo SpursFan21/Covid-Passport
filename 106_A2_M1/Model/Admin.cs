@@ -602,6 +602,44 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<List<UserDB>> GetListOfUsersAsync(string searchQuery)
+        {
+            try
+            {
+                // Use SingletonClient to get the list of users with a search query through a GET request
+                List<UserDB> listOfUsers = await SingletonClient.Instance.GetListOfUsersAsync(searchQuery);
+
+                if (listOfUsers != null && listOfUsers.Count > 0)
+                {
+                    // Display user information
+                    foreach (var user in listOfUsers)
+                    {
+                        Console.WriteLine($"User ID: {user.id}");
+                        Console.WriteLine($"Email: {user.email}");
+                        Console.WriteLine($"First Name: {user.first_name}");
+                        Console.WriteLine($"Last Name: {user.last_name}");
+                        Console.WriteLine($"Date of Birth: {user.dob}");
+                        Console.WriteLine($"NHI Number: {user.nhi_num}");
+                        Console.WriteLine($"QR Status: {user.qr_status}");
+                        Console.WriteLine($"Issue Count: {user.issue_ct}");
+                        Console.WriteLine($"Test Count: {user.test_ct}");
+                        Console.WriteLine($"Vaccine Status: {user.vaccine_status}");
+                        Console.WriteLine("=======================================");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve the list of users from the backend.");
+                }
+
+                return listOfUsers;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
 
     }
 }

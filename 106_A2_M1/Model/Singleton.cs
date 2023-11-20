@@ -701,6 +701,38 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<List<UserDB>> GetListOfUsersAsync(string searchQuery)
+        {
+            try
+            {
+                // Construct the URL for the GET request to retrieve the list of users with a search query
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/users/list?search={Uri.EscapeDataString(searchQuery)}";
+
+                // Make a GET request to retrieve the list of users
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a List<UserDB> object
+                    List<UserDB> listOfUsers = JsonConvert.DeserializeObject<List<UserDB>>(content);
+
+                    return listOfUsers;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving the list of users: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the list of users: {ex.Message}");
+                return null;
+            }
+        }
 
 
         // Dispose method to clean up resources when the application exits
