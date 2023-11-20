@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              xmlns:local="clr-namespace:_106_A2_M1.View"
@@ -57,8 +58,54 @@
                     <ComboBoxItem Content="Polymerase Chain Reaction (PCR)" />
                 </ComboBox>
             </Border>
+            
+            <TextBlock
+                Text="Date"
+                Margin="0 20 0 5"
+                FontSize="20"
+                FontWeight="SemiBold" />
+            <Border
+                Background="White"
+                CornerRadius="5"
+                Margin="2"
+                >
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
+                </Border.Effect>
+                <DatePicker 
+                    Margin="5"
+                    FontSize="20"
+                    Background="White"
+                    SelectedDate="{x:Static sys:DateTime.Now}" 
+                    />
+            </Border>
 
+            <TextBlock
+                Text="Result"
+                Margin="0 20 0 5"
+                FontSize="20"
+                FontWeight="SemiBold" />
 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <RadioButton Content="Positive"
+                             Grid.Column="0"
+                             HorizontalAlignment="Stretch" 
+                             Height="50"
+                             FontSize="24"
+                             Foreground="Black"
+                             Style="{StaticResource MenuButtonTheme}"/>
+                <RadioButton Content="Negative" 
+                             Grid.Column="1"
+                             HorizontalAlignment="Stretch"
+                             Height="50"
+                             FontSize="24"
+                             Foreground="Black"
+                             Style="{StaticResource MenuButtonTheme}"/>
+            </Grid>
         </StackPanel>
     </materialDesign:Card>
 </UserControl>

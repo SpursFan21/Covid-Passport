@@ -155,7 +155,7 @@ namespace _106_A2_M1.ViewModel
             _baseUser = new BaseUser();
 
             qrnum = 2; // TESTING VARIABLE
-            //InitializeAsync(); // Loads userDb into this instance
+            InitializeAsync(); // Loads userDb into this instance
             /*
             int id = (int)UserData[nameof(id)];
             string email = (string)UserData[nameof(email)];
@@ -227,7 +227,7 @@ namespace _106_A2_M1.ViewModel
 
         private async Task GetUserDataAsync()
         {
-            _userDB = await _baseUser.RetrieveUserInformationAsync();
+            _userDB = await BaseUser.RetrieveUserInformationAsync();
         }
 
         private void ShowQRFrame()

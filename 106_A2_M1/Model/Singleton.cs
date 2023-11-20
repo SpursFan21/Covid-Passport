@@ -121,7 +121,7 @@ namespace _106_A2_M1.Model
             try
             {
                 // Make a request to your backend API to retrieve user information
-                HttpResponseMessage userResponse = await this._client.GetAsync("https://cse106-backend.d3rpp.dev/api/user");
+                HttpResponseMessage userResponse = await this._client.GetAsync("https://cse106-backend.d3rpp.dev/api/users/profile");
 
                 if (userResponse.IsSuccessStatusCode)
                 {
