@@ -518,7 +518,34 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
+        public async Task<bool> AddVaccinationAsync(Vaccine firstDose, Vaccine secondDose)
+        {
+            try
+            {
+                // Construct the URL for the POST request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/vaccinations/add";
 
+                // Create an object containing the vaccination data
+                var vaccinationData = new
+                {
+                    first_dose = firstDose,
+                    second_dose = secondDose
+                };
+
+                // Convert the data to StringContent
+                var stringContent = new StringContent(JsonConvert.SerializeObject(vaccinationData), Encoding.UTF8, "application/json");
+
+                // Make a POST request to add vaccination details
+                HttpResponseMessage response = await _client.PostAsync(apiUrl, stringContent);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while adding vaccination details: {ex.Message}");
+                return false;
+            }
+        }
 
 
         // Dispose method to clean up resources when the application exits
