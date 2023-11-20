@@ -27,18 +27,19 @@ namespace _106_A2_M1.ViewModel
         private BaseUser _baseUser;
         private Dictionary<string, object> _userData;
 
+        // 
         private int qrnum;
-        private UserControl _selectedUserControl;
+        private UserControl _qrUserControl;
 
-        public UserControl SelectedUserControl
+        public UserControl QRUserControl
         {
-            get { return _selectedUserControl; }
+            get { return _qrUserControl; }
             set
             {
-                if (_selectedUserControl != value)
+                if (_qrUserControl != value)
                 {
-                    _selectedUserControl = value;
-                    OnPropertyChanged(nameof(SelectedUserControl));
+                    _qrUserControl = value;
+                    OnPropertyChanged(nameof(QRUserControl));
                 }
             }
         }
@@ -153,7 +154,7 @@ namespace _106_A2_M1.ViewModel
             _userDB = new UserDB();
             _baseUser = new BaseUser();
 
-            qrnum = 1; // TESTING VARIABLE
+            qrnum = 2; // TESTING VARIABLE
             //InitializeAsync(); // Loads userDb into this instance
             /*
             int id = (int)UserData[nameof(id)];
@@ -236,15 +237,15 @@ namespace _106_A2_M1.ViewModel
                 // Set display frame based on user QRStatus
                 if (qrnum == 0)
                 {
-                    SelectedUserControl = new UserMyVaccinePassFrame_QR0();
+                    QRUserControl = new UserMyVaccinePassFrame_QR0();
                 }
                 else if (qrnum == 1)
                 {
-                    SelectedUserControl = new UserMyVaccinePassFrame_QR1();
+                    QRUserControl = new UserMyVaccinePassFrame_QR1();
                 }
                 else if (qrnum == 2)
                 {
-                    SelectedUserControl = new UserMyVaccinePassFrame_QR2();
+                    QRUserControl = new UserMyVaccinePassFrame_QR2();
                 }
                 else
                 {

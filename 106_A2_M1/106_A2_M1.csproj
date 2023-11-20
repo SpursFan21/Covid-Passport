@@ -95,6 +95,9 @@
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\UserDashboardViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\PopupWindows\AddTestResultPopup.xaml.cs">
+      <DependentUpon>AddTestResultPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AdminFrames\AdminIssueManagementFrame.xaml.cs">
       <DependentUpon>AdminIssueManagementFrame.xaml</DependentUpon>
     </Compile>
@@ -150,7 +153,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Theme\DropBoxTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Theme\MenuButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PopupWindows\AddTestResultPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,7 +21,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid>
-            <ContentControl Content="{Binding SelectedUserControl}" />
+            <ContentControl Content="{Binding QRUserControl}" />
         </Grid>
         <!--
         <Frame x:Name="vaccinePassFrame"
