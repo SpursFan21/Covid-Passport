@@ -72,7 +72,7 @@ namespace _106_A2_M1.Model
 
         public void DeleteVaccine() //TBC
         {
-           
+
         }
 
 
@@ -93,7 +93,7 @@ namespace _106_A2_M1.Model
 
             if (selectedUser != null)
             {
-               
+
                 Console.WriteLine("Enter the dose ID:");
                 string doseId = Console.ReadLine();
 
@@ -633,6 +633,41 @@ namespace _106_A2_M1.Model
                 }
 
                 return listOfUsers;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<UserDB> GetProfileByIDAsync(string userId)
+        {
+            try
+            {
+                // Use SingletonClient to get the user profile information through a GET request
+                UserDB userProfile = await SingletonClient.Instance.GetProfileByIDAsync(userId);
+
+                if (userProfile != null)
+                {
+                    Console.WriteLine("User Profile Information:");
+                    Console.WriteLine($"User ID: {userProfile.id}");
+                    Console.WriteLine($"Email: {userProfile.email}");
+                    Console.WriteLine($"First Name: {userProfile.first_name}");
+                    Console.WriteLine($"Last Name: {userProfile.last_name}");
+                    Console.WriteLine($"Date of Birth: {userProfile.dob}");
+                    Console.WriteLine($"NHI Number: {userProfile.nhi_num}");
+                    Console.WriteLine($"QR Status: {userProfile.qr_status}");
+                    Console.WriteLine($"Issue Count: {userProfile.issue_ct}");
+                    Console.WriteLine($"Test Count: {userProfile.test_ct}");
+                    Console.WriteLine($"Vaccine Status: {userProfile.vaccine_status}");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve user profile from the backend.");
+                }
+
+                return userProfile;
             }
             catch (Exception ex)
             {
