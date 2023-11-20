@@ -1,4 +1,6 @@
-﻿using System;
+﻿using _106_A2_M1.Model;
+using _106_A2_M1.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,13 @@ namespace _106_A2_M1.View.Pages
     /// </summary>
     public partial class UserDashboardPage : Page
     {
-        public UserDashboardPage()
+        private UserDB uDB;
+        public UserDashboardPage(UserDB _uDB)
         {
+            uDB = new UserDB();
+            uDB = _uDB;
             InitializeComponent();
+            DataContext = new UserDashboardViewModel(uDB);
         }
     }
 }

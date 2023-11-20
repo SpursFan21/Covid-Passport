@@ -23,17 +23,30 @@ namespace _106_A2_M1.ViewModel
 
         public string UserFullName { get; private set; }
         private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
-        private UserDB _userDB; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
-        private BaseUser _baseUser;
-        private Dictionary<string, object> _userData;
+        private UserDB _userData; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
+        
+        public UserDB User_Data
+        {
+            get => _userData;
 
-        // 
+            set
+            {
+                if(_userData != value)
+                {
+                    _userData = value;
+                    OnPropertyChanged(nameof(User_Data));
+                }
+            }
+        }
+        private BaseUser _baseUser;
+
+        
         private int qrnum;
         private UserControl _qrUserControl;
 
         public UserControl QRUserControl
         {
-            get { return _qrUserControl; }
+            get => _qrUserControl;
             set
             {
                 if (_qrUserControl != value)
@@ -43,28 +56,15 @@ namespace _106_A2_M1.ViewModel
                 }
             }
         }
-
-        public Dictionary<string, object> UserData
-        {
-            get => _userData;
-            set
-            {
-                if(_userData != value)
-                {
-                    _userData = value;
-                    OnPropertyChanged(nameof(UserData));
-                }
-            }
-        }
         
         public string FirstName
         {
-            get => _userDB.first_name;
+            get => User_Data.first_name;
             set
             {
-                if (_userDB.first_name != value)
+                if (User_Data.first_name != value)
                 {
-                    _userDB.first_name = value;
+                    User_Data.first_name = value;
                     OnPropertyChanged(nameof(FirstName));
                 }
             }
@@ -72,12 +72,12 @@ namespace _106_A2_M1.ViewModel
 
         public string LastName
         {
-            get => _userDB.last_name;
+            get => User_Data.last_name;
             set
             {
-                if (_userDB.last_name != value)
+                if (User_Data.last_name != value)
                 {
-                    _userDB.last_name = value;
+                    User_Data.last_name = value;
                     OnPropertyChanged(nameof(LastName));
                 }
             }
@@ -85,12 +85,12 @@ namespace _106_A2_M1.ViewModel
 
         public int UserDOB
         {
-            get => _userDB.dob;
+            get => User_Data.dob;
             set
             {
-                if (_userDB.dob != value)
+                if (User_Data.dob != value)
                 {
-                    _userDB.dob = value;
+                    User_Data.dob = value;
                     OnPropertyChanged(nameof(UserDOB));
                 }
             }
@@ -98,12 +98,12 @@ namespace _106_A2_M1.ViewModel
 
         public string UserEmail
         {
-            get => _userDB.email;
+            get => User_Data.email;
             set
             {
-                if (_userDB.email != value)
+                if (User_Data.email != value)
                 {
-                    _userDB.email = value;
+                    User_Data.email = value;
                     OnPropertyChanged(nameof(UserEmail));
                 }
             }
@@ -111,25 +111,25 @@ namespace _106_A2_M1.ViewModel
 
         public string UserNHI
         {
-            get => _userDB.nhi_num;
+            get => User_Data.nhi_num;
             set
             {
-                if (_userDB.nhi_num != value)
+                if (User_Data.nhi_num != value)
                 {
-                    _userDB.nhi_num = value;
+                    User_Data.nhi_num = value;
                     OnPropertyChanged(nameof(UserNHI));
                 }
             }
         }
-
+        
         public int QRStatus
         {
-            get => _userDB.qr_status;
+            get => User_Data.qr_status;
             set
             {
-                if(_userDB.qr_status != value)
+                if(User_Data.qr_status != value)
                 {
-                    _userDB.qr_status = value;
+                    User_Data.qr_status = value;
                     OnPropertyChanged(nameof(QRStatus));
                 }
             }
@@ -147,28 +147,16 @@ namespace _106_A2_M1.ViewModel
                 OnPropertyChanged(nameof(TestList));
             }
         }
-        public UserDashboardViewModel()
+        public UserDashboardViewModel(UserDB _uDB)
         {
             // Initialize MODEL instances to ViewModel Pipeline
-            _user = new User(); 
-            _userDB = new UserDB();
+            _user = new User();
+            _userData = new UserDB();
+            _userData = _uDB;
             _baseUser = new BaseUser();
 
             qrnum = 2; // TESTING VARIABLE
-            InitializeAsync(); // Loads userDb into this instance
-            /*
-            int id = (int)UserData[nameof(id)];
-            string email = (string)UserData[nameof(email)];
-            string first_name = (string)UserData[nameof(first_name)];
-            string last_name = (string)UserData[nameof(last_name)];
-            DateTime dob = (DateTime)UserData[nameof(dob)];
-            string nhi_num = (string)UserData[nameof(nhi_num)];
-            bool qr_status = (bool)UserData[nameof(qr_status)];
-            int issue_ct = (int)UserData[nameof(issue_ct)];
-            int test_ct = (int)UserData[nameof(test_ct)];
-            string vaccine_status = (string)UserData[nameof(vaccine_status)];
-            UpdateUserFullName(); 
-            */
+            //InitializeAsync(); // Loads userDb into this instance
 
             // Startup display for user login
             FrameTitle = "My Vaccine Pass";
@@ -227,7 +215,7 @@ namespace _106_A2_M1.ViewModel
 
         private async Task GetUserDataAsync()
         {
-            _userDB = await BaseUser.RetrieveUserInformationAsync();
+            User_Data = await BaseUser.RetrieveUserInformationAsync();
         }
 
         private void ShowQRFrame()
