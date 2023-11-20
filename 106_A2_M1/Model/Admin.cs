@@ -72,7 +72,7 @@ namespace _106_A2_M1.Model
 
         public void DeleteVaccine() //TBC
         {
-           
+
         }
 
 
@@ -93,7 +93,7 @@ namespace _106_A2_M1.Model
 
             if (selectedUser != null)
             {
-               
+
                 Console.WriteLine("Enter the dose ID:");
                 string doseId = Console.ReadLine();
 
@@ -519,5 +519,162 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
+
+        public async Task GetVaccinationsAsync()
+        {
+            try
+            {
+                // Use SingletonClient to get vaccination information through a GET request
+                List<Vaccine> vaccinationData = await SingletonClient.Instance.GetVaccinationsAsync();
+
+                if (vaccinationData != null && vaccinationData.Count > 0)
+                {
+                    // Check if the user has received the first dose
+                    if (vaccinationData.Count >= 1)
+                    {
+                        Console.WriteLine("First Dose Information:");
+                        Console.WriteLine($"Dose ID: {vaccinationData[0].dose_id}");
+                        Console.WriteLine($"Date Administered: {vaccinationData[0].date_administered}");
+                        Console.WriteLine($"Brand: {vaccinationData[0].brand}");
+                        Console.WriteLine($"Location: {vaccinationData[0].location}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No information available for the first dose.");
+                    }
+
+                    // Check if the user has received the second dose
+                    if (vaccinationData.Count >= 2)
+                    {
+                        Console.WriteLine("\nSecond Dose Information:");
+                        Console.WriteLine($"Dose ID: {vaccinationData[1].dose_id}");
+                        Console.WriteLine($"Date Administered: {vaccinationData[1].date_administered}");
+                        Console.WriteLine($"Brand: {vaccinationData[1].brand}");
+                        Console.WriteLine($"Location: {vaccinationData[1].location}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nNo information available for the second dose.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve vaccination information from the backend.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task<List<CovidTest>> GetUserTestsAsync(string id)
+        {
+            try
+            {
+                // Use SingletonClient to get user test information through a GET request
+                List<CovidTest> userTests = await SingletonClient.Instance.GetUserTestsAsync(id);
+
+                if (userTests != null && userTests.Count > 0)
+                {
+                    Console.WriteLine("User Test Information:");
+
+                    foreach (var test in userTests)
+                    {
+                        Console.WriteLine($"Test ID: {test.test_id}");
+                        Console.WriteLine($"Test Date: {test.test_date}");
+                        Console.WriteLine($"Result: {test.result}");
+                        Console.WriteLine($"Test Type: {test.test_type}");
+                        Console.WriteLine();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No test information available for the user.");
+                }
+
+                return userTests;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<UserDB>> GetListOfUsersAsync(string searchQuery)
+        {
+            try
+            {
+                // Use SingletonClient to get the list of users with a search query through a GET request
+                List<UserDB> listOfUsers = await SingletonClient.Instance.GetListOfUsersAsync(searchQuery);
+
+                if (listOfUsers != null && listOfUsers.Count > 0)
+                {
+                    // Display user information
+                    foreach (var user in listOfUsers)
+                    {
+                        Console.WriteLine($"User ID: {user.id}");
+                        Console.WriteLine($"Email: {user.email}");
+                        Console.WriteLine($"First Name: {user.first_name}");
+                        Console.WriteLine($"Last Name: {user.last_name}");
+                        Console.WriteLine($"Date of Birth: {user.dob}");
+                        Console.WriteLine($"NHI Number: {user.nhi_num}");
+                        Console.WriteLine($"QR Status: {user.qr_status}");
+                        Console.WriteLine($"Issue Count: {user.issue_ct}");
+                        Console.WriteLine($"Test Count: {user.test_ct}");
+                        Console.WriteLine($"Vaccine Status: {user.vaccine_status}");
+                        Console.WriteLine("=======================================");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve the list of users from the backend.");
+                }
+
+                return listOfUsers;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<UserDB> GetProfileByIDAsync(string userId)
+        {
+            try
+            {
+                // Use SingletonClient to get the user profile information through a GET request
+                UserDB userProfile = await SingletonClient.Instance.GetProfileByIDAsync(userId);
+
+                if (userProfile != null)
+                {
+                    Console.WriteLine("User Profile Information:");
+                    Console.WriteLine($"User ID: {userProfile.id}");
+                    Console.WriteLine($"Email: {userProfile.email}");
+                    Console.WriteLine($"First Name: {userProfile.first_name}");
+                    Console.WriteLine($"Last Name: {userProfile.last_name}");
+                    Console.WriteLine($"Date of Birth: {userProfile.dob}");
+                    Console.WriteLine($"NHI Number: {userProfile.nhi_num}");
+                    Console.WriteLine($"QR Status: {userProfile.qr_status}");
+                    Console.WriteLine($"Issue Count: {userProfile.issue_ct}");
+                    Console.WriteLine($"Test Count: {userProfile.test_ct}");
+                    Console.WriteLine($"Vaccine Status: {userProfile.vaccine_status}");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve user profile from the backend.");
+                }
+
+                return userProfile;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
     }
 }
