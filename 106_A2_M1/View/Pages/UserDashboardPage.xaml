@@ -15,17 +15,7 @@
     <Page.DataContext>
         <vm:UserDashboardViewModel />
     </Page.DataContext>
-    <Page.Resources>
-        <DataTemplate DataType="{x:Type views:UserMyVaccinePassFrame_QR0}">
-            <views:UserMyVaccinePassFrame_QR0 />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type views:UserMyVaccinePassFrame_QR1}">
-            <views:UserMyVaccinePassFrame_QR1 />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type views:UserMyVaccinePassFrame_QR2}">
-            <views:UserMyVaccinePassFrame_QR2 />
-        </DataTemplate>
-    </Page.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />

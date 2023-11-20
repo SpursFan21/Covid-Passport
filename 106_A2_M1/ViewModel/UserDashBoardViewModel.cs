@@ -27,6 +27,22 @@ namespace _106_A2_M1.ViewModel
         private BaseUser _baseUser;
         private Dictionary<string, object> _userData;
 
+        private int qrnum;
+        private UserControl _selectedUserControl;
+
+        public UserControl SelectedUserControl
+        {
+            get { return _selectedUserControl; }
+            set
+            {
+                if (_selectedUserControl != value)
+                {
+                    _selectedUserControl = value;
+                    OnPropertyChanged(nameof(SelectedUserControl));
+                }
+            }
+        }
+
         public Dictionary<string, object> UserData
         {
             get => _userData;
@@ -132,10 +148,13 @@ namespace _106_A2_M1.ViewModel
         }
         public UserDashboardViewModel()
         {
-            _user = new User(); // Initialize a new User instance MODEL to ViewModel Pipeline
-            _userDB = new UserDB(); // Might not need these
+            // Initialize MODEL instances to ViewModel Pipeline
+            _user = new User(); 
+            _userDB = new UserDB();
             _baseUser = new BaseUser();
-            InitializeAsync(); // Loads userDb into this instance
+
+            qrnum = 1; // TESTING VARIABLE
+            //InitializeAsync(); // Loads userDb into this instance
             /*
             int id = (int)UserData[nameof(id)];
             string email = (string)UserData[nameof(email)];
@@ -150,8 +169,10 @@ namespace _106_A2_M1.ViewModel
             UpdateUserFullName(); 
             */
 
+            // Startup display for user login
             FrameTitle = "My Vaccine Pass";
-            NavigateToFrame(new UserMyVaccinePassFrame_QR0());
+            NavigateToFrame(new UserMyVaccinePassControlFrame());
+            ShowQRFrame();
 
             // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
@@ -163,7 +184,8 @@ namespace _106_A2_M1.ViewModel
             NavMyVaccinePassCommand = new RelayCommand(x =>
             {
                 FrameTitle = "My Vaccine Pass";
-                NavigateToFrame(new UserMyVaccinePassFrame_QR0());
+                NavigateToFrame(new UserMyVaccinePassControlFrame());
+                ShowQRFrame();
             });
             
             // Test list for TESTING PURPOSES ONLY
@@ -206,5 +228,36 @@ namespace _106_A2_M1.ViewModel
         {
             _userDB = await _baseUser.RetrieveUserInformationAsync();
         }
+
+        private void ShowQRFrame()
+        {
+            try
+            {
+                // Set display frame based on user QRStatus
+                if (qrnum == 0)
+                {
+                    SelectedUserControl = new UserMyVaccinePassFrame_QR0();
+                }
+                else if (qrnum == 1)
+                {
+                    SelectedUserControl = new UserMyVaccinePassFrame_QR1();
+                }
+                else if (qrnum == 2)
+                {
+                    SelectedUserControl = new UserMyVaccinePassFrame_QR2();
+                }
+                else
+                {
+                    // Handle unexpected values
+                    throw new InvalidOperationException($"Unexpected value of qrnum: {qrnum}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Show error message as a popup
+                ShowErrorPopup($"An error occurred in ShowQRFrame: {ex.Message}");
+            }
+        }
+        
     }
 }

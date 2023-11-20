@@ -122,6 +122,9 @@
     <Compile Include="View\UserFrames\UserMyRecordsFrame.xaml.cs">
       <DependentUpon>UserMyRecordsFrame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserFrames\UserMyVaccinePassControlFrame.xaml.cs">
+      <DependentUpon>UserMyVaccinePassControlFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserFrames\UserMyVaccinePassFrame-QR0.xaml.cs">
       <DependentUpon>UserMyVaccinePassFrame-QR0.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserFrames\UserMyRecordsFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserFrames\UserMyVaccinePassControlFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
