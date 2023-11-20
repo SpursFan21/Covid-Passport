@@ -102,7 +102,7 @@ namespace _106_A2_M1.Model
                         UserDB userDB = await GetUserInformationAsync(); // Implement this method to fetch user information
                         this.UserInformation = userDB;
                         return 2;
-                    }
+                    }//
                 }
                 else
                 {
@@ -133,13 +133,13 @@ namespace _106_A2_M1.Model
                     UserDB userDB = new UserDB
                     {
                         email = userData.email,
-                        first_name = userData.given_name,
-                        last_name = userData.family_name,
-                        dob = userData.dob_ts,
+                        first_name = userData.first_name,
+                        last_name = userData.last_name,
+                        dob = userData.dob,
                         id = userData.id,
-                        qr_status = userData.qrcode_status ?? 0, // Handle possible null value
-                        issue_ct = userData.issue_count,
-                        test_ct = userData.test_count,
+                        qr_status = userData.qr_status ?? 0, // Handle possible null value
+                        issue_ct = userData.issue_ct,
+                        test_ct = userData.test_ct,
                         vaccine_status = userData.vaccine_status
                     };
 
@@ -164,12 +164,12 @@ namespace _106_A2_M1.Model
             public string token { get; set; }
             public string id { get; set; }
             public string email { get; set; }
-            public string family_name { get; set; }
-            public string given_name { get; set; }
-            public int dob_ts { get; set; }
-            public int? qrcode_status { get; set; }
-            public int issue_count { get; set; }
-            public int test_count { get; set; }
+            public string last_name { get; set; }
+            public string first_name { get; set; }
+            public int dob { get; set; }
+            public int? qr_status { get; set; }
+            public int issue_ct { get; set; }
+            public int test_ct { get; set; }
             public int vaccine_status { get; set; }
         }
 
