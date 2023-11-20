@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using _106_A2_M1.Interfaces.User;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -282,6 +283,43 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
+
+        public async Task<UserDB> GetOwnProfileAsync()
+        {
+            try
+            {
+                // Use SingletonClient to get the own user profile information through a GET request
+                UserDB = await SingletonClient.Instance.GetOwnProfileAsync();
+
+                if (UserDB != null)
+                {
+                    Console.WriteLine("Your Profile Information:");
+                    Console.WriteLine($"User ID: {UserDB.id}");
+                    Console.WriteLine($"Email: {UserDB.email}");
+                    Console.WriteLine($"First Name: {UserDB.first_name}");
+                    Console.WriteLine($"Last Name: {UserDB.last_name}");
+                    Console.WriteLine($"Date of Birth: {UserDB.dob}");
+                    Console.WriteLine($"NHI Number: {UserDB.nhi_num}");
+                    Console.WriteLine($"QR Status: {UserDB.qr_status}");
+                    Console.WriteLine($"Issue Count: {UserDB.issue_ct}");
+                    Console.WriteLine($"Test Count: {UserDB.test_ct}");
+                    Console.WriteLine($"Vaccine Status: {UserDB.vaccine_status}");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve your profile from the backend.");
+                }
+
+                return UserDB;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
+
 
 
     }

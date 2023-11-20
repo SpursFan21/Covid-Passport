@@ -767,7 +767,38 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<UserDB> GetOwnProfileAsync()
+        {
+            try
+            {
+                // Construct the URL for the GET request to retrieve the user's own profile
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/users/profile";
 
+                // Make a GET request to retrieve the user's own profile
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a UserDB object
+                    UserDB userProfile = JsonConvert.DeserializeObject<UserDB>(content);
+
+                    return userProfile;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving user profile: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving user profile: {ex.Message}");
+                return null;
+            }
+        }
 
         // Dispose method to clean up resources when the application exits
         public void Dispose()
