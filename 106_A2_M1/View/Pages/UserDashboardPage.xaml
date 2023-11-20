@@ -183,7 +183,7 @@
                         TextAlignment="Center"/>
 
                     <TextBlock
-                        Text="{Binding Path=FirstName}"
+                        Text="{Binding Path=UserFullName}"
                         Margin="0 25 0 0"
                         FontSize="24"
                         FontWeight="Bold"

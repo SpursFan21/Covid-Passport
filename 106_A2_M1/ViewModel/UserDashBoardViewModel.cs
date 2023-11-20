@@ -154,7 +154,7 @@ namespace _106_A2_M1.ViewModel
             _userData = new UserDB();
             _userData = _uDB;
             _baseUser = new BaseUser();
-
+            UpdateUserFullName();
             qrnum = 2; // TESTING VARIABLE
             //InitializeAsync(); // Loads userDb into this instance
 
@@ -204,8 +204,8 @@ namespace _106_A2_M1.ViewModel
 
         private void UpdateUserFullName()
         {
-            //UserFullName = $"{FirstName} {LastName}";
-            //OnPropertyChanged(nameof(UserFullName));
+            UserFullName = $"{FirstName} {LastName}";
+            OnPropertyChanged(nameof(UserFullName));
         }
 
         private async void InitializeAsync()
