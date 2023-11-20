@@ -114,7 +114,7 @@ namespace _106_A2_M1.Model
         {
             try
             {
-                // Call the private method in SingletonClient to get user information
+                // Call the method in SingletonClient to get user information
                 UserDB userDB = await SingletonClient.Instance.GetUserInformationAsync();
 
                 // You can perform additional actions here if needed

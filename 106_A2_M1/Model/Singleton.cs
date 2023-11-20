@@ -518,8 +518,287 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
+        public async Task<bool> AddVaccinationAsync(Vaccine firstDose, Vaccine secondDose)
+        {
+            try
+            {
+                // Construct the URL for the POST request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/vaccinations/add";
 
+                // Create an object containing the vaccination data
+                var vaccinationData = new
+                {
+                    first_dose = firstDose,
+                    second_dose = secondDose
+                };
 
+                // Convert the data to StringContent
+                var stringContent = new StringContent(JsonConvert.SerializeObject(vaccinationData), Encoding.UTF8, "application/json");
+
+                // Make a POST request to add vaccination details
+                HttpResponseMessage response = await _client.PostAsync(apiUrl, stringContent);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while adding vaccination details: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<List<Vaccine>> GetVaccinationsAsync()//Admin Call
+        {
+            try
+            {
+                // Construct the URL for the GET request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/vaccinations/01HFMP3S8V";
+
+                // Make a GET request to retrieve the vaccination information
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a List<Vaccine> object
+                    List<Vaccine> vaccinationData = JsonConvert.DeserializeObject<List<Vaccine>>(content);
+
+                    return vaccinationData;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving vaccination information: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving vaccination information: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<Vaccine>> GetUserVaccinationsAsync()//User Call
+        {
+            try
+            {
+                // Construct the URL for the GET request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/vaccinations";
+
+                // Make a GET request to retrieve the vaccination information
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a List<Vaccine> object
+                    List<Vaccine> vaccinationData = JsonConvert.DeserializeObject<List<Vaccine>>(content);
+
+                    return vaccinationData;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving vaccination information: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving vaccination information: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<bool> ReportTestAsync(CovidTest testReport)
+        {
+            try
+            {
+                // Construct the URL for the POST request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/tests/add";
+
+                // Convert the test report data to StringContent
+                var stringContent = new StringContent(JsonConvert.SerializeObject(testReport), Encoding.UTF8, "application/json");
+
+                // Make a POST request to report the test details
+                HttpResponseMessage response = await _client.PostAsync(apiUrl, stringContent);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while reporting the test: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<List<CovidTest>> GetTestsAsync()//User Call
+        {
+            try
+            {
+                // Construct the URL for the GET request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/tests";
+
+                // Make a GET request to retrieve the test information
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a List<CovidTest> object
+                    List<CovidTest> testsList = JsonConvert.DeserializeObject<List<CovidTest>>(content);
+
+                    return testsList;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving test information: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving test information: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<CovidTest>> GetUserTestsAsync(string id) // Admin Call
+        {
+            try
+            {
+                // Construct the URL for the GET request to retrieve tests for a specific user
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/tests/get_user/{id}";
+
+                // Make a GET request to retrieve the test information for the selected user
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a List<CovidTest> object
+                    List<CovidTest> userTests = JsonConvert.DeserializeObject<List<CovidTest>>(content);
+
+                    return userTests;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving user test information: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving user test information: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<List<UserDB>> GetListOfUsersAsync(string searchQuery)
+        {
+            try
+            {
+                // Construct the URL for the GET request to retrieve the list of users with a search query
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/users/list?search={Uri.EscapeDataString(searchQuery)}";
+
+                // Make a GET request to retrieve the list of users
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a List<UserDB> object
+                    List<UserDB> listOfUsers = JsonConvert.DeserializeObject<List<UserDB>>(content);
+
+                    return listOfUsers;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving the list of users: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving the list of users: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<UserDB> GetProfileByIDAsync(string userId) //Admin Call
+        {
+            try
+            {
+                // Construct the URL for the GET request to retrieve a user by ID
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/users/profile/{userId}";
+
+                // Make a GET request to retrieve the user information by ID
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a UserDB object
+                    UserDB userProfile = JsonConvert.DeserializeObject<UserDB>(content);
+
+                    return userProfile;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving user profile: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving user profile: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<UserDB> GetOwnProfileAsync()
+        {
+            try
+            {
+                // Construct the URL for the GET request to retrieve the user's own profile
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/users/profile";
+
+                // Make a GET request to retrieve the user's own profile
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a UserDB object
+                    UserDB userProfile = JsonConvert.DeserializeObject<UserDB>(content);
+
+                    return userProfile;
+                }
+                else
+                {
+                    Console.WriteLine($"Error retrieving user profile: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving user profile: {ex.Message}");
+                return null;
+            }
+        }
 
         // Dispose method to clean up resources when the application exits
         public void Dispose()
