@@ -613,6 +613,29 @@ namespace _106_A2_M1.Model
             }
         }
 
+        public async Task<bool> ReportTestAsync(CovidTest testReport)
+        {
+            try
+            {
+                // Construct the URL for the POST request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/tests/add";
+
+                // Convert the test report data to StringContent
+                var stringContent = new StringContent(JsonConvert.SerializeObject(testReport), Encoding.UTF8, "application/json");
+
+                // Make a POST request to report the test details
+                HttpResponseMessage response = await _client.PostAsync(apiUrl, stringContent);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while reporting the test: {ex.Message}");
+                return false;
+            }
+        }
+
+
 
         // Dispose method to clean up resources when the application exits
         public void Dispose()
