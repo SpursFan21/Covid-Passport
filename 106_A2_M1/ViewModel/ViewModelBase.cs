@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace _106_A2_M1.ViewModel
@@ -42,6 +43,12 @@ namespace _106_A2_M1.ViewModel
                 _currentDisplayFrame = value;
                 OnPropertyChanged("CurrentDisplayFrame");
             }
+        }
+        protected void ShowErrorPopup(string errorMessage)
+        {
+            // Using MessageBox as a simple example
+            MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            // Alternatively, you can create a custom dialog for more control over the appearance and behavior
         }
     }
 }

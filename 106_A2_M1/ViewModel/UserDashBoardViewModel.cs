@@ -21,18 +21,50 @@ namespace _106_A2_M1.ViewModel
         public ICommand AddTestResultCommand { get; }
         public ICommand LogoutCommand { get; }
 
-
+        public string UserFullName { get; private set; }
         private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
-        private UserDB _userDB;
-
-        public string FirstName
+        private UserDB _userData; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
+        
+        public UserDB User_Data
         {
-            get => _user.UserDB.first_name;
+            get => _userData;
+
             set
             {
-                if (_user.UserDB.first_name != value)
+                if(_userData != value)
                 {
-                    _user.UserDB.first_name = value;
+                    _userData = value;
+                    OnPropertyChanged(nameof(User_Data));
+                }
+            }
+        }
+        private BaseUser _baseUser;
+
+        
+        private int qrnum;
+        private UserControl _qrUserControl;
+
+        public UserControl QRUserControl
+        {
+            get => _qrUserControl;
+            set
+            {
+                if (_qrUserControl != value)
+                {
+                    _qrUserControl = value;
+                    OnPropertyChanged(nameof(QRUserControl));
+                }
+            }
+        }
+        
+        public string FirstName
+        {
+            get => User_Data.first_name;
+            set
+            {
+                if (User_Data.first_name != value)
+                {
+                    User_Data.first_name = value;
                     OnPropertyChanged(nameof(FirstName));
                 }
             }
@@ -40,25 +72,25 @@ namespace _106_A2_M1.ViewModel
 
         public string LastName
         {
-            get => _user.UserDB.last_name;
+            get => User_Data.last_name;
             set
             {
-                if (_user.UserDB.last_name != value)
+                if (User_Data.last_name != value)
                 {
-                    _user.UserDB.last_name = value;
+                    User_Data.last_name = value;
                     OnPropertyChanged(nameof(LastName));
                 }
             }
         }
 
-        public string UserDOB
+        public int UserDOB
         {
-            get => _user.UserDB.dob;
+            get => User_Data.dob;
             set
             {
-                if (_user.UserDB.dob != value)
+                if (User_Data.dob != value)
                 {
-                    _user.UserDB.dob = value;
+                    User_Data.dob = value;
                     OnPropertyChanged(nameof(UserDOB));
                 }
             }
@@ -66,33 +98,44 @@ namespace _106_A2_M1.ViewModel
 
         public string UserEmail
         {
-            get => _user.UserDB.email;
+            get => User_Data.email;
             set
             {
-                if (_user.UserDB.email != value)
+                if (User_Data.email != value)
                 {
-                    _user.UserDB.email = value;
+                    User_Data.email = value;
                     OnPropertyChanged(nameof(UserEmail));
                 }
             }
         }
 
-        public int UserNHI
+        public string UserNHI
         {
-            get => _user.UserDB.nhi_num;
+            get => User_Data.nhi_num;
             set
             {
-                if (_user.UserDB.nhi_num != value)
+                if (User_Data.nhi_num != value)
                 {
-                    _user.UserDB.nhi_num = value;
+                    User_Data.nhi_num = value;
                     OnPropertyChanged(nameof(UserNHI));
                 }
             }
         }
+        
+        public int QRStatus
+        {
+            get => User_Data.qr_status;
+            set
+            {
+                if(User_Data.qr_status != value)
+                {
+                    User_Data.qr_status = value;
+                    OnPropertyChanged(nameof(QRStatus));
+                }
+            }
+        }
 
-        public string UserFullName { get; private set; }
-
-
+    
 
         private ObservableCollection<CovidTest> _testList = new ObservableCollection<CovidTest>();
         public ObservableCollection<CovidTest> TestList
@@ -104,20 +147,23 @@ namespace _106_A2_M1.ViewModel
                 OnPropertyChanged(nameof(TestList));
             }
         }
-        public UserDashboardViewModel()
+        public UserDashboardViewModel(UserDB _uDB)
         {
-            _user = new User(); // Initialize a new User instance MODEL to ViewModel Pipeline
-            // Access UserDB data from User in MODEL    
-            //UserDB userDbData = _user.UserInformation;
-            //UserFullName = userDBData.first_name +" " + userDBData.last_name;
-            _userDB = new UserDB();
-            generateUserData("Hank", "Schrader", "31 Aug 1970", "hank@DIA.com", 1234567);
+            // Initialize MODEL instances to ViewModel Pipeline
+            _user = new User();
+            _userData = new UserDB();
+            _userData = _uDB;
+            _baseUser = new BaseUser();
             UpdateUserFullName();
+            qrnum = 2; // TESTING VARIABLE
+            //InitializeAsync(); // Loads userDb into this instance
 
-
+            // Startup display for user login
             FrameTitle = "My Vaccine Pass";
-            NavigateToFrame(new UserMyVaccinePassFrame());
+            NavigateToFrame(new UserMyVaccinePassControlFrame());
+            ShowQRFrame();
 
+            // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
             NavMyRecordsCommand = new RelayCommand(x =>
             {
@@ -127,9 +173,11 @@ namespace _106_A2_M1.ViewModel
             NavMyVaccinePassCommand = new RelayCommand(x =>
             {
                 FrameTitle = "My Vaccine Pass";
-                NavigateToFrame(new UserMyVaccinePassFrame());
+                NavigateToFrame(new UserMyVaccinePassControlFrame());
+                ShowQRFrame();
             });
             
+            // Test list for TESTING PURPOSES ONLY
             TestList = new ObservableCollection<CovidTest>();
             generateTest(10102023, false, "RAT");
             generateTest(02022023, true, "PCR");
@@ -154,20 +202,51 @@ namespace _106_A2_M1.ViewModel
             TestList.Add(test);
         }
 
-        private void generateUserData(string fname, string lname, string dob, string email, int nhi)
-        {
-            _userDB.first_name = fname;
-            _userDB.last_name = lname;
-            _userDB.dob = dob;
-            _userDB.email = email;
-            _userDB.nhi_num = nhi;
-            _user.UserDB = _userDB;
-        }
-
         private void UpdateUserFullName()
         {
             UserFullName = $"{FirstName} {LastName}";
             OnPropertyChanged(nameof(UserFullName));
         }
+
+        private async void InitializeAsync()
+        {
+            await GetUserDataAsync();
+        }
+
+        private async Task GetUserDataAsync()
+        {
+            User_Data = await BaseUser.RetrieveUserInformationAsync();
+        }
+
+        private void ShowQRFrame()
+        {
+            try
+            {
+                // Set display frame based on user QRStatus
+                if (qrnum == 0)
+                {
+                    QRUserControl = new UserMyVaccinePassFrame_QR0();
+                }
+                else if (qrnum == 1)
+                {
+                    QRUserControl = new UserMyVaccinePassFrame_QR1();
+                }
+                else if (qrnum == 2)
+                {
+                    QRUserControl = new UserMyVaccinePassFrame_QR2();
+                }
+                else
+                {
+                    // Handle unexpected values
+                    throw new InvalidOperationException($"Unexpected value of qrnum: {qrnum}");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Show error message as a popup
+                ShowErrorPopup($"An error occurred in ShowQRFrame: {ex.Message}");
+            }
+        }
+        
     }
 }

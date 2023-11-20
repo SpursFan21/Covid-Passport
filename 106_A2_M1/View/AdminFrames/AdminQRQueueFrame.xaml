@@ -11,7 +11,11 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <materialDesign:Card UniformCornerRadius="2" Background="#FFDEDDEB" Padding="50,25,50,25" HorizontalAlignment="Center" VerticalAlignment="Center" >
                 <!-- Content goes here -->
-                <TextBlock Text="QR Controls Here" />
+                <StackPanel>
+                    <TextBlock Text="QR Controls Here" />
+                    
+                    
+                </StackPanel>
             </materialDesign:Card>
         </StackPanel>
     </Grid>

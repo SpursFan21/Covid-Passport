@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,6 +54,7 @@ namespace _106_A2_M1.ViewModel
         public LoginViewModel()
         {
             _baseUser = new BaseUser();
+            UserDbData = new UserDB();
             // Set the default frame to WelcomeBackFrame
             CurrentDisplayFrame = new WelcomeBackFrame();
             CurrentDisplayFrame.DataContext = this;
@@ -97,7 +99,7 @@ namespace _106_A2_M1.ViewModel
             SetUserType();
 
         }
-        public void SetUserType()
+        public async void SetUserType()
         {
             if (_baseUser.UserType == 1)
             {
@@ -107,7 +109,9 @@ namespace _106_A2_M1.ViewModel
             else if (_baseUser.UserType == 2)
             {
                 // Nav command to User Dashboard
-                NavigateToPage(new UserDashboardPage());
+                UserDbData = await InitializeAsync();
+                // Thread.Sleep(TimeSpan.FromSeconds(3)); // Delay for 3 seconds
+                NavigateToPage(new UserDashboardPage(UserDbData));
             }
             else
             {
@@ -139,11 +143,22 @@ namespace _106_A2_M1.ViewModel
                 var passwordBox = (PasswordBox)sender;
                 string password = passwordBox.Password;
 
-                // Assuming you have an instance of your ViewModel (viewModel) or Model (model)
-                // viewModel.HandlePassword(password); // Call a method in ViewModel
-                // model.HandlePassword(password); // Call a method in Model
+                
             }
         }
+
+        private async Task<UserDB> InitializeAsync()
+        {
+            UserDbData = await GetUserDataAsync();
+            return UserDbData;
+        }
+
+        private async Task<UserDB> GetUserDataAsync()
+        {
+            UserDbData = await BaseUser.RetrieveUserInformationAsync();
+            return UserDbData;
+        }
+
 
     }
 }

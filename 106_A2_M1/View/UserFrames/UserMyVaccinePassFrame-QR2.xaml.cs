@@ -1,6 +1,4 @@
-﻿using _106_A2_M1.Model;
-using _106_A2_M1.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,20 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _106_A2_M1.View.Pages
+namespace _106_A2_M1.View.UserFrames
 {
     /// <summary>
-    /// Interaction logic for UserDashboardPage.xaml
+    /// Interaction logic for UserMyVaccinePassFrame_QR2.xaml
     /// </summary>
-    public partial class UserDashboardPage : Page
+    public partial class UserMyVaccinePassFrame_QR2 : UserControl
     {
-        private UserDB uDB;
-        public UserDashboardPage(UserDB _uDB)
+        public UserMyVaccinePassFrame_QR2()
         {
-            uDB = new UserDB();
-            uDB = _uDB;
             InitializeComponent();
-            DataContext = new UserDashboardViewModel(uDB);
         }
     }
 }

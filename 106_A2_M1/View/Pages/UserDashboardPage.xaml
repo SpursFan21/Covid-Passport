@@ -4,17 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       xmlns:local="clr-namespace:_106_A2_M1.View.Pages"
-      xmlns:views="clr-namespace:_106_A2_M1.View"
+      xmlns:views="clr-namespace:_106_A2_M1.View.UserFrames"
       xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="UserDashboardPage" 
       ShowsNavigationUI="False">
-    <Page.DataContext>
-        <vm:UserDashboardViewModel />
-    </Page.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
@@ -185,7 +183,7 @@
                         TextAlignment="Center"/>
 
                     <TextBlock
-                        Text="{Binding UserFullName}"
+                        Text="{Binding Path=UserFullName}"
                         Margin="0 25 0 0"
                         FontSize="24"
                         FontWeight="Bold"
@@ -199,7 +197,7 @@
                         />
 
                     <TextBlock
-                        Text="{Binding UserDOB}"
+                        Text="{Binding Path=UserDOB}"
                         Margin="50 3 0 0"
                         FontSize="24"
                         FontWeight="Bold"/>
@@ -212,7 +210,7 @@
                         />
 
                     <TextBlock
-                        Text="{Binding UserEmail}"
+                        Text="{Binding Path=UserEmail}"
                         Margin="50 3 0 0"
                         FontSize="24"
                         FontWeight="Bold" />
@@ -225,7 +223,7 @@
                         />
 
                     <TextBlock
-                        Text="{Binding UserNHI}"
+                        Text="{Binding Path=UserNHI}"
                         Margin="50 3 0 0"
                         FontSize="24"
                         FontWeight="Bold" />

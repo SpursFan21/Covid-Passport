@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace _106_A2_M1.View.UserFrames
 {
     /// <summary>
-    /// Interaction logic for UserMyVaccinePassFrame.xaml
+    /// Interaction logic for UserMyVaccinePassFrame_QR0.xaml
     /// </summary>
-    public partial class UserMyVaccinePassFrame : UserControl
+    public partial class UserMyVaccinePassFrame_QR0 : UserControl
     {
-        public UserMyVaccinePassFrame()
+        public UserMyVaccinePassFrame_QR0()
         {
             InitializeComponent();
         }
