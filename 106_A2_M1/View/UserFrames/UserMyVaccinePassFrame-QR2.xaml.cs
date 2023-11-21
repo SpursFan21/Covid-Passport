@@ -21,24 +21,9 @@ namespace _106_A2_M1.View.UserFrames
     /// </summary>
     public partial class UserMyVaccinePassFrame_QR2 : UserControl
     {
-        private BitmapImage _qrImage;
-
-        public BitmapImage QRImage
-        {
-            get { return _qrImage; }
-            set
-            {
-                if (_qrImage != value)
-                {
-                    _qrImage = value;
-                    //OnPropertyChanged(nameof(Image));
-                }
-            }
-        }
-        public UserMyVaccinePassFrame_QR2(BitmapImage _image)
+        public UserMyVaccinePassFrame_QR2()
         {
             InitializeComponent();
-            QRImage = _image;
         }
     }
 }
