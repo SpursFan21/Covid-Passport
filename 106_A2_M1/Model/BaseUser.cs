@@ -34,7 +34,7 @@ namespace _106_A2_M1.Model
         public string QrCodeImageUrl { get; private set; }
 
         //URL Storage
-        private string storedQRCodeImageURL;
+        public string storedQRCodeImageURL;
 
         //Image Storage
         public byte[] storedImageData;
@@ -338,6 +338,26 @@ namespace _106_A2_M1.Model
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task GetQRData()
+        {
+            try
+            {
+                if (this.UserDB.qr_status == 2)
+                {
+                    await RetrieveQRCodeImageAsync();
+                    await RetrieveQRCodeImageURLAsync();
+                }
+                else
+                {
+                    Console.WriteLine("User QR not approved!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An exception was caught!: {ex.Message}");
             }
         }
 
