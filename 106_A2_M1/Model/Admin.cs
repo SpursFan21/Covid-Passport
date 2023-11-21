@@ -209,22 +209,22 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task ApproveQRCodeAsync(string userId)
+        public async Task ApproveQRCodeAsync()
         {
             try
             {
                 // Use SingletonClient to approve the QR code through a PUT request
-                HttpResponseMessage response = await SingletonClient.Instance.ApproveQRCodeAsync(userId);
+                HttpResponseMessage response = await SingletonClient.Instance.ApproveQRCodeAsync();
 
                 if (response != null && response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"QR Code for user with ID {userId} approved successfully.");
-                    await RetrieveQRCodeImageURLAsync(userId);
-                    await RetrieveQRCodeImageAsync(userId);
+                    Console.WriteLine($"QR Code for user approved successfully.");
+                    await RetrieveQRCodeImageURLAsync();
+                    await RetrieveQRCodeImageAsync();
                 }
                 else
                 {
-                    Console.WriteLine($"Failed to approve QR Code for user with ID {userId}.");
+                    Console.WriteLine($"Failed to approve QR Code for user.");
                 }
             }
             catch (Exception ex)
