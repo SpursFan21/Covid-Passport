@@ -109,7 +109,7 @@ namespace _106_A2_M1.ViewModel
             else if (_baseUser.UserType == 2)
             {
                 // Nav command to User Dashboard
-                UserDbData = await InitializeAsync();
+                UserDbData = await GetUserDataAsync();
                 // Thread.Sleep(TimeSpan.FromSeconds(3)); // Delay for 3 seconds
                 NavigateToPage(new UserDashboardPage(UserDbData));
             }
@@ -145,12 +145,6 @@ namespace _106_A2_M1.ViewModel
 
                 
             }
-        }
-
-        private async Task<UserDB> InitializeAsync()
-        {
-            UserDbData = await GetUserDataAsync();
-            return UserDbData;
         }
 
         private async Task<UserDB> GetUserDataAsync()
