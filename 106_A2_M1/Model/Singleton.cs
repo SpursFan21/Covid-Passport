@@ -283,12 +283,12 @@ namespace _106_A2_M1.Model
             }
         }
 
-                public async Task<HttpResponseMessage> ApproveQRCodeAsync(string userId)
+                public async Task<HttpResponseMessage> ApproveQRCodeAsync()
                 {
                     try
                     {
                         // Construct the URL for the PUT request
-                        string apiUrl = $"https://cse106-backend.d3rpp.dev/api/qrcodes/approve/{userId}";
+                        string apiUrl = $"https://cse106-backend.d3rpp.dev/api/qrcodes/approve/01HFMP3S8V";
 
                         // Update the QR status to 2
                         var updateStatus = new
@@ -311,12 +311,12 @@ namespace _106_A2_M1.Model
                     }
                 }
 
-        public async Task<string> RetrieveQRCodeImageURLAsync(string userId)
+        public async Task<string> RetrieveQRCodeImageURLAsync()
         {
             try
             {
-                // Construct the URL for the GET request including the userId
-                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/qrcodes/{userId}";
+                // Construct the URL for the GET request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/qrcodes";
 
                 // Make a GET request to retrieve the QR code image URL
                 HttpResponseMessage response = await this._client.GetAsync(apiUrl);
@@ -344,12 +344,16 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<byte[]> RetrieveQRCodeImageAsync(string imageUrl)
+
+        public async Task<byte[]> RetrieveQRCodeImageAsync()
         {
             try
             {
+                // Construct the URL for the GET request to retrieve the QR code image
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/qrcodes/get_image/e30%3D.eyJxcmNvZGVfaWQiOiIwMUhGTVRTUkhCIiwiZXhwIjoxNzMxOTY4NTAzMzM3fQ%3D%3D.jfX4MSvu%2BApTOwieE2UPmmfx4JtyBNMq9rR3vuRrUb4%3D";
+
                 // Make a GET request to retrieve the QR code image
-                HttpResponseMessage response = await _client.GetAsync(imageUrl);
+                HttpResponseMessage response = await _client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -370,6 +374,7 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
+
 
 
         public async Task<List<Issue>> GetOpenIssuesAsync()

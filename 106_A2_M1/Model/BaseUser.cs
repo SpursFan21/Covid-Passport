@@ -287,16 +287,16 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<string> RetrieveQRCodeImageURLAsync(string userId)
+        public async Task<string> RetrieveQRCodeImageURLAsync()
         {
             try
             {
                 // Use SingletonClient to retrieve the QR code image URL asynchronously
-                string qrCodeImageURL = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync(userId);
+                string qrCodeImageURL = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync();
 
                 if (qrCodeImageURL != null)
                 {
-                    Console.WriteLine($"QR Code Image URL for user with ID {userId}: {qrCodeImageURL}");
+                    Console.WriteLine($"QR Code Image URL: {qrCodeImageURL}");
 
                     // Store the QR code image URL in the field
                     storedQRCodeImageURL = qrCodeImageURL;
@@ -305,7 +305,7 @@ namespace _106_A2_M1.Model
                 }
                 else
                 {
-                    Console.WriteLine($"QR Code Image URL not found for user with ID {userId}.");
+                    Console.WriteLine("QR Code Image URL not found.");
                     return null;
                 }
             }
@@ -316,63 +316,28 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task RetrieveQRCodeImageAsync(string userId)
+        public async Task RetrieveQRCodeImageAsync()
         {
             try
             {
-                // Use SingletonClient to retrieve the QR code image URL asynchronously
-                string qrCodeImageURL = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync(userId);
+                // Use SingletonClient to retrieve the QR code image asynchronously
+                byte[] imageData = await SingletonClient.Instance.RetrieveQRCodeImageAsync();
 
-                if (qrCodeImageURL != null)
+                if (imageData != null && imageData.Length > 0)
                 {
-                    // Use SingletonClient to retrieve the QR code image
-                    byte[] imageData = await SingletonClient.Instance.RetrieveQRCodeImageAsync(qrCodeImageURL);
+                    //method to save the image
+                    storedImageData = imageData;
 
-                    if (imageData != null)
-                    {
-                        // Assuming you have a method to save the image, adjust accordingly
-                        SaveQRCodeImage(imageData, userId);
-
-                        Console.WriteLine($"QR Code Image for user with ID {userId} retrieved successfully.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Failed to retrieve QR Code Image for user with ID {userId}.");
-                    }
+                    Console.WriteLine("QR Code Image retrieved successfully.");
                 }
                 else
                 {
-                    Console.WriteLine($"QR Code Image URL not found for user with ID {userId}.");
+                    Console.WriteLine("Failed to retrieve QR Code Image.");
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
-        public void SaveQRCodeImage(byte[] imageData, string userId)
-        {
-            try
-            {
-                if (imageData != null && imageData.Length > 0)
-                {
-                    // Implement logic to save the image data to a file
-                    File.WriteAllBytes($"QRCode_{userId}.png", imageData);
-
-                    // Store the imageData in the field
-                    storedImageData = imageData;
-
-                    Console.WriteLine($"QR code image for user with ID {userId} saved successfully.");
-                }
-                else
-                {
-                    Console.WriteLine($"Error: Invalid or empty QR code image data for user with ID {userId}.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while saving QR code image: {ex.Message}");
             }
         }
 
