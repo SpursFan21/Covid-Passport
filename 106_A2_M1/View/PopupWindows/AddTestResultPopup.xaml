@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              xmlns:local="clr-namespace:_106_A2_M1.View"
              xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
              mc:Ignorable="d" 

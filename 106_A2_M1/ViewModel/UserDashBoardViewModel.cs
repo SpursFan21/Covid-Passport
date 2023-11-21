@@ -18,7 +18,7 @@ namespace _106_A2_M1.ViewModel
         public ICommand NavMyVaccinePassCommand { get; }
         public ICommand AddTestResultCommand { get; }
         public ICommand LogoutCommand { get; }
-
+        public ICommand RequestQRCommand { get; }
         public string UserFullName { get; private set; }
         private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
         private UserDB _userData; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
@@ -198,6 +198,8 @@ namespace _106_A2_M1.ViewModel
                 QRImageURL = ShowQRFrame();
             });
 
+            // Feature Commands
+            RequestQRCommand = new RelayCommand(x => RequestQRCode());
 
             
         
@@ -282,9 +284,9 @@ namespace _106_A2_M1.ViewModel
             return qrURL;
         }
 
-        public void SetImageUrlFromString(string imageUrl)
+        private void RequestQRCode()
         {
-            QRImageURL = imageUrl;
+            // Update QR status
         }
     }
 }

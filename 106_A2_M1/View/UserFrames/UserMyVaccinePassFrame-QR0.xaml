@@ -4,18 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              xmlns:local="clr-namespace:_106_A2_M1.View.UserFrames"
              xmlns:views="clr-namespace:_106_A2_M1.View.UserFrames"
              xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
              xmlns:converters="clr-namespace:_106_A2_M1.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d">
     <UserControl.Resources>
         <converters:IntToVaccineStatusConverter x:Key="IntToVaccineStatusConverter" />
     </UserControl.Resources>
     <Grid>
-        <materialDesign:Card Padding="50">
+        <materialDesign:Card Padding="50" Background="#DEDDEB" Width="600">
+            <materialDesign:Card.Effect>
+                <DropShadowEffect ShadowDepth="0" Opacity="0.3" BlurRadius="10"/>
+            </materialDesign:Card.Effect>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -65,12 +66,42 @@
                     </Grid>
 
                 </Grid>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Margin="0 20 0 0">
                     <Image 
                         Source="/Resources/ExclamationMark.png"
                         Stretch="Uniform"
                         Width="100"
                         Height="auto" />
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <TextBlock
+                        Text="You don't have a QR code to display" 
+                        HorizontalAlignment="Center"
+                        Margin="0 30"
+                        FontSize="20"
+                        FontWeight="Bold"/>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Button  
+                            Command="{Binding RequestQRCommand}"
+                            materialDesign:ShadowAssist.ShadowDepth="Depth0" 
+                            Height="50" 
+                            Width="auto" 
+                            materialDesign:ButtonAssist.CornerRadius="10"
+                            FontSize="18" 
+                            Content="Request a QR Code" 
+                            Background="White" 
+                            Foreground="Black" 
+                            HorizontalAlignment="Center" 
+                            BorderBrush="{x:Null}" 
+                            VerticalAlignment="Top" 
+                            HorizontalContentAlignment="Center" >
+                        <Button.Effect>
+                            <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
+                        </Button.Effect>
+                    </Button>
                 </Grid>
             </Grid>
         </materialDesign:Card>
