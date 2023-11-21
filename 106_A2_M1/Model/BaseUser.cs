@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace _106_A2_M1.Model
 {
@@ -28,6 +29,10 @@ namespace _106_A2_M1.Model
         }
 
         public UserDB _userDB;
+
+        //Image Storage
+        public byte[] storedImageData;
+
 
         // Expose UserDB through a property
         public UserDB UserDB
@@ -274,6 +279,98 @@ namespace _106_A2_M1.Model
             {
                 Console.WriteLine($"Vaccination ({doseType} dose) with dose ID {doseId} not found.");
             }
+        }
+
+        public async Task<string> RetrieveQRCodeImageURLAsync(string userId)
+        {
+            try
+            {
+                // Use SingletonClient to retrieve the QR code image URL asynchronously
+                string qrCodeImageURL = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync(userId);
+
+                if (qrCodeImageURL != null)
+                {
+                    Console.WriteLine($"QR Code Image URL for user with ID {userId}: {qrCodeImageURL}");
+                    return qrCodeImageURL;
+                }
+                else
+                {
+                    Console.WriteLine($"QR Code Image URL not found for user with ID {userId}.");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
+
+        public async Task RetrieveQRCodeImageAsync(string userId)
+        {
+            try
+            {
+                // Use SingletonClient to retrieve the QR code image URL asynchronously
+                string qrCodeImageURL = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync(userId);
+
+                if (qrCodeImageURL != null)
+                {
+                    // Use SingletonClient to retrieve the QR code image
+                    byte[] imageData = await SingletonClient.Instance.RetrieveQRCodeImageAsync(qrCodeImageURL);
+
+                    if (imageData != null)
+                    {
+                        // Assuming you have a method to save the image, adjust accordingly
+                        SaveQRCodeImage(imageData, userId);
+
+                        Console.WriteLine($"QR Code Image for user with ID {userId} retrieved successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Failed to retrieve QR Code Image for user with ID {userId}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"QR Code Image URL not found for user with ID {userId}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public void SaveQRCodeImage(byte[] imageData, string userId)
+        {
+            try
+            {
+                if (imageData != null && imageData.Length > 0)
+                {
+                    // Implement logic to save the image data to a file
+                    File.WriteAllBytes($"QRCode_{userId}.png", imageData);
+
+                    // Store the imageData in the field
+                    storedImageData = imageData;
+
+                    Console.WriteLine($"QR code image for user with ID {userId} saved successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: Invalid or empty QR code image data for user with ID {userId}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving QR code image: {ex.Message}");
+            }
+        }
+
+        //retrieve the storedImageData
+        public byte[] GetStoredImageData()
+        {
+            return storedImageData;
         }
     }
 }
