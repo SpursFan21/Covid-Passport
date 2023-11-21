@@ -69,6 +69,7 @@
     <Compile Include="Converters\BoolToResolvedColorConverter.cs" />
     <Compile Include="Converters\BoolToResolvedTextConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntToVaccineStatusConverter.cs" />
     <Compile Include="Interfaces\Auth\AdminAuth.cs" />
     <Compile Include="Interfaces\Auth\LoginRequest.cs" />
     <Compile Include="Interfaces\Auth\UserAuth.cs" />

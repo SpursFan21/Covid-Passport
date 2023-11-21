@@ -23,14 +23,5 @@
         <Grid>
             <ContentControl Content="{Binding QRUserControl}" />
         </Grid>
-        <!--
-        <Frame x:Name="vaccinePassFrame"
-                       Grid.Row="1"
-                       NavigationUIVisibility="Hidden">
-            <Frame.Content>
-                <Binding Path="CurrentDisplayFrame" UpdateSourceTrigger="PropertyChanged"/>
-            </Frame.Content>
-        </Frame>
-        -->
     </Grid>
 </UserControl>

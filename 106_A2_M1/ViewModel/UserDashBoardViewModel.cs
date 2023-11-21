@@ -24,14 +24,14 @@ namespace _106_A2_M1.ViewModel
         public string UserFullName { get; private set; }
         private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
         private UserDB _userData; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
-        
+
         public UserDB User_Data
         {
             get => _userData;
 
             set
             {
-                if(_userData != value)
+                if (_userData != value)
                 {
                     _userData = value;
                     OnPropertyChanged(nameof(User_Data));
@@ -40,7 +40,7 @@ namespace _106_A2_M1.ViewModel
         }
         private BaseUser _baseUser;
 
-        
+
         private int qrnum;
         private UserControl _qrUserControl;
 
@@ -56,7 +56,7 @@ namespace _106_A2_M1.ViewModel
                 }
             }
         }
-        
+
         public string FirstName
         {
             get => User_Data.first_name;
@@ -121,13 +121,13 @@ namespace _106_A2_M1.ViewModel
                 }
             }
         }
-        
+
         public int QRStatus
         {
             get => User_Data.qr_status;
             set
             {
-                if(User_Data.qr_status != value)
+                if (User_Data.qr_status != value)
                 {
                     User_Data.qr_status = value;
                     OnPropertyChanged(nameof(QRStatus));
@@ -135,8 +135,18 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-    
-
+        public int VaccineStatus
+        {
+            get => User_Data.vaccine_status;
+            set
+            {
+                if(User_Data.vaccine_status != value)
+                {
+                    User_Data.vaccine_status = value;
+                    OnPropertyChanged(nameof(VaccineStatus));
+                }
+            }
+        }
         private ObservableCollection<CovidTest> _testList = new ObservableCollection<CovidTest>();
         public ObservableCollection<CovidTest> TestList
         {
@@ -193,6 +203,8 @@ namespace _106_A2_M1.ViewModel
             CurrentDisplayFrame = destinationFrame;
             CurrentDisplayFrame.DataContext = this;
         }
+
+        // TESTING PURPOSES ONLY
         private void generateTest(int date, bool result, string type)
         {
             CovidTest test = new CovidTest();
@@ -223,22 +235,22 @@ namespace _106_A2_M1.ViewModel
             try
             {
                 // Set display frame based on user QRStatus
-                if (qrnum == 0)
+                if (QRStatus == 0)
                 {
                     QRUserControl = new UserMyVaccinePassFrame_QR0();
                 }
-                else if (qrnum == 1)
+                else if (QRStatus == 1)
                 {
                     QRUserControl = new UserMyVaccinePassFrame_QR1();
                 }
-                else if (qrnum == 2)
+                else if (QRStatus == 2)
                 {
                     QRUserControl = new UserMyVaccinePassFrame_QR2();
                 }
                 else
                 {
                     // Handle unexpected values
-                    throw new InvalidOperationException($"Unexpected value of qrnum: {qrnum}");
+                    throw new InvalidOperationException($"Unexpected value of QRStatus: {QRStatus}");
                 }
             }
             catch (Exception ex)
