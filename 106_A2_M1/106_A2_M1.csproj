@@ -90,6 +90,7 @@
     <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Vaccine.cs" />
+    <Compile Include="Services\QRImageHelper.cs" />
     <Compile Include="Services\RelayCommand.cs" />
     <Compile Include="ViewModel\AdminDashboardViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />

@@ -3,14 +3,12 @@ using _106_A2_M1.Services;
 using _106_A2_M1.View.Pages;
 using _106_A2_M1.View.UserFrames;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace _106_A2_M1.ViewModel
 {
@@ -40,8 +38,6 @@ namespace _106_A2_M1.ViewModel
         }
         private BaseUser _baseUser;
 
-
-        private int qrnum;
         private UserControl _qrUserControl;
 
         public UserControl QRUserControl
@@ -140,13 +136,16 @@ namespace _106_A2_M1.ViewModel
             get => User_Data.vaccine_status;
             set
             {
-                if(User_Data.vaccine_status != value)
+                if (User_Data.vaccine_status != value)
                 {
                     User_Data.vaccine_status = value;
                     OnPropertyChanged(nameof(VaccineStatus));
                 }
             }
         }
+
+        
+
         private ObservableCollection<CovidTest> _testList = new ObservableCollection<CovidTest>();
         public ObservableCollection<CovidTest> TestList
         {
@@ -165,7 +164,7 @@ namespace _106_A2_M1.ViewModel
             _userData = _uDB;
             _baseUser = new BaseUser();
             UpdateUserFullName();
-            qrnum = 2; // TESTING VARIABLE
+
             //InitializeAsync(); // Loads userDb into this instance
 
             // Startup display for user login
@@ -186,9 +185,14 @@ namespace _106_A2_M1.ViewModel
                 NavigateToFrame(new UserMyVaccinePassControlFrame());
                 ShowQRFrame();
             });
+
+
             
-            // Test list for TESTING PURPOSES ONLY
-            TestList = new ObservableCollection<CovidTest>();
+        
+            
+
+        // Test list for TESTING PURPOSES ONLY
+        TestList = new ObservableCollection<CovidTest>();
             generateTest(10102023, false, "RAT");
             generateTest(02022023, true, "PCR");
         }
@@ -245,7 +249,9 @@ namespace _106_A2_M1.ViewModel
                 }
                 else if (QRStatus == 2)
                 {
-                    QRUserControl = new UserMyVaccinePassFrame_QR2();
+                    byte[] QRImageData = _baseUser.GetStoredImageData();
+                    BitmapImage QRImage = QRImageHelper.ConvertByteArrayToBitmap(QRImageData);
+                    QRUserControl = new UserMyVaccinePassFrame_QR2(QRImage);
                 }
                 else
                 {
