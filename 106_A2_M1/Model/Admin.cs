@@ -20,9 +20,6 @@ namespace _106_A2_M1.Model
         //field to store the users with QR status
         private List<UserDB> usersWithQR;
 
-        // Property to store the QR code image link
-        public string QrCodeImageUrl { get; private set; }
-
         public Admin()
         {
             user_list = new List<User>();

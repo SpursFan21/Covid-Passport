@@ -30,6 +30,9 @@ namespace _106_A2_M1.Model
 
         public UserDB _userDB;
 
+        // Property to store the QR code image link
+        public string QrCodeImageUrl { get; private set; }
+
         //Image Storage
         public byte[] storedImageData;
 
