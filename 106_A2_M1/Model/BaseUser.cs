@@ -33,6 +33,9 @@ namespace _106_A2_M1.Model
         // Property to store the QR code image link
         public string QrCodeImageUrl { get; private set; }
 
+        //URL Storage
+        private string storedQRCodeImageURL;
+
         //Image Storage
         public byte[] storedImageData;
 
@@ -294,6 +297,10 @@ namespace _106_A2_M1.Model
                 if (qrCodeImageURL != null)
                 {
                     Console.WriteLine($"QR Code Image URL for user with ID {userId}: {qrCodeImageURL}");
+
+                    // Store the QR code image URL in the field
+                    storedQRCodeImageURL = qrCodeImageURL;
+
                     return qrCodeImageURL;
                 }
                 else
@@ -308,7 +315,6 @@ namespace _106_A2_M1.Model
                 return null;
             }
         }
-
 
         public async Task RetrieveQRCodeImageAsync(string userId)
         {
@@ -374,6 +380,12 @@ namespace _106_A2_M1.Model
         public byte[] GetStoredImageData()
         {
             return storedImageData;
+        }
+
+        //retrieve the storedQRCodeImageURL
+        public string GetStoredQRCodeImageURL()
+        {
+            return storedQRCodeImageURL;
         }
     }
 }
