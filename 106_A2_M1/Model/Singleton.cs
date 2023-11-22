@@ -311,6 +311,11 @@ namespace _106_A2_M1.Model
                     }
                 }
 
+        public class QRCodeUrlResponseData {
+            public string url { get; set; }
+            public inst exp { get; set; }
+        }
+
         public async Task<string> RetrieveQRCodeImageURLAsync()
         {
             try
@@ -327,9 +332,9 @@ namespace _106_A2_M1.Model
                     string content = await response.Content.ReadAsStringAsync();
 
                     // Deserialize the string to a string (assuming the URL is a string)
-                    string qrCodeUrl = JsonConvert.DeserializeObject<string>(content);
+                    string qrCodeUrl = JsonConvert.DeserializeObject<QRCodeUrlResponseData>(content);
 
-                    return qrCodeUrl;
+                    return qrCodeUrl.url;
                 }
                 else
                 {
