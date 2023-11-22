@@ -3,7 +3,7 @@
 
     <Style x:Key="CustomBorderStyle" TargetType="Border">
 
-        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="CornerRadius" Value="5" />
         <Setter Property="Background" Value="White" />
         <Setter Property="Effect">
             <Setter.Value>

@@ -166,7 +166,7 @@ namespace _106_A2_M1.ViewModel
 
         private async Task<UserDB> GetUserDataAsync()
         {
-            UserDbData = await BaseUser.RetrieveUserInformationAsync();
+            UserDbData = await _baseUser.RetrieveUserInformationAsync();
             return UserDbData;
         }
 

@@ -34,13 +34,13 @@ namespace _106_A2_M1.Model
         public string qrCodeU { get; private set; }
        
         //URL Storage
-        public static string storedQRCodeImageURL;
+        public string storedQRCodeImageURL;
 
         //URl expiry Date storage packed
         public ulong storedExp;
 
         //URL Expiry date storage un-packed
-        public static string UrlExpDate;
+        public string UrlExpDate;
 
         //Image Storage
         public byte[] storedImageData;
@@ -127,7 +127,10 @@ namespace _106_A2_M1.Model
             }
         }
         /*
-        public static async Task<UserDB> RetrieveUserInformationAsync()
+
+
+        public async Task<UserDB> RetrieveUserInformationAsync()
+
         {
             try
             {
@@ -411,7 +414,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public static string FormatUnixTimestamp(long unixTimestamp)
+        public string FormatUnixTimestamp(long unixTimestamp)
         {
             try
             {
@@ -488,7 +491,7 @@ namespace _106_A2_M1.Model
         }
 
         //retrieve the storedQRCodeImageURL
-        public static string GetStoredQRCodeImageURL()
+        public string GetStoredQRCodeImageURL()
         {
             return storedQRCodeImageURL;
         }

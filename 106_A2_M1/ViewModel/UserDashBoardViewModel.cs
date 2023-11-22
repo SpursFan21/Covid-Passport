@@ -20,22 +20,20 @@ namespace _106_A2_M1.ViewModel
         public ICommand LogoutCommand { get; }
         public ICommand RequestQRCommand { get; }
         public string UserFullName { get; private set; }
-        private User _user; // Declare an instance of the User class MODEL to ViewModel Pipeline
-        private UserDB _userData; // Declare an instance of the UserDB class MODEL to ViewModel Pipeline
-
-        public UserDB User_Data
+        private User _activeUser; // Declare an instance of the User class MODEL to ViewModel Pipeline
+        public User ActiveUser
         {
-            get => _userData;
-
+            get => _activeUser;
             set
             {
-                if (_userData != value)
+                if(_activeUser != value)
                 {
-                    _userData = value;
-                    OnPropertyChanged(nameof(User_Data));
+                    _activeUser = value;
+                    OnPropertyChanged(nameof(ActiveUser));
                 }
             }
         }
+
         private BaseUser _baseUser;
 
         private UserControl _qrUserControl;
@@ -55,12 +53,12 @@ namespace _106_A2_M1.ViewModel
 
         public string FirstName
         {
-            get => User_Data.first_name;
+            get => ActiveUser.UserDB.first_name;
             set
             {
-                if (User_Data.first_name != value)
+                if (ActiveUser.UserDB.first_name != value)
                 {
-                    User_Data.first_name = value;
+                    ActiveUser.UserDB.first_name = value;
                     OnPropertyChanged(nameof(FirstName));
                 }
             }
@@ -68,12 +66,12 @@ namespace _106_A2_M1.ViewModel
 
         public string LastName
         {
-            get => User_Data.last_name;
+            get => ActiveUser.UserDB.last_name;
             set
             {
-                if (User_Data.last_name != value)
+                if (ActiveUser.UserDB.last_name != value)
                 {
-                    User_Data.last_name = value;
+                    ActiveUser.UserDB.last_name = value;
                     OnPropertyChanged(nameof(LastName));
                 }
             }
@@ -81,12 +79,12 @@ namespace _106_A2_M1.ViewModel
 
         public int UserDOB
         {
-            get => User_Data.dob;
+            get => ActiveUser.UserDB.dob;
             set
             {
-                if (User_Data.dob != value)
+                if (ActiveUser.UserDB.dob != value)
                 {
-                    User_Data.dob = value;
+                    ActiveUser.UserDB.dob = value;
                     OnPropertyChanged(nameof(UserDOB));
                 }
             }
@@ -94,12 +92,12 @@ namespace _106_A2_M1.ViewModel
 
         public string UserEmail
         {
-            get => User_Data.email;
+            get => ActiveUser.UserDB.email;
             set
             {
-                if (User_Data.email != value)
+                if (ActiveUser.UserDB.email != value)
                 {
-                    User_Data.email = value;
+                    ActiveUser.UserDB.email = value;
                     OnPropertyChanged(nameof(UserEmail));
                 }
             }
@@ -107,12 +105,12 @@ namespace _106_A2_M1.ViewModel
 
         public string UserNHI
         {
-            get => User_Data.nhi_num;
+            get => ActiveUser.UserDB.nhi_num;
             set
             {
-                if (User_Data.nhi_num != value)
+                if (ActiveUser.UserDB.nhi_num != value)
                 {
-                    User_Data.nhi_num = value;
+                    ActiveUser.UserDB.nhi_num = value;
                     OnPropertyChanged(nameof(UserNHI));
                 }
             }
@@ -120,12 +118,12 @@ namespace _106_A2_M1.ViewModel
 
         public int QRStatus
         {
-            get => User_Data.qr_status;
+            get => ActiveUser.UserDB.qr_status;
             set
             {
-                if (User_Data.qr_status != value)
+                if (ActiveUser.UserDB.qr_status != value)
                 {
-                    User_Data.qr_status = value;
+                    ActiveUser.UserDB.qr_status = value;
                     OnPropertyChanged(nameof(QRStatus));
                 }
             }
@@ -133,12 +131,12 @@ namespace _106_A2_M1.ViewModel
 
         public int VaccineStatus
         {
-            get => User_Data.vaccine_status;
+            get => ActiveUser.UserDB.vaccine_status;
             set
             {
-                if (User_Data.vaccine_status != value)
+                if (ActiveUser.UserDB.vaccine_status != value)
                 {
-                    User_Data.vaccine_status = value;
+                    ActiveUser.UserDB.vaccine_status = value;
                     OnPropertyChanged(nameof(VaccineStatus));
                 }
             }
@@ -147,12 +145,12 @@ namespace _106_A2_M1.ViewModel
         //private string _qrImageURL;
         public string QRImageURL
         {
-            get => BaseUser.storedQRCodeImageURL;
+            get => ActiveUser.storedQRCodeImageURL;
             set
             {
-                if(BaseUser.storedQRCodeImageURL != value)
+                if(ActiveUser.storedQRCodeImageURL != value)
                 {
-                    BaseUser.storedQRCodeImageURL = value;
+                    ActiveUser.storedQRCodeImageURL = value;
                     OnPropertyChanged(nameof(QRImageURL));
                 }
             }
@@ -171,9 +169,8 @@ namespace _106_A2_M1.ViewModel
         public UserDashboardViewModel(UserDB _uDB)
         {
             // Initialize MODEL instances to ViewModel Pipeline
-            _user = new User();
-            _userData = new UserDB();
-            _userData = _uDB;
+            _activeUser = new User();
+            _activeUser.UserDB = _uDB;
             _baseUser = new BaseUser();
             UpdateUserFullName();
 
@@ -247,7 +244,7 @@ namespace _106_A2_M1.ViewModel
 
         private async Task GetUserDataAsync()
         {
-            User_Data = await BaseUser.RetrieveUserInformationAsync();
+            ActiveUser.UserDB = await ActiveUser.RetrieveUserInformationAsync();
         }
 
         private async void ShowQRFrame()
@@ -288,7 +285,7 @@ namespace _106_A2_M1.ViewModel
 
         private async Task InitializeQRAsync()
         {
-            await _baseUser.GetQRData();
+            await ActiveUser.GetQRData();
         }
     }
 }
