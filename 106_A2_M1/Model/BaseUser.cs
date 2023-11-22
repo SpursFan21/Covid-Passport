@@ -34,7 +34,7 @@ namespace _106_A2_M1.Model
         public string qrCodeU { get; private set; }
        
         //URL Storage
-        public string storedQRCodeImageURL;
+        public static string storedQRCodeImageURL;
 
         //URl expiry Date storage packed
         public ulong storedExp;
@@ -437,7 +437,7 @@ namespace _106_A2_M1.Model
         }
 
         //retrieve the storedQRCodeImageURL
-        public string GetStoredQRCodeImageURL()
+        public static string GetStoredQRCodeImageURL()
         {
             return storedQRCodeImageURL;
         }

@@ -23,31 +23,33 @@
                         HorizontalAlignment="Center" 
                         Margin="0,28,0,0" 
                         FontSize="32" 
-                         />
+                        FontWeight="BOld" />
 
                     <!-- Email field -->
                     <TextBox 
                         x:Name="txtEmail" 
                         Text="{Binding Path=LoginEmail}"
-                        Margin="0 50 0 0" 
-                        Width="300" 
+                        Margin="2 50 2 0" 
+                        Width="296" 
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Email"
                         BorderThickness="2"
                         Background="White" 
-                         />
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}" />
 
                     <!-- Password field -->
                     <PasswordBox 
                         x:Name="txtPassword" 
                         PasswordChanged="PasswordBox_PasswordChanged"
-                        Margin="0 15 0 0" 
-                        Width="300" 
+                        Margin="2 15 2 0" 
+                        Width="296" 
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Password"
                         BorderThickness="2"
                         Background="White" 
-                         />
+                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+                        Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
 
                     <!-- Grid for "Forgot Password and Log In button -->
                     <Grid>
