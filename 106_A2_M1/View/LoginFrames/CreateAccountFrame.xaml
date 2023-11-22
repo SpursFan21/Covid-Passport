@@ -32,8 +32,8 @@
                     <TextBox 
                         x:Name="user_FirstName" 
                         Text="{Binding UserFirstName}"
-                        Margin="0 50 0 0" 
-                        Width="300" 
+                        Margin="2 50 2 0" 
+                        Width="296"  
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="First Name"
                         BorderThickness="2"
@@ -45,8 +45,8 @@
                     <TextBox 
                         x:Name="user_LastName" 
                         Text="{Binding UserLastName}"
-                        Margin="0 15 0 0" 
-                        Width="300" 
+                        Margin="2 15 2 0" 
+                        Width="296"  
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Last Name" 
                         BorderThickness="2"
@@ -60,8 +60,8 @@
                     <DatePicker 
                         x:Name="user_DOB"
                         
-                        Margin="0 15 0 0"
-                        Width="300"
+                        Margin="2 15 2 0"
+                        Width="296" 
                         FontSize="18"
                         materialDesign:HintAssist.Hint="Date of Birth"
                         BorderThickness="2"
@@ -72,8 +72,8 @@
                     <TextBox 
                         x:Name="user_Email" 
                         Text="{Binding UserEmail}"
-                        Margin="0 15 0 0" 
-                        Width="300" 
+                        Margin="2 15 2 0" 
+                        Width="296"  
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Email" 
                         BorderThickness="2"
@@ -85,8 +85,8 @@
                     <TextBox 
                         x:Name="user_NHI"
                         Text="{Binding UserNHI}"
-                        Margin="0 15 0 0" 
-                        Width="300" 
+                        Margin="2 15 2 0" 
+                        Width="296"  
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="NHI Number" 
                         BorderThickness="2"
@@ -98,8 +98,8 @@
                     <PasswordBox 
                         x:Name="user_Password"
                         PasswordChanged="PasswordBox_PasswordChanged"
-                        Margin="0 15 0 0" 
-                        Width="300" 
+                        Margin="2 15 2 0" 
+                        Width="296"  
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Password" 
                         BorderThickness="2"
@@ -111,8 +111,8 @@
                     <PasswordBox 
                         x:Name="user_ConfirmPassword"
                         PasswordChanged="PasswordBox_PasswordChanged2"
-                        Margin="0 15 0 0" 
-                        Width="300" 
+                        Margin="2 15 2 0" 
+                        Width="296" 
                         FontSize="18" 
                         materialDesign:HintAssist.Hint="Confirm Password" 
                         BorderThickness="2"
@@ -121,7 +121,7 @@
                         Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
 
                     <!-- Grid for "Back and Create Account buttons -->
-                    <Grid>
+                    <Grid Margin="0 20 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
