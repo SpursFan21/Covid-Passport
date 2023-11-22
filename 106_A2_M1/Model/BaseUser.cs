@@ -139,7 +139,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, string nhiNum)
+        public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, DateTime dobDT, string nhiNum)
         {
             try
             {
@@ -148,6 +148,11 @@ namespace _106_A2_M1.Model
                 {
                     throw new ArgumentException("Email, first name, and last name cannot be null or empty.");
                 }
+
+                // Change DateTime to Unix timestamp (number of seconds since Unix epoch)
+                DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                TimeSpan elapsedTime = dobDT.ToUniversalTime() - epoch;
+                int dob = (int)elapsedTime.TotalSeconds;
 
                 // Call the CreateAccountAsync method in SingletonClient
                 UserDB user = await SingletonClient.Instance.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNum);
@@ -162,7 +167,7 @@ namespace _106_A2_M1.Model
                 userDB.email = email;
                 userDB.first_name = firstName;
                 userDB.last_name = lastName;
-                userDB.dob = dob; // Assuming dob is already an int
+                userDB.dob = dob; // Unix timestamp
                 userDB.nhi_num = nhiNum;
 
                 // Perform any additional logic for account creation
@@ -173,6 +178,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+
 
         protected void getIsolationDate(CovidTest covidTest)
         {
@@ -345,7 +351,7 @@ namespace _106_A2_M1.Model
         {
             try
             {
-                await RetrieveQRCodeImageAsync();
+                //await RetrieveQRCodeImageAsync();
                 await RetrieveQRCodeImageURLAsync();
             }
             catch (Exception ex)
