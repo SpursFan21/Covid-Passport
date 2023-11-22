@@ -9,9 +9,6 @@
              xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="550">
-    <UserControl.DataContext>
-        <vm:UserDashboardViewModel />
-    </UserControl.DataContext>
     <materialDesign:Card
         Background="#DEDDEB"
         Padding="50 20">
@@ -93,17 +90,20 @@
                 <RadioButton Content="Positive"
                              Grid.Column="0"
                              HorizontalAlignment="Stretch" 
+                             HorizontalContentAlignment="Center"
                              Height="50"
                              FontSize="24"
                              Foreground="Black"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource TestButtonTheme}" />
+
                 <RadioButton Content="Negative" 
                              Grid.Column="1"
                              HorizontalAlignment="Stretch"
+                             HorizontalContentAlignment="Center"
                              Height="50"
                              FontSize="24"
                              Foreground="Black"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource TestButtonTheme}" />
             </Grid>
         </StackPanel>
     </materialDesign:Card>

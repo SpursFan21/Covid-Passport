@@ -183,7 +183,7 @@ namespace _106_A2_M1.ViewModel
             FrameTitle = "My Vaccine Pass";
             InitializeQRAsync();
             NavigateToFrame(new UserMyVaccinePassControlFrame());
-            QRImageURL = ShowQRFrame();
+            ShowQRFrame();
 
             // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
@@ -195,8 +195,9 @@ namespace _106_A2_M1.ViewModel
             NavMyVaccinePassCommand = new RelayCommand(x =>
             {
                 FrameTitle = "My Vaccine Pass";
+                InitializeQRAsync();
                 NavigateToFrame(new UserMyVaccinePassControlFrame());
-                QRImageURL = ShowQRFrame();
+                ShowQRFrame();
             });
 
             // Feature Commands
@@ -249,10 +250,8 @@ namespace _106_A2_M1.ViewModel
             User_Data = await BaseUser.RetrieveUserInformationAsync();
         }
 
-        private string ShowQRFrame()
+        private async void ShowQRFrame()
         {
-            string qrURL = null;
-
             try
             {
                 // Set display frame based on user QRStatus
@@ -266,10 +265,8 @@ namespace _106_A2_M1.ViewModel
                 }
                 else if (QRStatus == 2)
                 {
-                    // Get the QR image URL before displaying next frame
-                    //qrURL = BaseUser.StoredQRCodeImageURL;
+                    await Task.Delay(300);
                     QRUserControl = new UserMyVaccinePassFrame_QR2();
-                    return QRImageURL;
                 }
                 else
                 {
@@ -282,8 +279,6 @@ namespace _106_A2_M1.ViewModel
                 // Show error message as a popup
                 ShowErrorPopup($"An error occurred in ShowQRFrame: {ex.Message}");
             }
-
-            return qrURL;
         }
 
         private void RequestQRCode()

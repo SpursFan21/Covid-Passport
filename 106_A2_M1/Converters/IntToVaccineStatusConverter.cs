@@ -25,7 +25,7 @@ namespace _106_A2_M1.Converters
                         return "Complete";
                     default:
                         // Handle other values if needed
-                        return "Unknown";
+                        return "Complete";
                 }
             }
 
