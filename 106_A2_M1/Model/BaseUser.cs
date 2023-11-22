@@ -126,7 +126,7 @@ namespace _106_A2_M1.Model
                 // Log the exception or handle it based on your application's needs
             }
         }
-
+        /*
         public static async Task<UserDB> RetrieveUserInformationAsync()
         {
             try
@@ -143,7 +143,54 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while retrieving user information: {ex.Message}");
                 return null;
             }
+        }*/
+
+        public static async Task<UserDB> RetrieveUserInformationAsync()
+        {
+            try
+            {
+                // Call the method in SingletonClient to get user information
+                UserDB userDB = await SingletonClient.Instance.GetUserInformationAsync();
+
+                // Check if userDB is not null and dob is a valid Unix timestamp
+                if (userDB != null && userDB.dob > 0)
+                {
+                    // Convert Unix timestamp to formatted date string
+                    userDB.FormattedDOB = FormatUnixTimestampDob(userDB.dob);
+                }
+
+                return userDB;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving user information: {ex.Message}");
+                return null;
+            }
         }
+
+        //Timestamp to string converter for users date of birth
+        public static string FormatUnixTimestampDob(long unixTimestamp)
+        {
+            try
+            {
+                // Unix Epoch time starts from January 1, 1970
+                DateTimeOffset epochTime = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+                // Add the Unix timestamp in milliseconds to get the actual DateTimeOffset
+                DateTimeOffset dateTimeOffset = epochTime.AddMilliseconds(unixTimestamp);
+
+                // Format the DateTimeOffset as a string
+                string formattedDateTimeDob = dateTimeOffset.ToString("yyyy-MM-dd");
+
+                return formattedDateTimeDob;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while formatting Unix timestamp: {ex.Message}");
+                return string.Empty;
+            }
+        }
+
 
         public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, DateTime dobDT, string nhiNum)
         {
@@ -375,7 +422,7 @@ namespace _106_A2_M1.Model
                 DateTimeOffset dateTimeOffset = epochTime.AddMilliseconds(unixTimestamp);
 
                 // Format the DateTimeOffset as a string
-                string formattedDateTime = dateTimeOffset.ToString("yyyy-MM-dd HH:mm:ss");
+                string formattedDateTime = dateTimeOffset.ToString("yyyy-MM-dd");
 
                 UrlExpDate = formattedDateTime;
                 return formattedDateTime;
