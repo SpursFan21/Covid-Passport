@@ -69,6 +69,8 @@
     <Compile Include="Converters\BoolToResolvedColorConverter.cs" />
     <Compile Include="Converters\BoolToResolvedTextConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\DatePickerToIntConverter.cs" />
+    <Compile Include="Converters\IntToVaccineStatusConverter.cs" />
     <Compile Include="Interfaces\Auth\AdminAuth.cs" />
     <Compile Include="Interfaces\Auth\LoginRequest.cs" />
     <Compile Include="Interfaces\Auth\UserAuth.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Model\Issue.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Vaccine.cs" />
+    <Compile Include="Services\QRImageHelper.cs" />
     <Compile Include="Services\RelayCommand.cs" />
     <Compile Include="ViewModel\AdminDashboardViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
@@ -260,7 +263,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Sent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\QRStripes.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

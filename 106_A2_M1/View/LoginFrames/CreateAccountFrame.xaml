@@ -6,9 +6,13 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1.View"
              xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
+             xmlns:converters="clr-namespace:_106_A2_M1.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800"
              >
+    <UserControl.Resources>
+        <converters:DatePickerToIntConverter x:Key="DatePickerToIntConverter" />
+    </UserControl.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <materialDesign:Card UniformCornerRadius="2" Background="#FFDEDDEB" Padding="50,25,50,25" HorizontalAlignment="Center" VerticalAlignment="Center" >
@@ -27,6 +31,7 @@
                     <!-- First Name field -->
                     <TextBox 
                         x:Name="user_FirstName" 
+                        Text="{Binding UserFirstName}"
                         Margin="0 50 0 0" 
                         Width="300" 
                         FontSize="18" 
@@ -39,6 +44,7 @@
                     <!-- Last Email field -->
                     <TextBox 
                         x:Name="user_LastName" 
+                        Text="{Binding UserLastName}"
                         Margin="0 15 0 0" 
                         Width="300" 
                         FontSize="18" 
@@ -52,7 +58,8 @@
 
                     <!-- Birth Date field -->
                     <DatePicker 
-                        x:Name="user_DOB" 
+                        x:Name="user_DOB"
+                        
                         Margin="0 15 0 0"
                         Width="300"
                         FontSize="18"
@@ -64,6 +71,7 @@
                     <!-- Email field -->
                     <TextBox 
                         x:Name="user_Email" 
+                        Text="{Binding UserEmail}"
                         Margin="0 15 0 0" 
                         Width="300" 
                         FontSize="18" 
@@ -75,7 +83,8 @@
 
                     <!-- NHI Number field -->
                     <TextBox 
-                        x:Name="user_NHI" 
+                        x:Name="user_NHI"
+                        Text="{Binding UserNHI}"
                         Margin="0 15 0 0" 
                         Width="300" 
                         FontSize="18" 
@@ -87,7 +96,8 @@
 
                     <!-- Password field -->
                     <PasswordBox 
-                        x:Name="user_Password" 
+                        x:Name="user_Password"
+                        PasswordChanged="PasswordBox_PasswordChanged"
                         Margin="0 15 0 0" 
                         Width="300" 
                         FontSize="18" 
@@ -99,7 +109,8 @@
 
                     <!-- Confirm Password field -->
                     <PasswordBox 
-                        x:Name="user_ConfirmPassword" 
+                        x:Name="user_ConfirmPassword"
+                        PasswordChanged="PasswordBox_PasswordChanged2"
                         Margin="0 15 0 0" 
                         Width="300" 
                         FontSize="18" 
@@ -143,8 +154,8 @@
                         <Button 
                             x:Name="createAccountBtn"
                             Content="Create Account" 
+                            Command="{Binding CreateAccountCommand}"
                             Margin="0 5 0 0" 
-                            
                             Style="{StaticResource MaterialDesignFlatMidBgButton}" 
                             materialDesign:ShadowAssist.ShadowDepth="Depth0" 
                             Height="50" 

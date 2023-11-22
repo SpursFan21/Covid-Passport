@@ -345,15 +345,8 @@ namespace _106_A2_M1.Model
         {
             try
             {
-                if (this.UserDB.qr_status == 2)
-                {
-                    await RetrieveQRCodeImageAsync();
-                    await RetrieveQRCodeImageURLAsync();
-                }
-                else
-                {
-                    Console.WriteLine("User QR not approved!");
-                }
+                await RetrieveQRCodeImageAsync();
+                await RetrieveQRCodeImageURLAsync();
             }
             catch (Exception ex)
             {
