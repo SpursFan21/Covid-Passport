@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:_106_A2_M1.View.Pages"
+      xmlns:controls="clr-namespace:_106_A2_M1.View.PopupWindows"
       xmlns:views="clr-namespace:_106_A2_M1.View.UserFrames"
       xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
       mc:Ignorable="d" 
@@ -17,6 +18,17 @@
             <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <!-- Darkened background -->
+        <Rectangle Grid.RowSpan="2"  
+                   Name="DarkenedBackground" 
+                   Fill="#80000000" 
+                   Visibility="{Binding Path=DarkenedBackgroundVisibility}"
+                   Panel.ZIndex="60">
+            <Rectangle.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding ClosePopupCommand}" />
+            </Rectangle.InputBindings>
+        </Rectangle>
 
         <!-- Top Banner Row -->
         <Grid Grid.Row="0" Panel.ZIndex="50">
@@ -62,9 +74,8 @@
                 </Grid.Effect>
                 <StackPanel Margin="50 50 0 0">
                     <Button 
-                            Margin="-50 0 0 0" 
-                            x:Name="loginBtn"
-                            Command="{Binding AddTestResultCommand}"
+                            Margin="-50 0 0 0"
+                            Command="{Binding ShowPopupCommand}"
                             materialDesign:ShadowAssist.ShadowDepth="Depth0" 
                             Height="50" 
                             Width="300" 
@@ -156,30 +167,29 @@
 
                 <StackPanel>
                     <Button
-                    Grid.Row="0"
-                    Content="Logout"
-                    Width="200"
-                    Height="50"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    HorizontalAlignment="Right"
-                    Background="{x:Null}"
-                    Foreground="Black" BorderBrush="{x:Null}"
-                    Command="{Binding LogoutCommand}"/>
-                    <TextBlock
-                        Text="USER:" 
-                        Margin="0 25 0 0"
-                        FontSize="24"
+                        Grid.Row="0"
+                        Margin="0 10"
+                        Width="auto"
+                        Height="50"
+                        FontSize="20"
                         FontWeight="Bold"
-                        TextAlignment="Center"/>
+                        HorizontalAlignment="Right"
+                        Background="{x:Null}"
+                        Foreground="Black" BorderBrush="{x:Null}"
+                        Command="{Binding LogoutCommand}">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Logout" VerticalAlignment="Center" Margin="10 0" />
+                                    <Image Source="/Resources/Logout.png" Margin="5" />
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
 
                     <!-- Image Here -->
-                    <TextBlock
-                        Text="[   ]"
-                        Margin="0 25 0 0"
-                        FontSize="24"
-                        FontWeight="Bold"
-                        TextAlignment="Center"/>
+                    <Image
+                        Source="/Resources/UserIcon.png"
+                        Margin="0 20 0 0"
+                        Width="150" />
 
                     <TextBlock
                         Text="{Binding Path=UserFullName}"
@@ -231,5 +241,15 @@
 
             </Grid>
         </Grid>
+        
+        <!-- Popup -->
+        <Popup x:Name="TestResultPopup" 
+               IsOpen="{Binding IsPopupOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+               Placement="Center"
+               PlacementTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+            <Border>
+                <controls:AddTestResultPopup />
+            </Border>
+        </Popup>
     </Grid>
 </Page>

@@ -9,7 +9,8 @@
                     <ControlTemplate TargetType="RadioButton">
                         <Grid VerticalAlignment="Stretch"
                               HorizontalAlignment="Stretch"
-                              Background="{TemplateBinding Background}">
+                              Background="{TemplateBinding Background}"
+                              Margin="2">
 
                             <TextBlock Text="{TemplateBinding Property=Content}"
                                        VerticalAlignment="Center"
@@ -24,8 +25,8 @@
             </Setter>
 
             <Setter Property="Background" Value="White" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#A1A1A1" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="FontSize" Value="16" />
         </Style.Setters>

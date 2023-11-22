@@ -30,5 +30,14 @@ namespace _106_A2_M1.View.Pages
             InitializeComponent();
             DataContext = new UserDashboardViewModel(uDB);
         }
+        private void ClosePopupCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            // Execute the ClosePopupCommand in the ViewModel
+            if (DataContext is UserDashboardViewModel viewModel)
+            {
+                viewModel.ClosePopupCommand.Execute(null);
+            }
+        }
+
     }
 }

@@ -79,7 +79,7 @@
                         Margin="0 30"
                         FontSize="16" />
                     <TextBlock
-                        Text="*{Binding ExpDate}" 
+                        Text="{Binding ExpDate}" 
                         Margin="0 30"
                         FontSize="16"
                         FontWeight="Bold" />
