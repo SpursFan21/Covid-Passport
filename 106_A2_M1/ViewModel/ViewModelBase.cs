@@ -52,5 +52,11 @@ namespace _106_A2_M1.ViewModel
             // Alternatively, you can create a custom dialog for more control over the appearance and behavior
         }
 
+        protected void ShowSuccessPopup(string successMessage)
+        {
+            // Using MessageBox as a simple example
+            MessageBox.Show(successMessage, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Alternatively, you can create a custom dialog for more control over the appearance and behavior
+        }
     }
 }

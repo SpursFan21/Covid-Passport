@@ -23,8 +23,9 @@ namespace _106_A2_M1.ViewModel
         public ICommand NavCreateAccountCommand { get; set; }
         public ICommand WelcomeBackCommand { get; set; }
         public ICommand LoginCommand { get; set; }
-        private BaseUser _baseUser;
+        public ICommand CreateAccountCommand { get; set; }
 
+        private BaseUser _baseUser;
         // ViewModel property to access UserDB data
         private UserDB _userDbData; 
         public UserDB UserDbData 
@@ -35,7 +36,29 @@ namespace _106_A2_M1.ViewModel
             }
         
         }
-        
+
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
+
+        private DateTime _userDOB;
+        public DateTime UserDOB
+        {
+            get => _userDOB;
+            set
+            {
+                if(_userDOB != value)
+                {
+                    _userDOB = value;
+                    OnPropertyChanged(nameof(UserDOB));
+                }
+            }
+        }
+        public string UserEmail { get; set; }
+        public string UserNHI { get; set; }
+        public string UserPassword { private get; set; }
+        public string UserPassword2 { private get; set; }
+
+
         public string _loginEmail;
         public string LoginEmail
         {
@@ -64,6 +87,7 @@ namespace _106_A2_M1.ViewModel
             NavCreateAccountCommand = new RelayCommand(x => NavigateToFrame(new CreateAccountFrame()));
             WelcomeBackCommand = new RelayCommand(x => NavigateToFrame(new WelcomeBackFrame()));
             LoginCommand = new RelayCommand(async x => await PerformLogin());
+            CreateAccountCommand = new RelayCommand(x => PerformCreateAccount());
         }
 
         
@@ -115,7 +139,7 @@ namespace _106_A2_M1.ViewModel
             }
             else
             {
-                Console.WriteLine("Login Failed");
+                ShowErrorPopup("Login Failed.\nEmail or password is incorrect.");
             }
         }
 
@@ -131,19 +155,12 @@ namespace _106_A2_M1.ViewModel
             get { return _baseUser.UserType == 2; }
         }
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            // Update the LoginPassword property when the password changes
-            //LoginPassword = txtPassword.Password;
-        }
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 var passwordBox = (PasswordBox)sender;
                 string password = passwordBox.Password;
-
-                
             }
         }
 
@@ -153,6 +170,26 @@ namespace _106_A2_M1.ViewModel
             return UserDbData;
         }
 
+        private async void PerformCreateAccount()
+        {
+            try
+            {
+                if(UserPassword != UserPassword2)
+                {
+                    throw new ArgumentException("Passwords do not match.\nPlease try again.");
+                }
+                
+                // Call create account model function
+                //int CreateAccSuccess = await _baseUser.CreateAccountAsync(UserEmail, UserPassword, UserFirstName, UserLastName, UserDOB, UserNHI);
+                ShowSuccessPopup("Well done! You're account has been made!");
+                NavigateToFrame(new WelcomeBackFrame());
+            }
+
+            catch (Exception ex)
+            {
+                ShowErrorPopup(ex.Message);
+            }
+        }
 
     }
 }

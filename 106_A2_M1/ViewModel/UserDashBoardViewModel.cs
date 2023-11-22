@@ -181,7 +181,7 @@ namespace _106_A2_M1.ViewModel
 
             // Startup display for user login
             FrameTitle = "My Vaccine Pass";
-            InitializeQRAsync().Wait();
+            InitializeQRAsync();
             NavigateToFrame(new UserMyVaccinePassControlFrame());
             QRImageURL = ShowQRFrame();
 

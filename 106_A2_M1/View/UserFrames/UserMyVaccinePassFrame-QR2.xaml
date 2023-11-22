@@ -14,15 +14,12 @@
         <converters:IntToVaccineStatusConverter x:Key="IntToVaccineStatusConverter" />
     </UserControl.Resources>
     <Grid>
-        <materialDesign:Card Padding="50" Background="#DEDDEB" Width="600">
-            <materialDesign:Card.Effect>
-                <DropShadowEffect ShadowDepth="0" Opacity="0.3" BlurRadius="10"/>
-            </materialDesign:Card.Effect>
-            <Grid>
+
+            <Grid Width="500" Margin="0 50 0 0">
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
@@ -33,8 +30,8 @@
 
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
 
                         <TextBlock
@@ -62,13 +59,14 @@
                             Grid.Row="1"
                             Text="{Binding Path=VaccineStatus, Converter={StaticResource IntToVaccineStatusConverter}}" 
                             FontSize="20"
-                            FontWeight="Bold" />
+                            FontWeight="Bold"
+                            HorizontalAlignment="Right"/>
                     </Grid>
 
                 </Grid>
                 <Grid Grid.Row="1" Margin="0 20 0 0">
                     <Grid>
-                        <Image Source="/Resources/QRStripes.png" Width="500" />
+                        <Image Source="/Resources/QRStripes.png" MaxWidth="500" />
                         <Image Source="{Binding QRImageURL, Mode=OneWay}" />
 
 
@@ -83,12 +81,12 @@
                         Margin="0 30"
                         FontSize="16" />
                     <TextBlock
-                        Text=" {Binding ExpDate}" 
+                        Text="*{Binding ExpDate}" 
                         Margin="0 30"
                         FontSize="16"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold" />
                 </StackPanel>
             </Grid>
-        </materialDesign:Card>
+
     </Grid>
 </UserControl>
