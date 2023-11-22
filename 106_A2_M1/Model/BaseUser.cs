@@ -150,9 +150,9 @@ namespace _106_A2_M1.Model
                 }
 
                 // Change DateTime to Unix timestamp (number of seconds since Unix epoch)
-                DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
                 TimeSpan elapsedTime = dobDT.ToUniversalTime() - epoch;
-                int dob = (int)elapsedTime.TotalSeconds;
+                int dob = (int)elapsedTime.TotalSeconds * 1000;
 
                 // Call the CreateAccountAsync method in SingletonClient
                 UserDB user = await SingletonClient.Instance.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNum);
