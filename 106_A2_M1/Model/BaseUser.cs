@@ -34,7 +34,7 @@ namespace _106_A2_M1.Model
         public string QrCodeImageUrl { get; private set; }
 
         //URL Storage
-        public string storedQRCodeImageURL;
+        public static string storedQRCodeImageURL;
 
         //Image Storage
         public byte[] storedImageData;
@@ -307,7 +307,7 @@ namespace _106_A2_M1.Model
                     // Store the QR code image URL in the field
                     storedQRCodeImageURL = qrCodeURL;
 
-                    return qrCodeURL;
+                    return storedQRCodeImageURL;
                 }
                 else
                 {
@@ -367,7 +367,7 @@ namespace _106_A2_M1.Model
         }
 
         //retrieve the storedQRCodeImageURL
-        public string GetStoredQRCodeImageURL()
+        public static string GetStoredQRCodeImageURL()
         {
             return storedQRCodeImageURL;
         }

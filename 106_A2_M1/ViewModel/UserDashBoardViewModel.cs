@@ -144,15 +144,15 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-        private string _qrImageURL;
+        //private string _qrImageURL;
         public string QRImageURL
         {
-            get => _qrImageURL;
+            get => BaseUser.storedQRCodeImageURL;
             set
             {
-                if(_qrImageURL != value)
+                if(BaseUser.storedQRCodeImageURL != value)
                 {
-                    _qrImageURL = value;
+                    BaseUser.storedQRCodeImageURL = value;
                     OnPropertyChanged(nameof(QRImageURL));
                 }
             }
@@ -267,8 +267,9 @@ namespace _106_A2_M1.ViewModel
                 else if (QRStatus == 2)
                 {
                     // Get the QR image URL before displaying next frame
-                    qrURL = _baseUser.GetStoredQRCodeImageURL();
+                    //qrURL = BaseUser.StoredQRCodeImageURL;
                     QRUserControl = new UserMyVaccinePassFrame_QR2();
+                    return QRImageURL;
                 }
                 else
                 {
