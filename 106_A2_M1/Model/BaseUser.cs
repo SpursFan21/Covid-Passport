@@ -31,10 +31,13 @@ namespace _106_A2_M1.Model
         public UserDB _userDB;
 
         // Property to store the QR code image link
-        public string QrCodeImageUrl { get; private set; }
-
+        public string qrCodeU { get; private set; }
+       
         //URL Storage
         public static string storedQRCodeImageURL;
+
+        //URl expiry Date storage packed
+        public ulong storedExp;
 
         //Image Storage
         public byte[] storedImageData;
@@ -150,9 +153,9 @@ namespace _106_A2_M1.Model
                 }
 
                 // Change DateTime to Unix timestamp (number of seconds since Unix epoch)
-                DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
                 TimeSpan elapsedTime = dobDT.ToUniversalTime() - epoch;
-                int dob = (int)elapsedTime.TotalSeconds;
+                int dob = (int)elapsedTime.TotalSeconds * 1000;
 
                 // Call the CreateAccountAsync method in SingletonClient
                 UserDB user = await SingletonClient.Instance.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNum);
@@ -293,34 +296,101 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<string> RetrieveQRCodeImageURLAsync()
+        /* public async Task<(string, ulong)> RetrieveQRCodeImageURLAsync()
+         {
+             try
+             {
+                 // Use SingletonClient to retrieve the QR code image URL asynchronously
+                 var (qrCodeURL, qrCodeExe) = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync();
+
+                 if (qrCodeURL != null)
+                 {
+                     Console.WriteLine($"QR Code Image URL: {qrCodeURL}");
+                     Console.WriteLine($"QR Code Expiration: {qrCodeExe}");
+
+                     // Store the QR code image URL in the field
+                     storedQRCodeImageURL = qrCodeURL;
+                     storedExp = qrCodeExe;
+
+                     return (qrCodeURL, qrCodeExe);
+                 }
+                 else
+                 {
+                     Console.WriteLine("QR Code Image URL not found.");
+                     return (null, 0);
+                 }
+             }
+             catch (Exception ex)
+             {
+                 Console.WriteLine($"An error occurred: {ex.Message}");
+                 return (null, 0);
+             }
+         }*/
+
+        public async Task<(string, string)> RetrieveQRCodeImageURLAsync()
         {
             try
             {
                 // Use SingletonClient to retrieve the QR code image URL asynchronously
-                string qrCodeURL = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync();
+                var (qrCodeURL, qrCodeExe) = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync();
 
                 if (qrCodeURL != null)
                 {
                     Console.WriteLine($"QR Code Image URL: {qrCodeURL}");
 
-                    // Store the QR code image URL in the field
-                    storedQRCodeImageURL = qrCodeURL;
+                    // Format the expiration timestamp as a string
+                    string formattedExp = FormatUnixTimestamp((long)qrCodeExe); // Corrected this line
+                    Console.WriteLine($"QR Code Expiration: {formattedExp}");
 
-                    return storedQRCodeImageURL;
+                    // Store the QR code image URL and formatted expiration in the fields
+                    storedQRCodeImageURL = qrCodeURL;
+                    storedExp = qrCodeExe;
+
+                    return (qrCodeURL, formattedExp);
                 }
                 else
                 {
                     Console.WriteLine("QR Code Image URL not found.");
-                    return null;
+                    return (null, null);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-                return null;
+                return (null, null);
             }
         }
+
+        public static string FormatUnixTimestamp(long unixTimestamp)
+        {
+            try
+            {
+                // Unix Epoch time starts from January 1, 1970
+                DateTimeOffset epochTime = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
+
+                // Add the Unix timestamp in milliseconds to get the actual DateTimeOffset
+                DateTimeOffset dateTimeOffset = epochTime.AddMilliseconds(unixTimestamp);
+
+                // Format the DateTimeOffset as a string
+                string formattedDateTime = dateTimeOffset.ToString("yyyy-MM-dd HH:mm:ss");
+
+                return formattedDateTime;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while formatting Unix timestamp: {ex.Message}");
+                return string.Empty;
+            }
+        }
+
+
+
+
+        public string GetFormattedExpiration()
+        {
+            return FormatUnixTimestamp((long)storedExp);
+        }
+
 
         public async Task RetrieveQRCodeImageAsync()
         {

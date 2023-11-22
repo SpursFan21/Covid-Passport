@@ -348,9 +348,10 @@ namespace _106_A2_M1.Model
         public class QRCodeUrlResponse
         {
             public string Url { get; set; }
+            public ulong exp { get; set; }
         }
 
-        public async Task<string> RetrieveQRCodeImageURLAsync()
+        public async Task<(string, ulong)> RetrieveQRCodeImageURLAsync()
         {
             try
             {
@@ -370,19 +371,20 @@ namespace _106_A2_M1.Model
 
                     // Access the URL property
                     string qrCodeUrl = qrCodeResponse.Url;
+                    ulong qrCodeExe = qrCodeResponse.exp;
 
-                    return qrCodeUrl;
+                    return (qrCodeUrl, qrCodeExe);
                 }
                 else
                 {
                     Console.WriteLine($"Error retrieving QR code URL: {response.StatusCode} - {response.ReasonPhrase}");
-                    return null;
+                    return (null, 0);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while retrieving QR code URL: {ex.Message}");
-                return null;
+                return (null, 0);
             }
         }
 
