@@ -298,16 +298,16 @@ namespace _106_A2_M1.Model
             try
             {
                 // Use SingletonClient to retrieve the QR code image URL asynchronously
-                string qrCodeImageURL = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync();
+                string qrCodeURL = await SingletonClient.Instance.RetrieveQRCodeImageURLAsync();
 
-                if (qrCodeImageURL != null)
+                if (qrCodeURL != null)
                 {
-                    Console.WriteLine($"QR Code Image URL: {qrCodeImageURL}");
+                    Console.WriteLine($"QR Code Image URL: {qrCodeURL}");
 
                     // Store the QR code image URL in the field
-                    storedQRCodeImageURL = qrCodeImageURL;
+                    storedQRCodeImageURL = qrCodeURL;
 
-                    return qrCodeImageURL;
+                    return qrCodeURL;
                 }
                 else
                 {
