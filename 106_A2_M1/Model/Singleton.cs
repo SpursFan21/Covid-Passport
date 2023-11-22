@@ -309,7 +309,46 @@ namespace _106_A2_M1.Model
                         Console.WriteLine($"An error occurred while approving QR code: {ex.Message}");
                         return null;
                     }
+        }
+
+        /*public async Task<string> RetrieveQRCodeImageURLAsync()
+        {
+            try
+            {
+                // Construct the URL for the GET request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/qrcodes";
+
+                // Make a GET request to retrieve the QR code image URL
+                HttpResponseMessage response = await this._client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Read the response content as a string
+                    string content = await response.Content.ReadAsStringAsync();
+
+                    // Deserialize the string to a string 
+                    string qrCodeUrl = JsonConvert.DeserializeObject<string>(content);
+
+                    return qrCodeUrl;
                 }
+                else
+                {
+                    Console.WriteLine($"Error retrieving QR code URL: {response.StatusCode} - {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving QR code URL: {ex.Message}");
+                return null;
+            }
+       } */
+
+
+        public class QRCodeUrlResponse
+        {
+            public string Url { get; set; }
+        }
 
         public async Task<string> RetrieveQRCodeImageURLAsync()
         {
@@ -326,8 +365,11 @@ namespace _106_A2_M1.Model
                     // Read the response content as a string
                     string content = await response.Content.ReadAsStringAsync();
 
-                    // Deserialize the string to a string (assuming the URL is a string)
-                    string qrCodeUrl = JsonConvert.DeserializeObject<string>(content);
+                    // Deserialize the JSON object to QRCodeUrlResponse
+                    QRCodeUrlResponse qrCodeResponse = JsonConvert.DeserializeObject<QRCodeUrlResponse>(content);
+
+                    // Access the URL property
+                    string qrCodeUrl = qrCodeResponse.Url;
 
                     return qrCodeUrl;
                 }
