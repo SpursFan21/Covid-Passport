@@ -39,6 +39,9 @@ namespace _106_A2_M1.Model
         //URl expiry Date storage packed
         public ulong storedExp;
 
+        //URL Expiry date storage un-packed
+        public static string UrlExpDate;
+
         //Image Storage
         public byte[] storedImageData;
 
@@ -374,6 +377,7 @@ namespace _106_A2_M1.Model
                 // Format the DateTimeOffset as a string
                 string formattedDateTime = dateTimeOffset.ToString("yyyy-MM-dd HH:mm:ss");
 
+                UrlExpDate = formattedDateTime;
                 return formattedDateTime;
             }
             catch (Exception ex)
