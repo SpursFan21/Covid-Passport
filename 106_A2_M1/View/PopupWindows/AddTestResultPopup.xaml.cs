@@ -1,4 +1,6 @@
-﻿using System;
+﻿using _106_A2_M1.Model;
+using _106_A2_M1.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,10 @@ namespace _106_A2_M1.View.PopupWindows
     /// </summary>
     public partial class AddTestResultPopup : UserControl
     {
-        public AddTestResultPopup()
+        public AddTestResultPopup(UserDB uDB)
         {
             InitializeComponent();
+            DataContext = new UserDashboardViewModel(uDB);
         }
     }
 }

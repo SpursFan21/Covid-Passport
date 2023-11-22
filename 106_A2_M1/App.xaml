@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="Theme/MenuButtonTheme.xaml" />
                 <ResourceDictionary Source="Theme/DropBoxTheme.xaml" />
+                <ResourceDictionary Source="Theme/TestButtonTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
