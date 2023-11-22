@@ -352,7 +352,7 @@ namespace _106_A2_M1.Model
 
         public class QRCodeUrlResponseData {
             public string url { get; set; }
-            public inst exp { get; set; }
+            public int exp { get; set; }
         }
 
         public async Task<string> RetrieveQRCodeImageURLAsync()
