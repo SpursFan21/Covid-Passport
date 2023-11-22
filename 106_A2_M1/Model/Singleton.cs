@@ -350,11 +350,6 @@ namespace _106_A2_M1.Model
             public string Url { get; set; }
         }
 
-        public class QRCodeUrlResponseData {
-            public string url { get; set; }
-            public inst exp { get; set; }
-        }
-
         public async Task<string> RetrieveQRCodeImageURLAsync()
         {
             try
