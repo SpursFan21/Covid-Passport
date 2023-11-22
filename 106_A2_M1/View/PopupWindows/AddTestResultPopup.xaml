@@ -7,11 +7,11 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1.View"
              xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="550">
+             mc:Ignorable="d">
     <materialDesign:Card
         Background="#DEDDEB"
-        Padding="50 20">
+        Padding="50 20"
+        Width="500">
         <StackPanel>
             <TextBlock
                 Text="Add Test Result"
@@ -69,7 +69,7 @@
                     <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
                 </Border.Effect>
                 <DatePicker 
-                    Margin="5"
+                    Margin="15 5"
                     FontSize="20"
                     Background="White"
                     SelectedDate="{x:Static sys:DateTime.Now}" 
@@ -92,7 +92,6 @@
                              HorizontalAlignment="Stretch" 
                              HorizontalContentAlignment="Center"
                              Height="50"
-                             FontSize="24"
                              Foreground="Black"
                              Style="{StaticResource TestButtonTheme}" />
 
@@ -101,10 +100,29 @@
                              HorizontalAlignment="Stretch"
                              HorizontalContentAlignment="Center"
                              Height="50"
-                             FontSize="24"
                              Foreground="Black"
                              Style="{StaticResource TestButtonTheme}" />
             </Grid>
+            <Button Command="{Binding SubmitTestCommand}"
+                    Margin="0 25"
+                    Padding="25 0"
+                    materialDesign:ShadowAssist.ShadowDepth="Depth0" 
+                    Height="50" 
+                    Width="auto" 
+                    materialDesign:ButtonAssist.CornerRadius="20"
+                    FontSize="16"
+                    FontWeight="Bold"
+                    Content="SUBMIT" 
+                    Background="White" 
+                    Foreground="Black" 
+                    HorizontalAlignment="Center" 
+                    BorderBrush="{x:Null}" 
+                    VerticalAlignment="Top" 
+                    HorizontalContentAlignment="Center" >
+                <Button.Effect>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
+                </Button.Effect>
+            </Button>
         </StackPanel>
     </materialDesign:Card>
 </UserControl>
