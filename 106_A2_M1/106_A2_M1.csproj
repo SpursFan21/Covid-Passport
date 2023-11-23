@@ -68,9 +68,11 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToResolvedColorConverter.cs" />
     <Compile Include="Converters\BoolToResolvedTextConverter.cs" />
+    <Compile Include="Converters\BoolToResultConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DatePickerToIntConverter.cs" />
     <Compile Include="Converters\IntToVaccineStatusConverter.cs" />
+    <Compile Include="Converters\StringToDateTimeConverter.cs" />
     <Compile Include="Interfaces\Auth\AdminAuth.cs" />
     <Compile Include="Interfaces\Auth\LoginRequest.cs" />
     <Compile Include="Interfaces\Auth\UserAuth.cs" />
@@ -98,6 +100,9 @@
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\UserDashboardViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\PopupWindows\TestResultSuccess.xaml.cs">
+      <DependentUpon>TestResultSuccess.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PopupWindows\AddTestResultPopup.xaml.cs">
       <DependentUpon>AddTestResultPopup.xaml</DependentUpon>
     </Compile>
@@ -167,6 +172,10 @@
     <Page Include="Theme\TestButtonTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PopupWindows\TestResultSuccess.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\PopupWindows\AddTestResultPopup.xaml">
       <SubType>Designer</SubType>
@@ -278,6 +287,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\UserIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MyVaccinePassIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\MyRecordsIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PlusIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CovidTestIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.1.0\build\MaterialDesignThemes.targets')" />

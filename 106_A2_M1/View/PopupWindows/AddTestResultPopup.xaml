@@ -7,7 +7,12 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:_106_A2_M1.View"
              xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
-             mc:Ignorable="d">
+             xmlns:converters="clr-namespace:_106_A2_M1.Converters"
+             mc:Ignorable="d"
+             Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <converters:StringToDateTimeConverter x:Key="StringToDateTimeConverter" />
+    </UserControl.Resources>
     <materialDesign:Card
         Background="#DEDDEB"
         Padding="50 20"
@@ -25,19 +30,20 @@
                 FontWeight="SemiBold" />
             <Border Style="{StaticResource CustomBorderStyle}"
                     Margin="2">
-                <ComboBox Background="White"
+                <ComboBox x:Name="TypeComboBox"
+                          Background="White"
                           FontSize="20"
                           Margin="15 5"
-                          SelectedIndex="0">
+                          SelectedItem="{Binding Path=SelectedTestType, Mode=TwoWay}">
                     <ComboBox.ItemContainerStyle>
                         <Style TargetType="ComboBoxItem">
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ComboBoxItem">
                                         <Border x:Name="ItemBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderThickness="0"
-                                Padding="5">
+                                            Background="{TemplateBinding Background}"
+                                            BorderThickness="0"
+                                            Padding="5">
                                             <ContentPresenter />
                                         </Border>
                                         <ControlTemplate.Triggers>
@@ -68,12 +74,12 @@
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
                 </Border.Effect>
-                <DatePicker 
-                    Margin="15 5"
-                    FontSize="20"
-                    Background="White"
-                    SelectedDate="{x:Static sys:DateTime.Now}" 
-                    />
+                <DatePicker x:Name="TestDatePicker" 
+                            Margin="15 5"
+                            FontSize="20"
+                            Background="White"
+                            SelectedDate="{Binding Path=SelectedDate, Converter={StaticResource StringToDateTimeConverter}}" 
+                            />
             </Border>
 
             <TextBlock

@@ -18,19 +18,14 @@ using System.Windows.Shapes;
 namespace _106_A2_M1.View.PopupWindows
 {
     /// <summary>
-    /// Interaction logic for AddTestResultPopup.xaml
+    /// Interaction logic for TestResultSuccess.xaml
     /// </summary>
-    public partial class AddTestResultPopup : UserControl
+    public partial class TestResultSuccess : UserControl
     {
-        public AddTestResultPopup()
+        public TestResultSuccess()
         {
             InitializeComponent();
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Reset values to default when the UserControl is loaded
-            TypeComboBox.SelectedIndex = 0; // Set the default selection for the ComboBox
-            TestDatePicker.SelectedDate = DateTime.Now;
-        }
+        
     }
 }

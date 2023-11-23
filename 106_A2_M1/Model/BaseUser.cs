@@ -183,7 +183,7 @@ namespace _106_A2_M1.Model
                 DateTimeOffset dateTimeOffset = epochTime.AddMilliseconds(unixTimestamp);
 
                 // Format the DateTimeOffset as a string
-                string formattedDateTimeDob = dateTimeOffset.ToString("yyyy-MM-dd");
+                string formattedDateTimeDob = dateTimeOffset.ToString("dd-MM-yyyy");
 
                 return formattedDateTimeDob;
             }
@@ -425,7 +425,7 @@ namespace _106_A2_M1.Model
                 DateTimeOffset dateTimeOffset = epochTime.AddMilliseconds(unixTimestamp);
 
                 // Format the DateTimeOffset as a string
-                string formattedDateTime = dateTimeOffset.ToString("yyyy-MM-dd");
+                string formattedDateTime = dateTimeOffset.ToString("dd-MM-yyyy");
 
                 UrlExpDate = formattedDateTime;
                 return formattedDateTime;
