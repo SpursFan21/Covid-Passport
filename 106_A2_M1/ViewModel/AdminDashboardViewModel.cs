@@ -27,8 +27,8 @@ namespace _106_A2_M1.ViewModel
         private Admin _admin; // Declare an instance of the Admin class MODEL to ViewModel Pipeline
         private ObservableCollection<User> _userList; // Change the type to ObservableCollection<User>
         private ObservableCollection<Issue> _issueList;
-        
-        
+
+        public User user1;
 
         public ICommand UserSearchCommand
         {
@@ -88,6 +88,13 @@ namespace _106_A2_M1.ViewModel
                 NavigateToFrame(new AdminIssueManagementFrame());
             });
             MarkAsResolvedCommand = new RelayCommand(x => MarkAsResolved(x));
+
+            User user1 = new User();
+            user1.UserDB.first_name = "Daniel";
+            user1.UserDB.last_name = "Daniels";
+            user1.UserDB.email = "dan.daniels@daniel.com";
+            user1.UserDB.FormattedDOB = "12-03-1940";
+
         }
 
         
