@@ -97,7 +97,11 @@ namespace _106_A2_M1.ViewModel
 
         }
 
-        
+        public void TestAddUsers() // TESTING PURPOSES ONLY
+        {
+            _admin.TestUserGeneration();
+            UserList = new ObservableCollection<User>(_admin.user_list); // Update the ObservableCollection after adding users
+        }
         private void NavigateToPage(Page destinationPage)
         {
             MainWindowVM mainVM = (MainWindowVM)Application.Current.MainWindow.DataContext;
