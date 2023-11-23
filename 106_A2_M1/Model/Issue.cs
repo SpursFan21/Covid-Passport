@@ -21,7 +21,10 @@ namespace _106_A2_M1.Model
             }
             set
             {
-                resolve = value;
+                if(resolve != value)
+                {
+                    resolve = value;
+                }
             }
         }
         public int open_date { get; set; }

@@ -257,7 +257,7 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-        private DateTime _selectedDate = DateTime.Now;
+        private DateTime _selectedDate;
 
         public DateTime SelectedDate
         {
@@ -301,7 +301,6 @@ namespace _106_A2_M1.ViewModel
             NavigateToFrame(new UserMyVaccinePassControlFrame());
             ShowQRFrame();
 
-            PopupContent = new TestResultSuccess();
             // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
             NavMyRecordsCommand = new RelayCommand(x =>
@@ -322,6 +321,8 @@ namespace _106_A2_M1.ViewModel
             AddTestResultCommand = new RelayCommand(x => AddTestResult());
             ShowPopupCommand = new RelayCommand(x => ShowPopup());
             ClosePopupCommand = new RelayCommand(x => ClosePopup());
+
+            
 
             // Test list for TESTING PURPOSES ONLY
             TestList = new ObservableCollection<CovidTest>();
@@ -482,12 +483,14 @@ namespace _106_A2_M1.ViewModel
         {
             //IsPopupOpen = false;
             PopupContent = new TestResultSuccess();
-            IsPopupOpen = true;
         }
         private void ShowPopup()
         {
             // Show the popup here
             PopupContent = new AddTestResultPopup();
+            // Test Result Defaults
+            SelectedTestType = "Rapid Antigen Test (RAT)";
+            SelectedDate = DateTime.Now;
             IsPositiveSelected = false;
             IsNegativeSelected = false;
             IsPopupOpen = true;

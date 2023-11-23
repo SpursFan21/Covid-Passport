@@ -26,11 +26,6 @@ namespace _106_A2_M1.View.PopupWindows
         {
             InitializeComponent();
         }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Reset values to default when the UserControl is loaded
-            TypeComboBox.SelectedIndex = 0; // Set the default selection for the ComboBox
-            TestDatePicker.SelectedDate = DateTime.Now;
-        }
+        
     }
 }

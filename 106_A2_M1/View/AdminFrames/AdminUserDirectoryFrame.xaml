@@ -27,19 +27,18 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="NAME" Width="300"
-                                            DisplayMemberBinding="{Binding Path=FirstName}" />
+                                            DisplayMemberBinding="{Binding Path=UserDB.first_name}" />
                             <GridViewColumn Header="DOB" Width="200"
-                                            DisplayMemberBinding="{Binding Path=DateOfBirth}" />
-                            <GridViewColumn Header="EMAIL" Width="300"
-                                            DisplayMemberBinding="{Binding Path=Email}" />
-                            <GridViewColumn Header="ACTIONS" Width="auto">
+                                            DisplayMemberBinding="{Binding Path=UserDB.FormattedDOB}" />
+                            <GridViewColumn Header="EMAIL" Width="420"
+                                            DisplayMemberBinding="{Binding Path=UserDB.email}" />
+                            <GridViewColumn Header="ACTIONS" Width="Auto">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Content="Manage" 
                                                 Background="#EFEEF5" 
                                                 BorderBrush="#A1A1A1" 
-                                                Foreground="Black"
-                                                />
+                                                Foreground="Black" />
 
 
                                     </DataTemplate>
@@ -47,6 +46,21 @@
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="Margin" Value="0 20 0 0" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                            <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                 </ListView>
             </Grid>
 

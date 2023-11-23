@@ -8,8 +8,8 @@
              xmlns:local="clr-namespace:_106_A2_M1.View"
              xmlns:vm="clr-namespace:_106_A2_M1.ViewModel"
              xmlns:converters="clr-namespace:_106_A2_M1.Converters"
-             mc:Ignorable="d"
-             Loaded="UserControl_Loaded">
+             mc:Ignorable="d">
+    <!--Loaded="UserControl_Loaded-->
     <UserControl.Resources>
         <converters:StringToDateTimeConverter x:Key="StringToDateTimeConverter" />
     </UserControl.Resources>
@@ -49,6 +49,7 @@
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="ComboBoxItem.IsHighlighted" Value="True">
                                                 <Setter TargetName="ItemBorder" Property="BorderThickness" Value="0,0,0,1"/>
+                                                <Setter Property="Cursor" Value="Hand" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -78,7 +79,7 @@
                             Margin="15 5"
                             FontSize="20"
                             Background="White"
-                            SelectedDate="{Binding Path=SelectedDate, Converter={StaticResource StringToDateTimeConverter}}" 
+                            SelectedDate="{Binding Path=SelectedDate, Converter={StaticResource StringToDateTimeConverter}, Mode=TwoWay}" 
                             />
             </Border>
 

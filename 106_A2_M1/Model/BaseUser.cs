@@ -32,7 +32,7 @@ namespace _106_A2_M1.Model
 
         // Property to store the QR code image link
         public string qrCodeU { get; private set; }
-       
+
         //URL Storage
         public string storedQRCodeImageURL;
 
@@ -57,7 +57,11 @@ namespace _106_A2_M1.Model
         public Vaccine first_dose { get; set; }
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
-      
+
+        public BaseUser()
+        {
+            UserDB = new UserDB();
+        }
 
         public async Task GetLoginAsync(string email, string password)
         {

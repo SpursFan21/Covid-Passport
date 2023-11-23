@@ -65,7 +65,8 @@ namespace _106_A2_M1.ViewModel
             _admin = new Admin(); // Initialize the Admin instance MODEL to ViewModel Pipeline
             UserList = new ObservableCollection<User>(_admin.user_list); // Initialize the UserList
             IssueList = new ObservableCollection<Issue>(_admin.issue_list); // Initialize IssueList
-
+            TestAddUsers();
+            TestAddIssues();
             // Set the default frame to UserDirectoryFrame
             FrameTitle = "User Directory";
             CurrentDisplayFrame = new AdminUserDirectoryFrame();
@@ -102,6 +103,11 @@ namespace _106_A2_M1.ViewModel
             _admin.TestUserGeneration();
             UserList = new ObservableCollection<User>(_admin.user_list); // Update the ObservableCollection after adding users
         }
+        public void TestAddIssues() // TESTING PURPOSES ONLY
+        {
+            _admin.TestIssueGeneration();
+            IssueList = new ObservableCollection<Issue>(_admin.issue_list); // Update the ObservableCollection after adding users
+        }
         private void NavigateToPage(Page destinationPage)
         {
             MainWindowVM mainVM = (MainWindowVM)Application.Current.MainWindow.DataContext;
@@ -131,7 +137,8 @@ namespace _106_A2_M1.ViewModel
         {
             if (parameter is Issue issue)
             {
-                issue.resolve = true;
+                issue.open_date = 0;
+                issue.closed_date = 1;
 
                 OnPropertyChanged(nameof(IssueList));
                 NavigateToFrame(new AdminIssueManagementFrame());
