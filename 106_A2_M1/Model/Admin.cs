@@ -27,6 +27,32 @@ namespace _106_A2_M1.Model
             usersWithQR = new List<UserDB>(); // Initialize the usersWithQR list
         }
 
+        public void TestUserGeneration() // TESTING PURPOSES ONLY
+        {
+            User user1 = new User();  user1.UserDB.first_name = "Tom"; user1.UserDB.FormattedDOB = "23-06-1970"; user1.UserDB.email = "tom@email.com";
+            User user2 = new User();  user2.UserDB.first_name = "Frank"; user2.UserDB.FormattedDOB = "08-08-1988"; user2.UserDB.email = "frank@email.com";
+            user_list.Add(user1);
+            user_list.Add(user2);
+
+        }
+
+        public void TestIssueGeneration() // TESTINF PURPOSES ONLY
+        {
+            Issue issue1 = new Issue()
+            {
+                subject = "I have a problem",
+                description = "Where do I log out of my account, I have been logged in for 72 days.",
+                resolve = false
+            };
+            Issue issue2 = new Issue()
+            {
+                subject = "I too, have a problem",
+                description = "How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!How can I update my details? The button does not work!",
+                resolve = false
+            };
+            issue_list.Add(issue1);
+            issue_list.Add(issue2);
+        }
         public void UpdateUserDetails(string email, string firstName, string lastName, int dateOfBirth, string nhiNumber)
         {
             // Validate input parameters
