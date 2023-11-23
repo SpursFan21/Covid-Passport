@@ -12,6 +12,7 @@
     <UserControl.Resources>
         <converters:BoolToResolvedColorConverter x:Key="BoolToResolvedColorConverter" />
         <converters:BoolToResolvedTextConverter x:Key="BoolToResolvedTextConverter"/>
+        <converters:BoolToResultConverter x:Key="BoolToResultConverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid Margin="50">
@@ -137,14 +138,14 @@
                             <StackPanel Grid.Column="0">
                                 <!-- Left column -->
                                 <TextBlock Text="TEST DATE" FontSize="16" Foreground="Black"/>
-                                <TextBlock Text="{Binding Path=test_date}" FontWeight="Bold" FontSize="16"/>
+                                <TextBlock Text="{Binding Path=formatted_test_date}" FontWeight="Bold" FontSize="16"/>
 
                             </StackPanel>
 
                             <StackPanel Grid.Column="1">
                                 <!-- Right column -->
                                 <TextBlock Text="RESULT" FontSize="16" Foreground="Black"/>
-                                <TextBlock Text="{Binding Path=result}" FontWeight="Bold" FontSize="16"/>
+                                <TextBlock Text="{Binding Path=result, Converter={StaticResource BoolToResultConverter}}" FontWeight="Bold" FontSize="16"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="2">
@@ -156,7 +157,7 @@
                             <StackPanel Grid.Column="3">
                                 <!-- Right column -->
                                 <TextBlock Text="ISOLATE UNTIL" FontSize="16" Foreground="Black"/>
-                                <TextBlock Text="10012023" FontWeight="Bold" FontSize="16"/>
+                                <TextBlock Text="{Binding Path=formatted_iso_date}" FontWeight="Bold" FontSize="16"/>
                             </StackPanel>
                         </Grid>
                     </materialDesign:Card>

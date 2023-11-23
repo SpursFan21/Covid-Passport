@@ -5,6 +5,7 @@ using _106_A2_M1.View.PopupWindows;
 using _106_A2_M1.View.UserFrames;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -86,14 +87,14 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-        public int UserDOB
+        public string UserDOB
         {
-            get => ActiveUser.UserDB.dob;
+            get => ActiveUser.UserDB.FormattedDOB;
             set
             {
-                if (ActiveUser.UserDB.dob != value)
+                if (ActiveUser.UserDB.FormattedDOB != value)
                 {
-                    ActiveUser.UserDB.dob = value;
+                    ActiveUser.UserDB.FormattedDOB = value;
                     OnPropertyChanged(nameof(UserDOB));
                 }
             }
@@ -178,7 +179,20 @@ namespace _106_A2_M1.ViewModel
         }
 
         // Test Result Popup
-        private AddTestResultPopup _addTestResultPopup;
+        private UserControl _popupContent;
+        public UserControl PopupContent
+        {
+            get { return _popupContent; }
+            set
+            {
+                if (_popupContent != value)
+                {
+                    _popupContent = value;
+                    OnPropertyChanged(nameof(PopupContent));
+                }
+            }
+        }
+
 
         private bool _isPopupOpen;
         public bool IsPopupOpen
@@ -228,6 +242,40 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
+        private string _selectedTestType;
+
+        public string SelectedTestType
+        {
+            get { return _selectedTestType; }
+            set
+            {
+                if (_selectedTestType != value)
+                {
+                    _selectedTestType = value;
+                    OnPropertyChanged(nameof(SelectedTestType));
+                }
+            }
+        }
+
+        private DateTime _selectedDate = DateTime.Now;
+
+        public DateTime SelectedDate
+        {
+            get { return _selectedDate; }
+            set
+            {
+                if (_selectedDate != value)
+                {
+                    _selectedDate = value;
+                    OnPropertyChanged(nameof(SelectedDate));
+                    OnPropertyChanged(nameof(FormattedSelectedDate));
+                }
+            }
+        }
+
+        // Add a formatted string property
+        public string FormattedSelectedDate => SelectedDate.ToString("dd-MM-yyyy");
+
         private ObservableCollection<CovidTest> _testList = new ObservableCollection<CovidTest>();
         public ObservableCollection<CovidTest> TestList
         {
@@ -253,7 +301,7 @@ namespace _106_A2_M1.ViewModel
             NavigateToFrame(new UserMyVaccinePassControlFrame());
             ShowQRFrame();
 
-            _addTestResultPopup = new AddTestResultPopup();
+            PopupContent = new TestResultSuccess();
             // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
             NavMyRecordsCommand = new RelayCommand(x =>
@@ -277,8 +325,8 @@ namespace _106_A2_M1.ViewModel
 
             // Test list for TESTING PURPOSES ONLY
             TestList = new ObservableCollection<CovidTest>();
-            generateTest(10102023, false, "RAT");
-            generateTest(02022023, true, "PCR");
+            generateTest("10-08-2023", false, "RAT");
+            generateTest("21-04-2023", true, "PCR");
         }
 
         private void NavigateToPage(Page destinationPage)
@@ -293,12 +341,17 @@ namespace _106_A2_M1.ViewModel
         }
 
         // TESTING PURPOSES ONLY
-        private void generateTest(int date, bool result, string type)
+        private void generateTest(string date, bool result, string type)
         {
             CovidTest test = new CovidTest();
-            test.test_date = date;
+            test.formatted_test_date = date;
             test.result = result;
             test.test_type = type;
+
+            if (test.result)
+            {
+                test.formatted_iso_date = ReturnIsoDate(test.formatted_test_date);
+            }
             TestList.Add(test);
         }
 
@@ -358,22 +411,65 @@ namespace _106_A2_M1.ViewModel
         {
             try
             {
-                if(!IsPositiveSelected && !IsNegativeSelected)
+                CovidTest test1 = new CovidTest();
+
+                test1.result = ReturnTestResult();
+
+                if(SelectedTestType == "System.Windows.Controls.ComboBoxItem: Rapid Antigen Test (RAT)")
                 {
-                    throw new ArgumentException("Please select result.");
+                    test1.test_type = "RAT";
+
                 }
-                if (IsPositiveSelected)
+                else
                 {
-                    ClosePopup();
+                    test1.test_type = "PCR";
                 }
-                else if (IsNegativeSelected)
+
+                test1.formatted_test_date = FormattedSelectedDate;
+
+                if (test1.result)
                 {
-                    ClosePopup();
+                    test1.formatted_iso_date = ReturnIsoDate(FormattedSelectedDate);
                 }
+
+                TestList.Add(test1);
+                ShowSuccessPopup();
+
             }
             catch (Exception ex)
             {
-                ShowErrorPopup(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+            }
+        }
+        private bool ReturnTestResult()
+        {
+            if (IsPositiveSelected)
+            {
+                return true;
+            }
+            else if (IsNegativeSelected)
+            {
+                return false;
+            }
+
+            throw new ArgumentException("Please select result.");
+        }
+
+        private string ReturnIsoDate(string formattedDate)
+        {
+            if (DateTime.TryParseExact(formattedDate, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime originalDate))
+            {
+                // Add the specified number of days
+                DateTime newDate = originalDate.AddDays(10);
+
+                // Convert the new date back to a formatted string
+                string newFormattedDate = newDate.ToString("dd-MM-yyyy");
+
+                return newFormattedDate;
+            }
+            else
+            {
+                return "Error formatting date.";
             }
         }
 
@@ -382,10 +478,18 @@ namespace _106_A2_M1.ViewModel
             await ActiveUser.GetQRData();
         }
 
+        private void ShowSuccessPopup()
+        {
+            //IsPopupOpen = false;
+            PopupContent = new TestResultSuccess();
+            IsPopupOpen = true;
+        }
         private void ShowPopup()
         {
             // Show the popup here
-            _addTestResultPopup = new AddTestResultPopup();
+            PopupContent = new AddTestResultPopup();
+            IsPositiveSelected = false;
+            IsNegativeSelected = false;
             IsPopupOpen = true;
         }
         private void ClosePopup()

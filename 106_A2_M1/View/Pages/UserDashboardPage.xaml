@@ -82,34 +82,45 @@
                             materialDesign:ButtonAssist.CornerRadius="10"
                             FontSize="24"
                             FontWeight="Medium"
-                            Content="Add Test Result" 
                             Background="#FFEB99" 
                             Foreground="#DD000000" 
                             HorizontalAlignment="Center" 
                             BorderBrush="{x:Null}" 
-                            VerticalAlignment="Top" 
-                            HorizontalContentAlignment="Center" >
+                            VerticalAlignment="Top" >
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Resources/PlusIcon.png" Width="35" Margin="-10 0 20 0"/>
+                            <TextBlock Text="Add Test Result" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        </StackPanel>
                         <Button.Effect>
                             <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
                         </Button.Effect>
                     </Button>
 
-                    <RadioButton Content="My Vaccine Pass"
-                                 Height="50"
+                    <RadioButton Height="50"
                                  FontSize="24"
                                  Margin="0 50 0 0"
                                  Foreground="Black"
                                  Style="{StaticResource MenuButtonTheme}"
                                  Command="{Binding NavMyVaccinePassCommand}"
-                                 IsChecked="True"/>
+                                 IsChecked="True">
 
-                    <RadioButton Content="My Records"
-                                 Height="50"
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Resources/MyVaccinePassIcon.png" Width="50" Margin="-40,0,20,0"/>
+                            <TextBlock Text="My Vaccine Pass" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton Height="50"
                                  FontSize="24"
                                  Margin="0 50 0 0"
                                  Foreground="Black"
                                  Style="{StaticResource MenuButtonTheme}"
-                                 Command="{Binding NavMyRecordsCommand}" />
+                                 Command="{Binding NavMyRecordsCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Resources/MyRecordsIcon.png" Width="50" Margin="-40,0,20,0"/>
+                            <TextBlock Text="My Records" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </RadioButton>
 
                 </StackPanel>
 
@@ -248,7 +259,7 @@
                Placement="Center"
                PlacementTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
             <Border>
-                <controls:AddTestResultPopup />
+                <ContentControl Content="{Binding PopupContent}" />
             </Border>
         </Popup>
     </Grid>
