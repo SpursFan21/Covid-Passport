@@ -148,7 +148,7 @@ namespace _106_A2_M1.Model
             }
         }*/
 
-        public static async Task<UserDB> RetrieveUserInformationAsync()
+        public async Task<UserDB> RetrieveUserInformationAsync()
         {
             try
             {

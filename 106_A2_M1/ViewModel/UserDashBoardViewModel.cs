@@ -1,6 +1,7 @@
 ﻿using _106_A2_M1.Model;
 using _106_A2_M1.Services;
 using _106_A2_M1.View.Pages;
+using _106_A2_M1.View.PopupWindows;
 using _106_A2_M1.View.UserFrames;
 using System;
 using System.Collections.ObjectModel;
@@ -14,12 +15,23 @@ namespace _106_A2_M1.ViewModel
 {
     public class UserDashboardViewModel : ViewModelBase
     {
+        // Navigation Commands
         public ICommand NavMyRecordsCommand { get; }
         public ICommand NavMyVaccinePassCommand { get; }
-        public ICommand AddTestResultCommand { get; }
         public ICommand LogoutCommand { get; }
+
+        // Test Result Commands
+        public ICommand AddTestResultCommand { get; }
+        public ICommand ShowPopupCommand { get; }
+        public ICommand ClosePopupCommand { get; }
+
+        // QR Code Commands
         public ICommand RequestQRCommand { get; }
+
+        // User Member Variables
         public string UserFullName { get; private set; }
+        
+        
         private User _activeUser; // Declare an instance of the User class MODEL to ViewModel Pipeline
         public User ActiveUser
         {
@@ -34,10 +46,7 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-        private BaseUser _baseUser;
-
         private UserControl _qrUserControl;
-
         public UserControl QRUserControl
         {
             get => _qrUserControl;
@@ -142,7 +151,6 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-        //private string _qrImageURL;
         public string QRImageURL
         {
             get => ActiveUser.storedQRCodeImageURL;
@@ -152,6 +160,70 @@ namespace _106_A2_M1.ViewModel
                 {
                     ActiveUser.storedQRCodeImageURL = value;
                     OnPropertyChanged(nameof(QRImageURL));
+                }
+            }
+        }
+
+        public string ExpDate
+        {
+            get => ActiveUser.UrlExpDate;
+            set
+            {
+                if(ActiveUser.UrlExpDate != value)
+                {
+                    ActiveUser.UrlExpDate = value;
+                    OnPropertyChanged(nameof(ExpDate));
+                }
+            }
+        }
+
+        // Test Result Popup
+        private AddTestResultPopup _addTestResultPopup;
+
+        private bool _isPopupOpen;
+        public bool IsPopupOpen
+        {
+            get { return _isPopupOpen; }
+            set
+            {
+                if (_isPopupOpen != value)
+                {
+                    _isPopupOpen = value;
+                    OnPropertyChanged(nameof(IsPopupOpen));
+                    OnPropertyChanged(nameof(DarkenedBackgroundVisibility));
+                }
+            }
+        }
+
+        public Visibility DarkenedBackgroundVisibility
+        {
+            get { return IsPopupOpen ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        private bool _isPositiveSelected;
+        public bool IsPositiveSelected
+        {
+            get { return _isPositiveSelected; }
+            set
+            {
+                if (_isPositiveSelected != value)
+                {
+                    _isPositiveSelected = value;
+                    OnPropertyChanged(nameof(IsPositiveSelected));
+                }
+            }
+        }
+
+        private bool _isNegativeSelected;
+        public bool IsNegativeSelected
+        {
+            get { return _isNegativeSelected; }
+            set
+            {
+                if (_isNegativeSelected != value)
+                {
+                    _isNegativeSelected = value;
+                    OnPropertyChanged(nameof(IsNegativeSelected));
                 }
             }
         }
@@ -171,7 +243,6 @@ namespace _106_A2_M1.ViewModel
             // Initialize MODEL instances to ViewModel Pipeline
             _activeUser = new User();
             _activeUser.UserDB = _uDB;
-            _baseUser = new BaseUser();
             UpdateUserFullName();
 
             //InitializeAsync(); // Loads userDb into this instance
@@ -182,6 +253,7 @@ namespace _106_A2_M1.ViewModel
             NavigateToFrame(new UserMyVaccinePassControlFrame());
             ShowQRFrame();
 
+            _addTestResultPopup = new AddTestResultPopup();
             // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
             NavMyRecordsCommand = new RelayCommand(x =>
@@ -199,13 +271,12 @@ namespace _106_A2_M1.ViewModel
 
             // Feature Commands
             RequestQRCommand = new RelayCommand(x => RequestQRCode());
+            AddTestResultCommand = new RelayCommand(x => AddTestResult());
+            ShowPopupCommand = new RelayCommand(x => ShowPopup());
+            ClosePopupCommand = new RelayCommand(x => ClosePopup());
 
-            
-        
-            
-
-        // Test list for TESTING PURPOSES ONLY
-        TestList = new ObservableCollection<CovidTest>();
+            // Test list for TESTING PURPOSES ONLY
+            TestList = new ObservableCollection<CovidTest>();
             generateTest(10102023, false, "RAT");
             generateTest(02022023, true, "PCR");
         }
@@ -283,9 +354,46 @@ namespace _106_A2_M1.ViewModel
             // Update QR status
         }
 
+        private void AddTestResult()
+        {
+            try
+            {
+                if(!IsPositiveSelected && !IsNegativeSelected)
+                {
+                    throw new ArgumentException("Please select result.");
+                }
+                if (IsPositiveSelected)
+                {
+                    ClosePopup();
+                }
+                else if (IsNegativeSelected)
+                {
+                    ClosePopup();
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowErrorPopup(ex.Message);
+            }
+        }
+
         private async Task InitializeQRAsync()
         {
             await ActiveUser.GetQRData();
+        }
+
+        private void ShowPopup()
+        {
+            // Show the popup here
+            _addTestResultPopup = new AddTestResultPopup();
+            IsPopupOpen = true;
+        }
+        private void ClosePopup()
+        {
+            if (IsPopupOpen)
+            {
+                IsPopupOpen = false;
+            }
         }
     }
 }

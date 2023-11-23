@@ -22,10 +22,9 @@ namespace _106_A2_M1.View.PopupWindows
     /// </summary>
     public partial class AddTestResultPopup : UserControl
     {
-        public AddTestResultPopup(UserDB uDB)
+        public AddTestResultPopup()
         {
             InitializeComponent();
-            DataContext = new UserDashboardViewModel(uDB);
         }
     }
 }
