@@ -248,24 +248,37 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public void addTest(int testDate, bool result, string testType)
+        public async Task AddTestAsync(int testDate, bool result, string testType)
         {
-            // Validate input parameters
-            if (string.IsNullOrEmpty(testType))
+            try
             {
-                throw new ArgumentException("Test type cannot be null or empty.", nameof(testType));
+                // Use SingletonClient to make a POST request to add a new test
+                bool isSuccess = await SingletonClient.Instance.AddTestAsync(testDate, result, testType);
+
+                if (isSuccess)
+                {
+                    Console.WriteLine("Test added successfully.");
+
+                    // Create a new CovidTest instance with the provided data
+                    CovidTest newTest = new CovidTest
+                    {
+                        test_date = testDate,
+                        result = result,
+                        test_type = testType,
+                    };
+
+                    // Add the new test instance to test_list
+                    test_list.Add(newTest);
+                }
+                else
+                {
+                    Console.WriteLine("Failed to add test.");
+                }
             }
-
-            // Create a new CovidTest instance with the provided data
-            CovidTest newTest = new CovidTest
+            catch (Exception ex)
             {
-                test_date = testDate,
-                result = result,
-                test_type = testType,
-            };
-
-            // Add the new test instance to test_list
-            test_list.Add(newTest);
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
 
         private string GenerateTestId(int testDate, bool result, string testType)
