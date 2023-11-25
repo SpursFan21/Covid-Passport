@@ -266,39 +266,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<List<CovidTest>> GetTestsAsync()
-        {
-            try
-            {
-                // Use SingletonClient to get test information through a GET request
-                List<CovidTest> testInfoList = await SingletonClient.Instance.GetTestsAsync();
-
-                if (testInfoList != null && testInfoList.Count > 0)
-                {
-                    foreach (var testInfo in testInfoList)
-                    {
-                        Console.WriteLine("Test Information:");
-                        Console.WriteLine($"Test ID: {testInfo.test_id}");
-                        Console.WriteLine($"Test Date: {testInfo.test_date}");
-                        Console.WriteLine($"Result: {testInfo.result}");
-                        Console.WriteLine($"Test Type: {testInfo.test_type}");
-                        Console.WriteLine();
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Failed to retrieve test information from the backend.");
-                }
-
-                return testInfoList;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return null;
-            }
-        }
-
         public async Task<UserDB> GetOwnProfileAsync()
         {
             try

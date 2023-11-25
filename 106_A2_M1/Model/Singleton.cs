@@ -686,7 +686,7 @@ namespace _106_A2_M1.Model
             }
         } //User Call
 
-        public async Task<List<CovidTest>> GetTestsAsync()//User Call
+        public async Task<List<CovidTest>> GetTestsAsync()//BaseUser Call
         {
             try
             {
