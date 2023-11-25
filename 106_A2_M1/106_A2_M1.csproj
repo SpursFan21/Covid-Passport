@@ -72,6 +72,8 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DatePickerToIntConverter.cs" />
     <Compile Include="Converters\IntToVaccineStatusConverter.cs" />
+    <Compile Include="Converters\NullToHiddenConverter.cs" />
+    <Compile Include="Converters\NullToVisibleConverter.cs" />
     <Compile Include="Converters\StringToDateTimeConverter.cs" />
     <Compile Include="Interfaces\Auth\AdminAuth.cs" />
     <Compile Include="Interfaces\Auth\LoginRequest.cs" />
