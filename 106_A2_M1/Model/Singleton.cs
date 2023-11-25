@@ -46,8 +46,7 @@ namespace _106_A2_M1.Model
         }
 
          // Property to store UserDB instance
-    public UserDB UserInformation { get; private set; }
-
+        public UserDB UserInformation { get; private set; }
 
         public async Task<int> LoginAsync(string email, string password)
         {
@@ -221,7 +220,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-
         public class UserData // stroage for data generated in create account to be shipped to backend
         {
             public string Email { get; set; }
@@ -232,12 +230,15 @@ namespace _106_A2_M1.Model
             public string NhiNumber { get; set; }
         }
 
-        public async Task RequestQRCodeAsync()
+        public async Task<HttpResponseMessage> RequestQRCodeAsync()//User Call
         {
             try
             {
+                // Create an empty HttpContent since you're making a POST request without a payload
+                HttpContent content = new StringContent(string.Empty);
+
                 // Make a POST request to request a QR code
-                HttpResponseMessage response = await _client.PostAsync("https://cse106-backend.d3rpp.dev/api/qrcodes/request", null);
+                HttpResponseMessage response = await _client.PostAsync("https://cse106-backend.d3rpp.dev/api/qrcodes/request", content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -248,10 +249,13 @@ namespace _106_A2_M1.Model
                 {
                     Console.WriteLine($"Error requesting QR code: {response.StatusCode} - {response.ReasonPhrase}");
                 }
+
+                return response; // Return the HttpResponseMessage
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
+                return null; // Handle exceptions appropriately
             }
         }
 
@@ -281,9 +285,9 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while fetching users with QR status: {ex.Message}");
                 return null;
             }
-        }
+        }//Admin Call
 
-                public async Task<HttpResponseMessage> ApproveQRCodeAsync()
+        public async Task<HttpResponseMessage> ApproveQRCodeAsync()
                 {
                     try
                     {
@@ -309,7 +313,7 @@ namespace _106_A2_M1.Model
                         Console.WriteLine($"An error occurred while approving QR code: {ex.Message}");
                         return null;
                     }
-        }
+        }//Admin Call
 
         /*public async Task<string> RetrieveQRCodeImageURLAsync()
         {
@@ -343,7 +347,6 @@ namespace _106_A2_M1.Model
                 return null;
             }
        } */
-
 
         public class QRCodeUrlResponse
         {
@@ -386,8 +389,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while retrieving QR code URL: {ex.Message}");
                 return (null, 0);
             }
-        }
-
+        }// User Call
 
         public async Task<byte[]> RetrieveQRCodeImageAsync()
         {
@@ -417,9 +419,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while retrieving QR code image: {ex.Message}");
                 return null;
             }
-        }
-
-
+        }// User Call
 
         public async Task<List<Issue>> GetOpenIssuesAsync()
         {
@@ -451,8 +451,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while retrieving open issues: {ex.Message}");
                 return null; // handle the error
             }
-        }
-
+        } //Admin Call
 
         public async Task ReportIssueAsync(string subject, string description)
         {
@@ -485,7 +484,7 @@ namespace _106_A2_M1.Model
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
-        }
+        } //User Call
 
         public async Task<bool> CloseIssueInBackendAsync(string issueId)
         {
@@ -514,7 +513,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
                 return false;
             }
-        }
+        } //Admin Call
 
         public async Task<bool> DeleteIssueInBackend(string issueId)
         {
@@ -568,7 +567,8 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
                 return null;
             }
-        }
+        } //Admin Call
+
         public async Task<bool> AddVaccinationAsync(Vaccine firstDose, Vaccine secondDose)
         {
             try
@@ -596,7 +596,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while adding vaccination details: {ex.Message}");
                 return false;
             }
-        }
+        }  // User Call
 
         public async Task<List<Vaccine>> GetVaccinationsAsync()//Admin Call
         {
@@ -631,7 +631,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<List<Vaccine>> GetUserVaccinationsAsync()//User Call
+        public async Task<List<Vaccine>> GetUserVaccinationsAsync()//BaseUser Call
         {
             try
             {
@@ -684,9 +684,9 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while reporting the test: {ex.Message}");
                 return false;
             }
-        }
+        } //User Call
 
-        public async Task<List<CovidTest>> GetTestsAsync()//User Call
+        public async Task<List<CovidTest>> GetTestsAsync()//BaseUser Call
         {
             try
             {
@@ -783,7 +783,7 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while retrieving the list of users: {ex.Message}");
                 return null;
             }
-        }
+        } // Admin Call
 
         public async Task<UserDB> GetProfileByIDAsync(string userId) //Admin Call
         {
@@ -849,12 +849,52 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while retrieving user profile: {ex.Message}");
                 return null;
             }
-        }
+        } // User Call
 
         // Dispose method to clean up resources when the application exits
         public void Dispose()
         {
             this._client.Dispose();
         }
+
+        public async Task<bool> AddTestAsync(int testDate, bool result, string testType)//BaseUser Call
+        {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrEmpty(testType))
+                {
+                    throw new ArgumentException("Test type cannot be null or empty.", nameof(testType));
+                }
+
+                // Construct the URL for the POST request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/tests/add";
+
+                // Create a new CovidTest instance with the provided data
+                CovidTest newTest = new CovidTest
+                {
+                    test_date = testDate,
+                    result = result,
+                    test_type = testType,
+                };
+
+                // Serialize the newTest object to JSON
+                string jsonContent = JsonConvert.SerializeObject(newTest);
+
+                // Create HttpContent from the serialized JSON
+                HttpContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Make a POST request to add a new test
+                HttpResponseMessage response = await _client.PostAsync(apiUrl, content);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
+        }
+
     }
 }

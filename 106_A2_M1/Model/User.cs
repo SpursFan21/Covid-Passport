@@ -14,16 +14,31 @@ namespace _106_A2_M1.Model
     {
         private List<Issue> userIssues;
 
-        public async Task RequestQRAsync()
+
+        public async Task RequestQRCodeAsync()
         {
-            // Update qr_status to 1 which means they want QR aproval from Admin
-            UserDB.qr_status = 1;
+            try
+            {
+                // Update qr_status to 1, indicating the user wants QR approval from Admin
+                UserDB.qr_status = 1;
 
-            // Use SingletonClient to request a QR code and send user to QR que
-            await SingletonClient.Instance.RequestQRCodeAsync();
+                // Use SingletonClient to make a POST request to request a QR code
+                HttpResponseMessage response = await SingletonClient.Instance.RequestQRCodeAsync();
 
-            // For demonstration purposes
-            Console.WriteLine($"User requested QR. QrStatus: {UserDB.qr_status}");
+                if (response.IsSuccessStatusCode)
+                {
+                    // QR code request successful
+                    Console.WriteLine("QR code request successful.");
+                }
+                else
+                {
+                    Console.WriteLine($"Error requesting QR code: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
 
         public void UpdateUserDetails1(string currentPassword, string newPassword, string email, string firstName, string lastName)//TBC
@@ -166,54 +181,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task GetUserVaccinationsAsync()
-        {
-            try
-            {
-                // Use SingletonClient to get vaccination information through a GET request
-                List<Vaccine> vaccinationData = await SingletonClient.Instance.GetUserVaccinationsAsync();
-
-                if (vaccinationData != null && vaccinationData.Count > 0)
-                {
-                    // Check if the user has received the first dose
-                    if (vaccinationData.Count >= 1)
-                    {
-                        Console.WriteLine("First Dose Information:");
-                        Console.WriteLine($"Dose ID: {vaccinationData[0].dose_id}");
-                        Console.WriteLine($"Date Administered: {vaccinationData[0].date_administered}");
-                        Console.WriteLine($"Brand: {vaccinationData[0].brand}");
-                        Console.WriteLine($"Location: {vaccinationData[0].location}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No information available for the first dose.");
-                    }
-
-                    // Check if the user has received the second dose
-                    if (vaccinationData.Count >= 2)
-                    {
-                        Console.WriteLine("\nSecond Dose Information:");
-                        Console.WriteLine($"Dose ID: {vaccinationData[1].dose_id}");
-                        Console.WriteLine($"Date Administered: {vaccinationData[1].date_administered}");
-                        Console.WriteLine($"Brand: {vaccinationData[1].brand}");
-                        Console.WriteLine($"Location: {vaccinationData[1].location}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nNo information available for the second dose.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Failed to retrieve vaccination information from the backend.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
         public async Task ReportTestAsync(string testId, int testDate, bool result, string testType)
         {
             try
@@ -248,39 +215,6 @@ namespace _106_A2_M1.Model
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
-        public async Task<List<CovidTest>> GetTestsAsync()
-        {
-            try
-            {
-                // Use SingletonClient to get test information through a GET request
-                List<CovidTest> testInfoList = await SingletonClient.Instance.GetTestsAsync();
-
-                if (testInfoList != null && testInfoList.Count > 0)
-                {
-                    foreach (var testInfo in testInfoList)
-                    {
-                        Console.WriteLine("Test Information:");
-                        Console.WriteLine($"Test ID: {testInfo.test_id}");
-                        Console.WriteLine($"Test Date: {testInfo.test_date}");
-                        Console.WriteLine($"Result: {testInfo.result}");
-                        Console.WriteLine($"Test Type: {testInfo.test_type}");
-                        Console.WriteLine();
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Failed to retrieve test information from the backend.");
-                }
-
-                return testInfoList;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                return null;
             }
         }
 

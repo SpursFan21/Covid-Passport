@@ -81,7 +81,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-
         public async Task Login(string email, string password)
         {
             try
@@ -194,7 +193,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-
         public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, DateTime dobDT, string nhiNum)
         {
             try
@@ -235,7 +233,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-
         protected void getIsolationDate(CovidTest covidTest)
         {
             if (covidTest != null)
@@ -251,34 +248,37 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public void addTest(int testDate, bool result, string testType)
+        public async Task AddTestAsync(int testDate, bool result, string testType)
         {
-            // Validate input parameters
-            if (string.IsNullOrEmpty(testType))
+            try
             {
-                throw new ArgumentException("Test type cannot be null or empty.", nameof(testType));
+                // Use SingletonClient to make a POST request to add a new test
+                bool isSuccess = await SingletonClient.Instance.AddTestAsync(testDate, result, testType);
+
+                if (isSuccess)
+                {
+                    Console.WriteLine("Test added successfully.");
+
+                    // Create a new CovidTest instance with the provided data
+                    CovidTest newTest = new CovidTest
+                    {
+                        test_date = testDate,
+                        result = result,
+                        test_type = testType,
+                    };
+
+                    // Add the new test instance to test_list
+                    test_list.Add(newTest);
+                }
+                else
+                {
+                    Console.WriteLine("Failed to add test.");
+                }
             }
-
-            // Generate test_id based on test_date, result, and test_type
-            string testId = GenerateTestId(testDate, result, testType);
-
-            // Create a new CovidTest instance with the provided data
-            CovidTest newTest = new CovidTest
+            catch (Exception ex)
             {
-                test_date = testDate,
-                result = result,
-                test_type = testType,
-                test_id = testId
-            };
-
-            // Add the new test instance to test_list
-            test_list.Add(newTest);
-
-            // send the new test instance to the backend TBC
-            // SendRequestToBackend(newTest);
-
-            // For demonstration purposes
-            Console.WriteLine($"Generated test_id: {testId}");
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
 
         private string GenerateTestId(int testDate, bool result, string testType)
@@ -308,6 +308,7 @@ namespace _106_A2_M1.Model
             // For demonstration purposes
             Console.WriteLine($"Updated details for email: {email}, Date of Birth: {dateOfBirth}, NHI Number: {nhiNumber}");
         }
+
         public void logout()
         {
             // Reset the properties to their initial values and perform any necessary cleanup
@@ -319,6 +320,7 @@ namespace _106_A2_M1.Model
             // For demonstration purposes
             Console.WriteLine("User logged out and reset to base state");
         }
+
         public void deleteVaccination(string doseId, string doseType)
         {
             // Determine which dose to delete based on the specified doseType
@@ -437,14 +439,10 @@ namespace _106_A2_M1.Model
             }
         }
 
-
-
-
         public string GetFormattedExpiration()
         {
             return FormatUnixTimestamp((long)storedExp);
         }
-
 
         public async Task RetrieveQRCodeImageAsync()
         {
@@ -495,5 +493,87 @@ namespace _106_A2_M1.Model
         {
             return storedQRCodeImageURL;
         }
+
+        public async Task<List<CovidTest>> GetTestsAsync()
+        {
+            try
+            {
+                // Use SingletonClient to get test information through a GET request
+                List<CovidTest> testInfoList = await SingletonClient.Instance.GetTestsAsync();
+
+                if (testInfoList != null && testInfoList.Count > 0)
+                {
+                    foreach (var testInfo in testInfoList)
+                    {
+                        Console.WriteLine("Test Information:");
+                        Console.WriteLine($"Test ID: {testInfo.test_id}");
+                        Console.WriteLine($"Test Date: {testInfo.test_date}");
+                        Console.WriteLine($"Result: {testInfo.result}");
+                        Console.WriteLine($"Test Type: {testInfo.test_type}");
+                        Console.WriteLine();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve test information from the backend.");
+                }
+
+                return testInfoList;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task GetUserVaccinationsAsync()
+        {
+            try
+            {
+                // Use SingletonClient to get vaccination information through a GET request
+                List<Vaccine> vaccinationData = await SingletonClient.Instance.GetUserVaccinationsAsync();
+
+                if (vaccinationData != null && vaccinationData.Count > 0)
+                {
+                    // Check if the user has received the first dose
+                    if (vaccinationData.Count >= 1)
+                    {
+                        Console.WriteLine("First Dose Information:");
+                        Console.WriteLine($"Dose ID: {vaccinationData[0].dose_id}");
+                        Console.WriteLine($"Date Administered: {vaccinationData[0].date_administered}");
+                        Console.WriteLine($"Brand: {vaccinationData[0].brand}");
+                        Console.WriteLine($"Location: {vaccinationData[0].location}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No information available for the first dose.");
+                    }
+
+                    // Check if the user has received the second dose
+                    if (vaccinationData.Count >= 2)
+                    {
+                        Console.WriteLine("\nSecond Dose Information:");
+                        Console.WriteLine($"Dose ID: {vaccinationData[1].dose_id}");
+                        Console.WriteLine($"Date Administered: {vaccinationData[1].date_administered}");
+                        Console.WriteLine($"Brand: {vaccinationData[1].brand}");
+                        Console.WriteLine($"Location: {vaccinationData[1].location}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nNo information available for the second dose.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve vaccination information from the backend.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
     }
 }
