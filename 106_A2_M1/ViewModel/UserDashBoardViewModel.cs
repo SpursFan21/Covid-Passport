@@ -276,6 +276,33 @@ namespace _106_A2_M1.ViewModel
         // Add a formatted string property
         public string FormattedSelectedDate => SelectedDate.ToString("dd-MM-yyyy");
 
+        // Vaccine Doses
+        public Vaccine FirstDose
+        {
+            get => ActiveUser.first_dose;
+            set
+            {
+                if(ActiveUser.first_dose != null)
+                {
+                    ActiveUser.first_dose = value;
+                    OnPropertyChanged(nameof(FirstDose));
+                }
+            }
+        }
+
+        public Vaccine SecondDose
+        {
+            get => ActiveUser.second_dose;
+            set
+            {
+                if (ActiveUser.second_dose != null)
+                {
+                    ActiveUser.second_dose = value;
+                    OnPropertyChanged(nameof(SecondDose));
+                }
+            }
+        }
+
         private ObservableCollection<CovidTest> _testList = new ObservableCollection<CovidTest>();
         public ObservableCollection<CovidTest> TestList
         {
@@ -289,8 +316,8 @@ namespace _106_A2_M1.ViewModel
         public UserDashboardViewModel(UserDB _uDB)
         {
             // Initialize MODEL instances to ViewModel Pipeline
-            _activeUser = new User();
-            _activeUser.UserDB = _uDB;
+            ActiveUser = new User();
+            ActiveUser.UserDB = _uDB;
             UpdateUserFullName();
 
             //InitializeAsync(); // Loads userDb into this instance
@@ -304,15 +331,16 @@ namespace _106_A2_M1.ViewModel
             PopupContent = new TestResultSuccess();
             // Navigation commands
             LogoutCommand = new RelayCommand(x => NavigateToPage(new LoginPage()));
-            NavMyRecordsCommand = new RelayCommand(x =>
+            NavMyRecordsCommand = new RelayCommand(async x =>
             {
                 FrameTitle = "My Records";
+                await ActiveUser.GetUserVaccinationsAsync();
                 NavigateToFrame(new UserMyRecordsFrame());
             });
-            NavMyVaccinePassCommand = new RelayCommand(x =>
+            NavMyVaccinePassCommand = new RelayCommand( async x =>
             {
                 FrameTitle = "My Vaccine Pass";
-                InitializeQRAsync();
+                await InitializeQRAsync();
                 NavigateToFrame(new UserMyVaccinePassControlFrame());
                 ShowQRFrame();
             });
@@ -406,6 +434,7 @@ namespace _106_A2_M1.ViewModel
         {
             // Update QR status
         }
+
 
         private void AddTestResult()
         {

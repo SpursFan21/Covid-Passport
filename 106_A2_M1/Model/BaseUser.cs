@@ -58,6 +58,11 @@ namespace _106_A2_M1.Model
         public Vaccine second_dose { get; set; }
         public List<CovidTest> test_list { get; set; }
       
+        public BaseUser()
+        {
+            first_dose = new Vaccine();
+            second_dose = new Vaccine();
+        }
 
         public async Task GetLoginAsync(string email, string password)
         {
@@ -544,6 +549,12 @@ namespace _106_A2_M1.Model
                         Console.WriteLine($"Date Administered: {vaccinationData[0].date_administered}");
                         Console.WriteLine($"Brand: {vaccinationData[0].brand}");
                         Console.WriteLine($"Location: {vaccinationData[0].location}");
+
+                        // Set data to this object
+                        first_dose.dose_id = vaccinationData[0].dose_id;
+                        first_dose.date_administered = vaccinationData[0].date_administered;
+                        first_dose.brand = vaccinationData[0].brand;
+                        first_dose.location = vaccinationData[0].location;
                     }
                     else
                     {
@@ -558,6 +569,12 @@ namespace _106_A2_M1.Model
                         Console.WriteLine($"Date Administered: {vaccinationData[1].date_administered}");
                         Console.WriteLine($"Brand: {vaccinationData[1].brand}");
                         Console.WriteLine($"Location: {vaccinationData[1].location}");
+
+                        // Set data to this object
+                        second_dose.dose_id = vaccinationData[1].dose_id;
+                        second_dose.date_administered = vaccinationData[1].date_administered;
+                        second_dose.brand = vaccinationData[1].brand;
+                        second_dose.location = vaccinationData[1].location;
                     }
                     else
                     {
