@@ -7,20 +7,19 @@
              xmlns:viewmodel="clr-namespace:_106_A2_M1.ViewModel"
              xmlns:converters="clr-namespace:_106_A2_M1.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             d:DesignHeight="830" d:DesignWidth="1120">
+             mc:Ignorable="d" >
     <UserControl.Resources>
         <converters:BoolToResolvedColorConverter x:Key="BoolToResolvedColorConverter" />
         <converters:BoolToResolvedTextConverter x:Key="BoolToResolvedTextConverter"/>
         <converters:BoolToResultConverter x:Key="BoolToResultConverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
-    <Grid Margin="50">
+    <Grid Margin="50 50 50 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Text="Vaccination Status" Grid.Row="0" FontSize="24" FontWeight="Bold"/>
         <Grid Grid.Row="1" Margin="0 25 0 0" HorizontalAlignment="Stretch">
@@ -121,48 +120,49 @@
                 FontSize="24"
                 FontWeight="Bold" />
         </Grid>
+        <ScrollViewer Grid.Row="3">
+            <ListView x:Name="testPanel"  Margin="0 15 0 0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding TestList}">
+                <!--ItemsSource="{Binding TestList}"-->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Background="White" Padding="15" Margin="0 0 0 10">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-        <ListView x:Name="testPanel" Grid.Row="3" Margin="0 15 0 0" HorizontalContentAlignment="Stretch" ItemsSource="{Binding TestList}">
-            <!--ItemsSource="{Binding TestList}"-->
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <materialDesign:Card Background="White" Padding="15" Margin="0 0 0 10">
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <!-- Left column -->
+                                    <TextBlock Text="TEST DATE" FontSize="16" Foreground="Black"/>
+                                    <TextBlock Text="{Binding Path=formatted_test_date}" FontWeight="Bold" FontSize="16"/>
 
-                            <StackPanel Grid.Column="0">
-                                <!-- Left column -->
-                                <TextBlock Text="TEST DATE" FontSize="16" Foreground="Black"/>
-                                <TextBlock Text="{Binding Path=formatted_test_date}" FontWeight="Bold" FontSize="16"/>
+                                </StackPanel>
 
-                            </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <!-- Right column -->
+                                    <TextBlock Text="RESULT" FontSize="16" Foreground="Black"/>
+                                    <TextBlock Text="{Binding Path=result, Converter={StaticResource BoolToResultConverter}}" FontWeight="Bold" FontSize="16"/>
+                                </StackPanel>
 
-                            <StackPanel Grid.Column="1">
-                                <!-- Right column -->
-                                <TextBlock Text="RESULT" FontSize="16" Foreground="Black"/>
-                                <TextBlock Text="{Binding Path=result, Converter={StaticResource BoolToResultConverter}}" FontWeight="Bold" FontSize="16"/>
-                            </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <!-- Right column -->
+                                    <TextBlock Text="TEST TYPE" FontSize="16" Foreground="Black"/>
+                                    <TextBlock Text="{Binding Path=test_type}" FontWeight="Bold" FontSize="16"/>
+                                </StackPanel>
 
-                            <StackPanel Grid.Column="2">
-                                <!-- Right column -->
-                                <TextBlock Text="TEST TYPE" FontSize="16" Foreground="Black"/>
-                                <TextBlock Text="{Binding Path=test_type}" FontWeight="Bold" FontSize="16"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="3">
-                                <!-- Right column -->
-                                <TextBlock Text="ISOLATE UNTIL" FontSize="16" Foreground="Black"/>
-                                <TextBlock Text="{Binding Path=formatted_iso_date}" FontWeight="Bold" FontSize="16"/>
-                            </StackPanel>
-                        </Grid>
-                    </materialDesign:Card>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                <StackPanel Grid.Column="3">
+                                    <!-- Right column -->
+                                    <TextBlock Text="ISOLATE UNTIL" FontSize="16" Foreground="Black"/>
+                                    <TextBlock Text="{Binding Path=formatted_iso_date}" FontWeight="Bold" FontSize="16"/>
+                                </StackPanel>
+                            </Grid>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
     </Grid>
 </UserControl>
