@@ -856,5 +856,45 @@ namespace _106_A2_M1.Model
         {
             this._client.Dispose();
         }
+
+        public async Task<bool> AddTestAsync(int testDate, bool result, string testType)//BaseUser Call
+        {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrEmpty(testType))
+                {
+                    throw new ArgumentException("Test type cannot be null or empty.", nameof(testType));
+                }
+
+                // Construct the URL for the POST request
+                string apiUrl = "https://cse106-backend.d3rpp.dev/api/tests/add";
+
+                // Create a new CovidTest instance with the provided data
+                CovidTest newTest = new CovidTest
+                {
+                    test_date = testDate,
+                    result = result,
+                    test_type = testType,
+                };
+
+                // Serialize the newTest object to JSON
+                string jsonContent = JsonConvert.SerializeObject(newTest);
+
+                // Create HttpContent from the serialized JSON
+                HttpContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+                // Make a POST request to add a new test
+                HttpResponseMessage response = await _client.PostAsync(apiUrl, content);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
+            }
+        }
+
     }
 }

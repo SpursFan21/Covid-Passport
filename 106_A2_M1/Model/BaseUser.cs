@@ -81,7 +81,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-
         public async Task Login(string email, string password)
         {
             try
@@ -194,7 +193,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-
         public async Task CreateAccountAsync(string email, string password, string firstName, string lastName, DateTime dobDT, string nhiNum)
         {
             try
@@ -235,7 +233,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-
         protected void getIsolationDate(CovidTest covidTest)
         {
             if (covidTest != null)
@@ -259,26 +256,16 @@ namespace _106_A2_M1.Model
                 throw new ArgumentException("Test type cannot be null or empty.", nameof(testType));
             }
 
-            // Generate test_id based on test_date, result, and test_type
-            string testId = GenerateTestId(testDate, result, testType);
-
             // Create a new CovidTest instance with the provided data
             CovidTest newTest = new CovidTest
             {
                 test_date = testDate,
                 result = result,
                 test_type = testType,
-                test_id = testId
             };
 
             // Add the new test instance to test_list
             test_list.Add(newTest);
-
-            // send the new test instance to the backend TBC
-            // SendRequestToBackend(newTest);
-
-            // For demonstration purposes
-            Console.WriteLine($"Generated test_id: {testId}");
         }
 
         private string GenerateTestId(int testDate, bool result, string testType)
@@ -437,14 +424,10 @@ namespace _106_A2_M1.Model
             }
         }
 
-
-
-
         public string GetFormattedExpiration()
         {
             return FormatUnixTimestamp((long)storedExp);
         }
-
 
         public async Task RetrieveQRCodeImageAsync()
         {
