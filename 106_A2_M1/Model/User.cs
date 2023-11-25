@@ -14,16 +14,31 @@ namespace _106_A2_M1.Model
     {
         private List<Issue> userIssues;
 
-        public async Task RequestQRAsync()
+
+        public async Task RequestQRCodeAsync()
         {
-            // Update qr_status to 1 which means they want QR aproval from Admin
-            UserDB.qr_status = 1;
+            try
+            {
+                // Update qr_status to 1, indicating the user wants QR approval from Admin
+                UserDB.qr_status = 1;
 
-            // Use SingletonClient to request a QR code and send user to QR que
-            await SingletonClient.Instance.RequestQRCodeAsync();
+                // Use SingletonClient to make a POST request to request a QR code
+                HttpResponseMessage response = await SingletonClient.Instance.RequestQRCodeAsync();
 
-            // For demonstration purposes
-            Console.WriteLine($"User requested QR. QrStatus: {UserDB.qr_status}");
+                if (response.IsSuccessStatusCode)
+                {
+                    // QR code request successful
+                    Console.WriteLine("QR code request successful.");
+                }
+                else
+                {
+                    Console.WriteLine($"Error requesting QR code: {response.StatusCode} - {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
 
         public void UpdateUserDetails1(string currentPassword, string newPassword, string email, string firstName, string lastName)//TBC
