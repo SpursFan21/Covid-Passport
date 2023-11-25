@@ -631,7 +631,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<List<Vaccine>> GetUserVaccinationsAsync()//User Call
+        public async Task<List<Vaccine>> GetUserVaccinationsAsync()//BaseUser Call
         {
             try
             {

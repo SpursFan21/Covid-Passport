@@ -181,54 +181,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task GetUserVaccinationsAsync()
-        {
-            try
-            {
-                // Use SingletonClient to get vaccination information through a GET request
-                List<Vaccine> vaccinationData = await SingletonClient.Instance.GetUserVaccinationsAsync();
-
-                if (vaccinationData != null && vaccinationData.Count > 0)
-                {
-                    // Check if the user has received the first dose
-                    if (vaccinationData.Count >= 1)
-                    {
-                        Console.WriteLine("First Dose Information:");
-                        Console.WriteLine($"Dose ID: {vaccinationData[0].dose_id}");
-                        Console.WriteLine($"Date Administered: {vaccinationData[0].date_administered}");
-                        Console.WriteLine($"Brand: {vaccinationData[0].brand}");
-                        Console.WriteLine($"Location: {vaccinationData[0].location}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No information available for the first dose.");
-                    }
-
-                    // Check if the user has received the second dose
-                    if (vaccinationData.Count >= 2)
-                    {
-                        Console.WriteLine("\nSecond Dose Information:");
-                        Console.WriteLine($"Dose ID: {vaccinationData[1].dose_id}");
-                        Console.WriteLine($"Date Administered: {vaccinationData[1].date_administered}");
-                        Console.WriteLine($"Brand: {vaccinationData[1].brand}");
-                        Console.WriteLine($"Location: {vaccinationData[1].location}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nNo information available for the second dose.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Failed to retrieve vaccination information from the backend.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
         public async Task ReportTestAsync(string testId, int testDate, bool result, string testType)
         {
             try
