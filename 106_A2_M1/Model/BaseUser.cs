@@ -244,7 +244,7 @@ namespace _106_A2_M1.Model
             {
                 // Assuming test_date contains the number of days from today
                 // Adding 10 days to test_date
-                IsolationDate = covidTest.test_date + 10;
+                IsolationDate = (int)covidTest.test_date + 10;
             }
             else
             {
@@ -253,7 +253,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task AddTestAsync(int testDate, bool result, string testType)
+        public async Task AddTestAsync(long testDate, bool result, string testType)
         {
             try
             {
@@ -286,7 +286,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        private string GenerateTestId(int testDate, bool result, string testType)
+        private string GenerateTestId(long testDate, bool result, string testType)
         {
             // Generate a unique test_id based on test_date, result, and test_type
             string formattedDate = testDate.ToString("yyyyMMdd"); // Format test_date as YYYYMMDD
@@ -591,5 +591,46 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+
+        public async Task ReportTestAsync(string testId, DateTime testDate, bool result, string testType)
+        {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrEmpty(testId) || string.IsNullOrEmpty(testType))
+                {
+                    throw new ArgumentException("Invalid test details. Please provide valid information.");
+                }
+
+                // Convert DateTime to Unix timestamp
+                long unixTimestamp = testDate.ToUnixTimestamp();
+
+                // Create a new CovidTest object
+                CovidTest testReport = new CovidTest
+                {
+                    test_id = testId,
+                    test_date = unixTimestamp,
+                    result = result,
+                    test_type = testType
+                };
+
+                // Use SingletonClient to report the test details through a POST request
+                bool isReported = await SingletonClient.Instance.ReportTestAsync(testReport);
+
+                if (isReported)
+                {
+                    Console.WriteLine("Test reported successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to report the test to the backend.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
     }
 }

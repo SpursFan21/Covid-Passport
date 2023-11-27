@@ -108,43 +108,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task ReportTestAsync(string testId, int testDate, bool result, string testType)
-        {
-            try
-            {
-                // Validate input parameters
-                if (string.IsNullOrEmpty(testId) || testDate <= 0 || string.IsNullOrEmpty(testType))
-                {
-                    throw new ArgumentException("Invalid test details. Please provide valid information.");
-                }
-
-                // Create a new CovidTest object
-                CovidTest testReport = new CovidTest
-                {
-                    test_id = testId,
-                    test_date = testDate,
-                    result = result,
-                    test_type = testType
-                };
-
-                // Use SingletonClient to report the test details through a POST request
-                bool isReported = await SingletonClient.Instance.ReportTestAsync(testReport);
-
-                if (isReported)
-                {
-                    Console.WriteLine("Test reported successfully!");
-                }
-                else
-                {
-                    Console.WriteLine("Failed to report the test to the backend.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
         public async Task<UserDB> GetOwnProfileAsync()
         {
             try
