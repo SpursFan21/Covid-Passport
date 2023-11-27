@@ -569,7 +569,7 @@ namespace _106_A2_M1.Model
             }
         } //Admin Call
 
-        public async Task<bool> AddVaccinationAsync(Vaccine firstDose, Vaccine secondDose)
+        public async Task<bool> AddVaccinationAsync(Vaccine firstDose, Vaccine secondDose)//Admin Call
         {
             try
             {
@@ -596,9 +596,9 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while adding vaccination details: {ex.Message}");
                 return false;
             }
-        }  // User Call
+        }
 
-        public async Task<List<Vaccine>> GetVaccinationsAsync()//Admin Call
+        public async Task<List<Vaccine>> GetVaccinationsAsync()//BaseUser Call
         {
             try
             {
