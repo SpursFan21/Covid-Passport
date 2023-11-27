@@ -63,7 +63,7 @@ namespace _106_A2_M1.ViewModel
         public AdminDashboardViewModel()
         {
             _admin = new Admin(); // Initialize the Admin instance MODEL to ViewModel Pipeline
-            UserList = new ObservableCollection<User>(_admin.user_list); // Initialize the UserList
+            UserList = _admin.GetListOfUsersAsync(); // Initialize the UserList
             IssueList = new ObservableCollection<Issue>(_admin.issue_list); // Initialize IssueList
             
             // Set the default frame to UserDirectoryFrame
@@ -103,6 +103,10 @@ namespace _106_A2_M1.ViewModel
             CurrentDisplayFrame.DataContext = this;
         }
 
+        private async void GetUserList()
+        {
+            await _admin.GetListOfUsersAsync();
+        }
         public void UserDirSearch()
         {
 
