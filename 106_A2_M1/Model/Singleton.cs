@@ -752,12 +752,12 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<List<UserDB>> GetListOfUsersAsync(string searchQuery)
+        public async Task<List<UserDB>> GetListOfUsersAsync()
         {
             try
             {
                 // Construct the URL for the GET request to retrieve the list of users with a search query
-                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/users/list?search={Uri.EscapeDataString(searchQuery)}";
+                string apiUrl = $"https://cse106-backend.d3rpp.dev/api/users/list?search=Hu";
 
                 // Make a GET request to retrieve the list of users
                 HttpResponseMessage response = await _client.GetAsync(apiUrl);

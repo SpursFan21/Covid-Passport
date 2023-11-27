@@ -475,12 +475,12 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<List<UserDB>> GetListOfUsersAsync(string searchQuery)
+        public async Task<List<UserDB>> GetListOfUsersAsync()
         {
             try
             {
                 // Use SingletonClient to get the list of users with a search query through a GET request
-                List<UserDB> listOfUsers = await SingletonClient.Instance.GetListOfUsersAsync(searchQuery);
+                List<UserDB> listOfUsers = await SingletonClient.Instance.GetListOfUsersAsync();
 
                 if (listOfUsers != null && listOfUsers.Count > 0)
                 {
