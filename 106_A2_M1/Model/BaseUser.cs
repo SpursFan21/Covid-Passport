@@ -591,6 +591,5 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-
     }
 }
