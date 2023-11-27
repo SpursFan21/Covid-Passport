@@ -9,6 +9,15 @@ using System.IO;
 
 namespace _106_A2_M1.Model
 {
+    public static class DateTimeExtensions
+    {
+        public static long ToUnixTimestamp(this DateTime dateTime)
+        {
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var timeSpan = dateTime - epoch;
+            return (long)timeSpan.TotalSeconds;
+        }
+    }
     public class Admin : BaseUser
     {
         public string user_id { get; set; }
@@ -432,54 +441,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task GetVaccinationsAsync()
-        {
-            try
-            {
-                // Use SingletonClient to get vaccination information through a GET request
-                List<Vaccine> vaccinationData = await SingletonClient.Instance.GetVaccinationsAsync();
-
-                if (vaccinationData != null && vaccinationData.Count > 0)
-                {
-                    // Check if the user has received the first dose
-                    if (vaccinationData.Count >= 1)
-                    {
-                        Console.WriteLine("First Dose Information:");
-                        Console.WriteLine($"Dose ID: {vaccinationData[0].dose_id}");
-                        Console.WriteLine($"Date Administered: {vaccinationData[0].date_administered}");
-                        Console.WriteLine($"Brand: {vaccinationData[0].brand}");
-                        Console.WriteLine($"Location: {vaccinationData[0].location}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No information available for the first dose.");
-                    }
-
-                    // Check if the user has received the second dose
-                    if (vaccinationData.Count >= 2)
-                    {
-                        Console.WriteLine("\nSecond Dose Information:");
-                        Console.WriteLine($"Dose ID: {vaccinationData[1].dose_id}");
-                        Console.WriteLine($"Date Administered: {vaccinationData[1].date_administered}");
-                        Console.WriteLine($"Brand: {vaccinationData[1].brand}");
-                        Console.WriteLine($"Location: {vaccinationData[1].location}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nNo information available for the second dose.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Failed to retrieve vaccination information from the backend.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-        }
-
         public async Task<List<CovidTest>> GetUserTestsAsync(string id)
         {
             try
@@ -585,6 +546,86 @@ namespace _106_A2_M1.Model
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
                 return null;
+            }
+        }
+
+        public async Task AddFirstDose(string doseId, DateTime dateAdministered, string brand, string location)
+        {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrEmpty(doseId) || string.IsNullOrEmpty(brand) || string.IsNullOrEmpty(location))
+                {
+                    throw new ArgumentException("Invalid first dose details. Please provide valid information.");
+                }
+
+                // Convert DateTime to Unix timestamp
+                long unixTimestamp = dateAdministered.ToUnixTimestamp();
+
+                // Create a new first dose
+                first_dose = new Vaccine
+                {
+                    dose_id = doseId,
+                    date_administered = unixTimestamp,
+                    brand = brand,
+                    location = location
+                };
+
+                // Use SingletonClient to add the first dose details through a POST request
+                bool isAdded = await SingletonClient.Instance.AddVaccinationAsync(first_dose, null);
+
+                if (isAdded)
+                {
+                    Console.WriteLine("First dose added successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to add the first dose to the backend.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public async Task AddSecondDose(string doseId, DateTime dateAdministered, string brand, string location)
+        {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrEmpty(doseId) || string.IsNullOrEmpty(brand) || string.IsNullOrEmpty(location))
+                {
+                    throw new ArgumentException("Invalid second dose details. Please provide valid information.");
+                }
+
+                // Convert DateTime to Unix timestamp
+                long unixTimestamp = dateAdministered.ToUnixTimestamp();
+
+                // Create a new second dose
+                second_dose = new Vaccine
+                {
+                    dose_id = doseId,
+                    date_administered = unixTimestamp,
+                    brand = brand,
+                    location = location
+                };
+
+                // Use SingletonClient to add the second dose details through a POST request
+                bool isAdded = await SingletonClient.Instance.AddVaccinationAsync(null, second_dose);
+
+                if (isAdded)
+                {
+                    Console.WriteLine("Second dose added successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to add the second dose to the backend.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
 
