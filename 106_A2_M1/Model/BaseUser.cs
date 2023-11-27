@@ -523,6 +523,7 @@ namespace _106_A2_M1.Model
                     Console.WriteLine("Failed to retrieve test information from the backend.");
                 }
 
+                test_list = testInfoList;
                 return testInfoList;
             }
             catch (Exception ex)
@@ -592,12 +593,12 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task ReportTestAsync(string testId, DateTime testDate, bool result, string testType)
+        public async Task ReportTestAsync(DateTime testDate, bool result, string testType)
         {
             try
             {
                 // Validate input parameters
-                if (string.IsNullOrEmpty(testId) || string.IsNullOrEmpty(testType))
+                if (string.IsNullOrEmpty(testType))
                 {
                     throw new ArgumentException("Invalid test details. Please provide valid information.");
                 }
@@ -608,7 +609,6 @@ namespace _106_A2_M1.Model
                 // Create a new CovidTest object
                 CovidTest testReport = new CovidTest
                 {
-                    test_id = testId,
                     test_date = unixTimestamp,
                     result = result,
                     test_type = testType
