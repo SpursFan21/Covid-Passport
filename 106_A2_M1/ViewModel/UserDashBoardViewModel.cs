@@ -449,16 +449,17 @@ namespace _106_A2_M1.ViewModel
             {
                 CovidTest test1 = new CovidTest();
 
-                test1.result = ReturnTestResult();
+                int result = ReturnTestResult();
+                string testType;
 
                 if(SelectedTestType == "System.Windows.Controls.ComboBoxItem: Rapid Antigen Test (RAT)")
                 {
-                    test1.test_type = "RAT";
+                    testType = "RAT";
 
                 }
                 else
                 {
-                    test1.test_type = "PCR";
+                    testType = "PCR";
                 }
 
                 test1.formatted_test_date = FormattedSelectedDate;
@@ -468,7 +469,7 @@ namespace _106_A2_M1.ViewModel
                     test1.formatted_iso_date = ReturnIsoDate(FormattedSelectedDate);
                 }
 
-                await ActiveUser.ReportTestAsync(SelectedDate, test1.result, test1.test_type);
+                await ActiveUser.ReportTestAsync(result, testType);
                 ShowSuccessPopup();
 
             }
