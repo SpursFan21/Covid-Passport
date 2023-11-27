@@ -857,7 +857,7 @@ namespace _106_A2_M1.Model
             this._client.Dispose();
         }
 
-        public async Task<bool> AddTestAsync(int testDate, bool result, string testType)//BaseUser Call
+        public async Task<bool> AddTestAsync(long testDate, bool result, string testType)//BaseUser Call
         {
             try
             {
