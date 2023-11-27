@@ -301,7 +301,7 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-        private ObservableCollection<CovidTest> _testList = new ObservableCollection<CovidTest>();
+        private ObservableCollection<CovidTest> _testList;
         public ObservableCollection<CovidTest> TestList
         {
             get => _testList;
@@ -317,6 +317,13 @@ namespace _106_A2_M1.ViewModel
             ActiveUser = new User();
             ActiveUser.UserDB = _uDB;
             UpdateUserFullName();
+
+            // Load user tests
+            GetUserTestList();
+            if(ActiveUser.test_list != null)
+            {
+                TestList = new ObservableCollection<CovidTest>(ActiveUser.test_list);
+            }
 
             //InitializeAsync(); // Loads userDb into this instance
 
@@ -350,9 +357,11 @@ namespace _106_A2_M1.ViewModel
             ClosePopupCommand = new RelayCommand(x => ClosePopup());
 
             // Test list for TESTING PURPOSES ONLY
+            /*
             TestList = new ObservableCollection<CovidTest>();
             generateTest("10-08-2023", false, "RAT");
-            generateTest("21-04-2023", true, "PCR");
+            generateTest("21-04-2023", true, "PCR"); 
+            */
         }
 
         private void NavigateToPage(Page destinationPage)
@@ -434,7 +443,7 @@ namespace _106_A2_M1.ViewModel
         }
 
 
-        private void AddTestResult()
+        private async void AddTestResult()
         {
             try
             {
@@ -459,7 +468,7 @@ namespace _106_A2_M1.ViewModel
                     test1.formatted_iso_date = ReturnIsoDate(FormattedSelectedDate);
                 }
 
-                TestList.Add(test1);
+                await ActiveUser.ReportTestAsync(SelectedDate, test1.result, test1.test_type);
                 ShowSuccessPopup();
 
             }
@@ -525,6 +534,11 @@ namespace _106_A2_M1.ViewModel
             {
                 IsPopupOpen = false;
             }
+        }
+
+        private async void GetUserTestList()
+        {
+            ActiveUser.test_list = await ActiveUser.GetTestsAsync();
         }
     }
 }
