@@ -1,4 +1,4 @@
-﻿<Page x:Class="_106_A2_M1.View.Pages.AdminDashboardPage"
+﻿<Page x:Class="_106_A2_M1.View.Pages.AdminManagingUserPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -25,7 +25,7 @@
             </Grid.Effect>
             <Path Stretch="Fill"  Data="M 0,0 L 0,1 L 1,0 L 0,0" Fill="#FFFFCC00" />
             <Path Stretch="Fill"  Data="M 1,1 L 0,1 L 1,0 L 1,1" Fill="#FFFFEB99" />
-   
+
             <!-- Title -->
             <TextBlock 
                 x:Name="Title" 
@@ -195,7 +195,7 @@
                         FontSize="24"
                         FontWeight="Bold"
                         TextAlignment="Center"/>
-                    
+
                     <!-- Image Here -->
                     <TextBlock
                         Text="[ ! ]"
@@ -219,7 +219,7 @@
                         TextAlignment="Center"/>
 
                 </StackPanel>
-                
+
             </Grid>
         </Grid>
     </Grid>
