@@ -98,10 +98,14 @@
     <Compile Include="Services\QRImageHelper.cs" />
     <Compile Include="Services\RelayCommand.cs" />
     <Compile Include="ViewModel\AdminDashboardViewModel.cs" />
+    <Compile Include="ViewModel\AdminManagingUserVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\UserDashboardViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\Pages\AdminManagingUserPage.xaml.cs">
+      <DependentUpon>AdminManagingUserPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PopupWindows\TestResultSuccess.xaml.cs">
       <DependentUpon>TestResultSuccess.xaml</DependentUpon>
     </Compile>
@@ -172,6 +176,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme\TestButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\AdminManagingUserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
