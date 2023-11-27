@@ -421,7 +421,7 @@ namespace _106_A2_M1.ViewModel
                 }
                 else if (QRStatus == 2)
                 {
-                    await Task.Delay(300);
+                    await Task.Delay(100);
                     QRUserControl = new UserMyVaccinePassFrame_QR2();
                 }
                 else
@@ -477,15 +477,15 @@ namespace _106_A2_M1.ViewModel
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
             }
         }
-        private bool ReturnTestResult()
+        private int ReturnTestResult()
         {
             if (IsPositiveSelected)
             {
-                return true;
+                return 1;
             }
             else if (IsNegativeSelected)
             {
-                return false;
+                return 0;
             }
 
             throw new ArgumentException("Please select result.");
