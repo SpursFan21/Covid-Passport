@@ -243,7 +243,6 @@ namespace _106_A2_M1.ViewModel
         }
 
         private string _selectedTestType;
-
         public string SelectedTestType
         {
             get { return _selectedTestType; }
@@ -258,7 +257,6 @@ namespace _106_A2_M1.ViewModel
         }
 
         private DateTime _selectedDate = DateTime.Now;
-
         public DateTime SelectedDate
         {
             get { return _selectedDate; }
