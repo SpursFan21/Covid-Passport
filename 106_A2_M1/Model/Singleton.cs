@@ -752,7 +752,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task<List<UserDB>> GetListOfUsersAsync()
+        /*public async Task<List<UserDB>> GetListOfUsersAsync()
         {
             try
             {
@@ -783,7 +783,76 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred while retrieving the list of users: {ex.Message}");
                 return null;
             }
-        } // Admin Call
+        } // Admin Call*/
+
+        public async Task<List<UserDB>> GetListOfUsersAsync()
+        {
+            try
+            {
+                // Make a request to your backend API to retrieve the list of users
+                HttpResponseMessage usersResponse = await this._client.GetAsync("https://cse106-backend.d3rpp.dev/api/users/list?search=Hu");
+
+                if (usersResponse.IsSuccessStatusCode)
+                {
+                    // Deserialize the response content to obtain the list of users
+                    string content = await usersResponse.Content.ReadAsStringAsync();
+
+                    // Try to deserialize as a list of UserDataFromBackend
+                    List<UserDataFromBackend> listOfUserData = null;
+                    try
+                    {
+                        listOfUserData = JsonConvert.DeserializeObject<List<UserDataFromBackend>>(content);
+                    }
+                    catch (JsonSerializationException)
+                    {
+                        // If deserialization as a list fails, try to deserialize as a single UserDataFromBackend
+                        var singleUserData = JsonConvert.DeserializeObject<UserDataFromBackend>(content);
+                        if (singleUserData != null)
+                        {
+                            listOfUserData = new List<UserDataFromBackend> { singleUserData };
+                        }
+                    }
+
+                    // Map the backend data to UserDB class
+                    List<UserDB> listOfUserDBs = new List<UserDB>();
+                    if (listOfUserData != null)
+                    {
+                        foreach (var userData in listOfUserData)
+                        {
+                            // Create a new UserDB instance without relying on the constructor
+                            UserDB userDB = new UserDB
+                            {
+                                id = userData.id,
+                                email = userData.email,
+                                first_name = userData.given_name,
+                                last_name = userData.family_name,
+                                dob = userData.dob_ts,
+                                nhi_num = userData.national_health_index,
+                                qr_status = userData.qrcode_status,
+                                issue_ct = userData.issue_count,
+                                test_ct = userData.test_count,
+                                vaccine_status = userData.vaccine_status
+                            };
+
+                            // Add the new UserDB instance to the list
+                            listOfUserDBs.Add(userDB);
+                        }
+                    }
+
+                    return listOfUserDBs;
+                }
+                else
+                {
+                    Console.WriteLine($"Error fetching the list of users: {usersResponse.StatusCode} - {usersResponse.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while fetching the list of users: {ex.Message}");
+                return null;
+            }
+        }
 
         public async Task<UserDB> GetProfileByIDAsync(string userId) //Admin Call
         {
