@@ -383,7 +383,7 @@ namespace _106_A2_M1.ViewModel
             test.result = result;
             test.test_type = type;
 
-            if (test.result)
+            if (test.result == 1)
             {
                 test.formatted_iso_date = ReturnIsoDate(test.formatted_test_date);
             }
@@ -464,7 +464,7 @@ namespace _106_A2_M1.ViewModel
 
                 test1.formatted_test_date = FormattedSelectedDate;
 
-                if (test1.result)
+                if (test1.result == 1)
                 {
                     test1.formatted_iso_date = ReturnIsoDate(FormattedSelectedDate);
                 }
