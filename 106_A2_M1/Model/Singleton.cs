@@ -785,7 +785,7 @@ namespace _106_A2_M1.Model
             }
         } // Admin Call*/
 
-        public async Task<List<UserDB>> GetListOfUsersAsync()
+        public async Task<List<UserDB>> GetListOfUsersAsync()//Admin Call
         {
             try
             {
