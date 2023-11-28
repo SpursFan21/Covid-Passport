@@ -180,7 +180,7 @@ namespace _106_A2_M1.ViewModel
                 }
                 
                 // Call create account model function
-                //int CreateAccSuccess = await _baseUser.CreateAccountAsync(UserEmail, UserPassword, UserFirstName, UserLastName, UserDOB, UserNHI);
+                await _baseUser.CreateAccountAsync(UserEmail, UserPassword, UserFirstName, UserLastName, UserDOB, UserNHI);
                 ShowSuccessPopup("Well done! You're account has been made!");
                 NavigateToFrame(new WelcomeBackFrame());
             }

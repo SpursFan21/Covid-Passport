@@ -421,7 +421,7 @@ namespace _106_A2_M1.ViewModel
                 }
                 else if (QRStatus == 2)
                 {
-                    await Task.Delay(300);
+                    await Task.Delay(100);
                     QRUserControl = new UserMyVaccinePassFrame_QR2();
                 }
                 else
@@ -449,16 +449,17 @@ namespace _106_A2_M1.ViewModel
             {
                 CovidTest test1 = new CovidTest();
 
-                test1.result = ReturnTestResult();
+                int result = ReturnTestResult();
+                string testType;
 
                 if(SelectedTestType == "System.Windows.Controls.ComboBoxItem: Rapid Antigen Test (RAT)")
                 {
-                    test1.test_type = "RAT";
+                    testType = "RAT";
 
                 }
                 else
                 {
-                    test1.test_type = "PCR";
+                    testType = "PCR";
                 }
 
                 test1.formatted_test_date = FormattedSelectedDate;
@@ -468,7 +469,7 @@ namespace _106_A2_M1.ViewModel
                     test1.formatted_iso_date = ReturnIsoDate(FormattedSelectedDate);
                 }
 
-                await ActiveUser.ReportTestAsync(SelectedDate, test1.result, test1.test_type);
+                await ActiveUser.ReportTestAsync(result, testType);
                 ShowSuccessPopup();
 
             }
@@ -477,15 +478,15 @@ namespace _106_A2_M1.ViewModel
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
             }
         }
-        private bool ReturnTestResult()
+        private int ReturnTestResult()
         {
             if (IsPositiveSelected)
             {
-                return true;
+                return 1;
             }
             else if (IsNegativeSelected)
             {
-                return false;
+                return 0;
             }
 
             throw new ArgumentException("Please select result.");
