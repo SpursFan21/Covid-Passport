@@ -253,7 +253,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        public async Task AddTestAsync(long testDate, bool result, string testType)
+        public async Task AddTestAsync(long testDate, int result, string testType)
         {
             try
             {
@@ -286,7 +286,7 @@ namespace _106_A2_M1.Model
             }
         }
 
-        private string GenerateTestId(long testDate, bool result, string testType)
+        /*private string GenerateTestId(long testDate, int result, string testType)
         {
             // Generate a unique test_id based on test_date, result, and test_type
             string formattedDate = testDate.ToString("yyyyMMdd"); // Format test_date as YYYYMMDD
@@ -294,7 +294,7 @@ namespace _106_A2_M1.Model
             string testId = $"{formattedDate}_{resultIndicator}_{testType}";
 
             return testId;
-        }
+        }*/
 
         // Overloaded method with additional parameters
         public virtual void UpdateUserDetails(string email, string firstName, string lastName, string dateOfBirth, int nhiNumber)

@@ -376,7 +376,7 @@ namespace _106_A2_M1.ViewModel
         }
 
         // TESTING PURPOSES ONLY
-        private void generateTest(string date, bool result, string type)
+        private void generateTest(string date, int result, string type)
         {
             CovidTest test = new CovidTest();
             test.formatted_test_date = date;
