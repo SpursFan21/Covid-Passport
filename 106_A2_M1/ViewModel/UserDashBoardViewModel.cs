@@ -4,6 +4,7 @@ using _106_A2_M1.View.Pages;
 using _106_A2_M1.View.PopupWindows;
 using _106_A2_M1.View.UserFrames;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -319,11 +320,7 @@ namespace _106_A2_M1.ViewModel
             UpdateUserFullName();
 
             // Load user tests
-            GetUserTestList();
-            if(ActiveUser.test_list != null)
-            {
-                TestList = new ObservableCollection<CovidTest>(ActiveUser.test_list);
-            }
+            UpdateTestInfoListAsync();
 
             //InitializeAsync(); // Loads userDb into this instance
 
@@ -340,6 +337,7 @@ namespace _106_A2_M1.ViewModel
             {
                 FrameTitle = "My Records";
                 await ActiveUser.GetUserVaccinationsAsync();
+                UpdateTestInfoListAsync();
                 NavigateToFrame(new UserMyRecordsFrame());
             });
             NavMyVaccinePassCommand = new RelayCommand( async x =>
@@ -447,29 +445,29 @@ namespace _106_A2_M1.ViewModel
         {
             try
             {
-                CovidTest test1 = new CovidTest();
+                CovidTest test = new CovidTest();
 
-                int result = ReturnTestResult();
-                string testType;
+                test.result = ReturnTestResult();
 
                 if(SelectedTestType == "System.Windows.Controls.ComboBoxItem: Rapid Antigen Test (RAT)")
                 {
-                    testType = "RAT";
+                    test.test_type = "RAT";
 
                 }
                 else
                 {
-                    testType = "PCR";
+                    test.test_type = "PCR";
                 }
 
-                test1.formatted_test_date = FormattedSelectedDate;
+                test.formatted_test_date = FormattedSelectedDate;
 
-                if (test1.result == 1)
+                if (test.result == 1)
                 {
-                    test1.formatted_iso_date = ReturnIsoDate(FormattedSelectedDate);
+                    test.formatted_iso_date = ReturnIsoDate(FormattedSelectedDate);
                 }
 
-                await ActiveUser.ReportTestAsync(result, testType);
+                await ActiveUser.ReportTestAsync(test.result, test.test_type);
+                TestList.Add(test);
                 ShowSuccessPopup();
 
             }
@@ -537,9 +535,27 @@ namespace _106_A2_M1.ViewModel
             }
         }
 
-        private async void GetUserTestList()
+        public async Task UpdateTestInfoListAsync()
         {
-            ActiveUser.test_list = await ActiveUser.GetTestsAsync();
+            try
+            {
+                // Use your GetTestsAsync method to retrieve test information
+                List<CovidTest> testInfoList = await ActiveUser.GetTestsAsync();
+
+                if (testInfoList != null && testInfoList.Count > 0)
+                {
+                    // Assign the list to the TestInfoList property
+                    TestList = new ObservableCollection<CovidTest>(testInfoList);
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve test information from the backend.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
     }
 }

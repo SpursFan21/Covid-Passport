@@ -9,7 +9,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" >
     <UserControl.Resources>
-        <converters:BoolToResultConverter x:Key="BoolToResultConverter"/>
+        <converters:IntToResultConverter x:Key="IntToResultConverter"/>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:NullToHiddenConverter x:Key="NullToHiddenConverter"/>
         <converters:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
@@ -107,7 +107,7 @@
                                 <StackPanel Grid.Column="1">
                                     <!-- Right column -->
                                     <TextBlock Text="RESULT" FontSize="16" Foreground="Black"/>
-                                    <TextBlock Text="{Binding Path=result, Converter={StaticResource BoolToResultConverter}}" FontWeight="Bold" FontSize="16"/>
+                                    <TextBlock Text="{Binding Path=result, Converter={StaticResource IntToResultConverter}}" FontWeight="Bold" FontSize="16"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="2">

@@ -555,7 +555,6 @@ namespace _106_A2_M1.Model
                     Console.WriteLine("Failed to retrieve test information from the backend.");
                 }
 
-                test_list = testInfoList;
                 return testInfoList;
             }
             catch (Exception ex)

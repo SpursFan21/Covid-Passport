@@ -68,7 +68,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToResolvedColorConverter.cs" />
     <Compile Include="Converters\BoolToResolvedTextConverter.cs" />
-    <Compile Include="Converters\BoolToResultConverter.cs" />
+    <Compile Include="Converters\IntToResultConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\DatePickerToIntConverter.cs" />
     <Compile Include="Converters\IntToVaccineStatusConverter.cs" />
