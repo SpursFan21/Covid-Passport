@@ -45,7 +45,6 @@ namespace _106_A2_M1.Model
         //Image Storage
         public byte[] storedImageData;
 
-
         // Expose UserDB through a property
         public UserDB UserDB
         {
@@ -690,6 +689,5 @@ namespace _106_A2_M1.Model
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
-
     }
 }

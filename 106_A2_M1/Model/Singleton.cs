@@ -965,6 +965,35 @@ namespace _106_A2_M1.Model
             }
         }
 
+        /* public async Task<bool> ReportTestAsync(int result, string testType)
+         {
+             try
+             {
+                 // Construct the URL for the POST request
+                 string apiUrl = "https://cse106-backend.d3rpp.dev/api/tests/add";
+
+                 // Create an anonymous object to represent the test report data
+                 var testReportData = new
+                 {
+                     result = result,
+                     test_type = testType
+                 };
+
+                 // Convert the test report data to StringContent
+                 var stringContent = new StringContent(JsonConvert.SerializeObject(testReportData), Encoding.UTF8, "application/json");
+
+                 // Make a POST request to report the test details
+                 HttpResponseMessage response = await _client.PostAsync(apiUrl, stringContent);
+
+                 return response.IsSuccessStatusCode;
+             }
+             catch (Exception ex)
+             {
+                 Console.WriteLine($"An error occurred while reporting the test: {ex.Message}");
+                 return false;
+             }
+         }*/
+
         public async Task<bool> ReportTestAsync(int result, string testType)
         {
             try
@@ -979,8 +1008,11 @@ namespace _106_A2_M1.Model
                     test_type = testType
                 };
 
-                // Convert the test report data to StringContent
-                var stringContent = new StringContent(JsonConvert.SerializeObject(testReportData), Encoding.UTF8, "application/json");
+                // Serialize the test report data
+                string jsonContent = JsonConvert.SerializeObject(testReportData);
+
+                // Convert the serialized data to StringContent
+                var stringContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
                 // Make a POST request to report the test details
                 HttpResponseMessage response = await _client.PostAsync(apiUrl, stringContent);
@@ -993,6 +1025,7 @@ namespace _106_A2_M1.Model
                 return false;
             }
         }
+
 
     }
 }

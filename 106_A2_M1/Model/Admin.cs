@@ -366,7 +366,6 @@ namespace _106_A2_M1.Model
             }
         }
 
-
         public async Task<bool> CloseIssueInBackend(string issueId)
         {
             try
