@@ -25,7 +25,7 @@ namespace _106_A2_M1.ViewModel
         public ICommand MarkAsResolvedCommand { get; }
 
         private Admin _admin; // Declare an instance of the Admin class MODEL to ViewModel Pipeline
-        private ObservableCollection<User> _userList; // Change the type to ObservableCollection<User>
+        private ObservableCollection<UserDB> _userList; // Change the type to ObservableCollection<User>
         private ObservableCollection<Issue> _issueList;
         
         
@@ -40,7 +40,7 @@ namespace _106_A2_M1.ViewModel
                 return _userSearchCommand;
             }
         }
-        public ObservableCollection<User> UserList   //MODEL to ViewModel Pipeline
+        public ObservableCollection<UserDB> UserList   //MODEL to ViewModel Pipeline
         {
             get => _userList; // Access the ObservableCollection
             set
@@ -63,7 +63,7 @@ namespace _106_A2_M1.ViewModel
         public AdminDashboardViewModel()
         {
             _admin = new Admin(); // Initialize the Admin instance MODEL to ViewModel Pipeline
-            UserList = _admin.GetListOfUsersAsync(); // Initialize the UserList
+            UpdateUserListAsync();
             IssueList = new ObservableCollection<Issue>(_admin.issue_list); // Initialize IssueList
             
             // Set the default frame to UserDirectoryFrame
@@ -103,9 +103,27 @@ namespace _106_A2_M1.ViewModel
             CurrentDisplayFrame.DataContext = this;
         }
 
-        private async void GetUserList()
+        public async Task UpdateUserListAsync()
         {
-            await _admin.GetListOfUsersAsync();
+            try
+            {
+                // Use SingletonClient to get the list of users with a search query through a GET request
+                List<UserDB> listOfUsers = await SingletonClient.Instance.GetListOfUsersAsync();
+
+                if (listOfUsers != null && listOfUsers.Count > 0)
+                {
+                    // Assign the list to the UserList property
+                    UserList = new ObservableCollection<UserDB>(listOfUsers);
+                }
+                else
+                {
+                    Console.WriteLine("Failed to retrieve the list of users from the backend.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
         public void UserDirSearch()
         {
