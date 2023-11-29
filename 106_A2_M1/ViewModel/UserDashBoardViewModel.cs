@@ -318,7 +318,7 @@ namespace _106_A2_M1.ViewModel
             ActiveUser = new User();
             ActiveUser.UserDB = _uDB;
             UpdateUserFullName();
-
+            TestList = new ObservableCollection<CovidTest>();
             // Load user tests
             UpdateTestInfoListAsync();
 
@@ -447,17 +447,21 @@ namespace _106_A2_M1.ViewModel
             {
                 CovidTest test = new CovidTest();
 
-                test.result = ReturnTestResult();
-
                 if(SelectedTestType == "System.Windows.Controls.ComboBoxItem: Rapid Antigen Test (RAT)")
                 {
                     test.test_type = "RAT";
 
                 }
-                else
+                else if (SelectedTestType == "System.Windows.Controls.ComboBoxItem: Polymerase Chain Reaction (PCR)")
                 {
                     test.test_type = "PCR";
                 }
+                else
+                {
+                    throw new ArgumentException("Please select Test Type");
+                }
+                
+                test.result = ReturnTestResult();
 
                 test.formatted_test_date = FormattedSelectedDate;
 
