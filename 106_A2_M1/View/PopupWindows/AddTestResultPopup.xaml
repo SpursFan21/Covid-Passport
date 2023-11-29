@@ -60,7 +60,7 @@
                     <ComboBoxItem Content="Polymerase Chain Reaction (PCR)" />
                 </ComboBox>
             </Border>
-            
+            <!--
             <TextBlock
                 Text="Date"
                 Margin="0 20 0 5"
@@ -81,7 +81,7 @@
                             SelectedDate="{Binding Path=SelectedDate, Converter={StaticResource StringToDateTimeConverter}}" 
                             />
             </Border>
-
+            -->
             <TextBlock
                 Text="Result"
                 Margin="0 20 0 5"

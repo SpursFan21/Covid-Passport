@@ -495,7 +495,7 @@ namespace _106_A2_M1.ViewModel
             if (DateTime.TryParseExact(formattedDate, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime originalDate))
             {
                 // Add the specified number of days
-                DateTime newDate = originalDate.AddDays(10);
+                DateTime newDate = originalDate.AddDays(14);
 
                 // Convert the new date back to a formatted string
                 string newFormattedDate = newDate.ToString("dd-MM-yyyy");
