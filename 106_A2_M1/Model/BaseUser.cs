@@ -183,7 +183,7 @@ namespace _106_A2_M1.Model
                 DateTimeOffset epochTime = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
                 // Add the Unix timestamp in milliseconds to get the actual DateTimeOffset
-                DateTimeOffset dateTimeOffset = epochTime.AddMilliseconds(unixTimestamp);
+                DateTimeOffset dateTimeOffset = epochTime.AddSeconds(unixTimestamp);
 
                 // Format the DateTimeOffset as a string
                 string formattedDateTimeDob = dateTimeOffset.ToString("dd-MM-yyyy");
@@ -428,7 +428,7 @@ namespace _106_A2_M1.Model
                 DateTimeOffset epochTime = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
                 // Add the Unix timestamp in milliseconds to get the actual DateTimeOffset
-                DateTimeOffset dateTimeOffset = epochTime.AddMilliseconds(unixTimestamp);
+                DateTimeOffset dateTimeOffset = epochTime.AddSeconds(unixTimestamp);
 
                 // Format the DateTimeOffset as a string
                 string formattedDateTime = dateTimeOffset.ToString("dd-MM-yyyy");
