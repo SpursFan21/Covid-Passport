@@ -174,19 +174,32 @@ namespace _106_A2_M1.Model
             public string national_health_index { get; set; }
         }
 
-        public async Task<UserDB> CreateAccountAsync(string email, string password, string firstName, string lastName, int dob, string nhiNum)
+        public class UserDataSignUp 
+        {
+            public string email { get; set; }
+            public string password { get; set; }
+            public string given_name { get; set; }
+            public string family_name { get; set; }
+            public string nhi_number { get; set; }
+            public long dob_ts { get; set; }
+
+
+        }
+
+
+        public async Task<UserDB> CreateAccountAsync(string _email, string _password, string firstName, string lastName, long dob, string nhiNum)
         {
             try
             {
                 // Create a string containing the user data
-                UserData userData = new UserData
+                UserDataSignUp userData = new UserDataSignUp
                 {
-                    Email = email,
-                    Password = password,
-                    FirstName = firstName,
-                    LastName = lastName,
-                    DateOfBirth = dob,
-                    NhiNumber = nhiNum
+                    email = _email,
+                    password = _password,
+                    given_name = firstName,
+                    family_name = lastName,
+                    dob_ts = dob,
+                    nhi_number = nhiNum
                 };
 
                 // Convert the data to a JSON string using JsonConvert.SerializeObject

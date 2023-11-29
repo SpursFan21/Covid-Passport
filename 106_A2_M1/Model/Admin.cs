@@ -9,15 +9,6 @@ using System.IO;
 
 namespace _106_A2_M1.Model
 {
-    public static class DateTimeExtensions
-    {
-        public static long ToUnixTimestamp(this DateTime dateTime)
-        {
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            var timeSpan = dateTime - epoch;
-            return (long)timeSpan.TotalSeconds;
-        }
-    }
     public class Admin : BaseUser
     {
         public string user_id { get; set; }

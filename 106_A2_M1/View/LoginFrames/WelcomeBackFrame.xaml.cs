@@ -33,6 +33,15 @@ namespace _106_A2_M1.View
             { ((dynamic)this.DataContext).LoginPassword = ((PasswordBox)sender).Password; }
         }
 
+        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                var viewModel = DataContext as LoginViewModel;
+                viewModel?.LoginCommand.Execute(null);
+            }
+        }
+
         /*
 private void ForgotPassword_Click(object sender, RoutedEventArgs e)
 {

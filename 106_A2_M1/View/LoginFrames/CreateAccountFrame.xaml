@@ -59,7 +59,7 @@
                     <!-- Birth Date field -->
                     <DatePicker 
                         x:Name="user_DOB"
-                        
+                        SelectedDate="{Binding UserDOB}"
                         Margin="2 15 2 0"
                         Width="296" 
                         FontSize="18"

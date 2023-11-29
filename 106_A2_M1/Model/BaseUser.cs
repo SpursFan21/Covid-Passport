@@ -8,6 +8,15 @@ using System.IO;
 
 namespace _106_A2_M1.Model
 {
+    public static class DateTimeExtensions
+    {
+        public static long ToUnixTimestamp(this DateTime dateTime)
+        {
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var timeSpan = dateTime - epoch;
+            return (long)timeSpan.TotalSeconds;
+        }
+    }
     public class BaseUser
     {
 
@@ -212,8 +221,10 @@ namespace _106_A2_M1.Model
                 TimeSpan elapsedTime = dobDT.ToUniversalTime() - epoch;
                 int dob = (int)elapsedTime.TotalSeconds * 1000;
 
+                long dobTS = dobDT.ToUnixTimestamp();
+
                 // Call the CreateAccountAsync method in SingletonClient
-                UserDB user = await SingletonClient.Instance.CreateAccountAsync(email, password, firstName, lastName, dob, nhiNum);
+                UserDB user = await SingletonClient.Instance.CreateAccountAsync(email, password, firstName, lastName, dobTS, nhiNum);
 
                 // Set the unique data member using the class name
                 BaseUser.password = password;
