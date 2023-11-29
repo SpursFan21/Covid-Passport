@@ -546,6 +546,7 @@ namespace _106_A2_M1.Model
                         Console.WriteLine("Test Information:");
                         Console.WriteLine($"Result: {testInfo.result}");
                         Console.WriteLine($"Test Type: {testInfo.test_type}");
+                        Console.WriteLine($"Test Date: {testInfo.test_date}");
                         Console.WriteLine();
                     }
                 }

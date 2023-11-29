@@ -419,7 +419,7 @@ namespace _106_A2_M1.ViewModel
                 }
                 else if (QRStatus == 2)
                 {
-                    await Task.Delay(100);
+                    //await Task.Delay(100);
                     QRUserControl = new UserMyVaccinePassFrame_QR2();
                 }
                 else
