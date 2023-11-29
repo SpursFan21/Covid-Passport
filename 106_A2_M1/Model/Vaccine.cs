@@ -12,5 +12,6 @@ namespace _106_A2_M1.Model
         public long date_administered { get; set; }
         public string brand { get; set; }
         public string location { get; set; }
+        public string formatted_date_administered { get; set; }
     }
 }

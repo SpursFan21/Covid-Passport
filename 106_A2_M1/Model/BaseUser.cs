@@ -546,7 +546,14 @@ namespace _106_A2_M1.Model
                         Console.WriteLine("Test Information:");
                         Console.WriteLine($"Result: {testInfo.result}");
                         Console.WriteLine($"Test Type: {testInfo.test_type}");
+                        Console.WriteLine($"Test Date: {testInfo.test_date}");
                         Console.WriteLine();
+                        testInfo.formatted_test_date = FormatUnixTimestamp(testInfo.test_date);
+                        if(testInfo.result == 1)
+                        {
+                            testInfo.formatted_iso_date = FormatUnixTimestamp(testInfo.test_date + (60 * 60 * 24 * 7 * 2));
+                        }
+
                     }
                 }
                 else
@@ -586,6 +593,7 @@ namespace _106_A2_M1.Model
                         first_dose.date_administered = vaccinationData[0].date_administered;
                         first_dose.brand = vaccinationData[0].brand;
                         first_dose.location = vaccinationData[0].location;
+                        first_dose.formatted_date_administered = FormatUnixTimestamp(vaccinationData[0].date_administered);
                     }
                     else
                     {

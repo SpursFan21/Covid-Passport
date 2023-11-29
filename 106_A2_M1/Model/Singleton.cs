@@ -381,6 +381,8 @@ namespace _106_A2_M1.Model
                 else
                 {
                     Console.WriteLine($"Error retrieving QR code URL: {response.StatusCode} - {response.ReasonPhrase}");
+                    string content = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(content);
                     return (null, 0);
                 }
             }
