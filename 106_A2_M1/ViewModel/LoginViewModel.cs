@@ -40,7 +40,7 @@ namespace _106_A2_M1.ViewModel
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
 
-        private DateTime _userDOB;
+        private DateTime _userDOB = new DateTime(2000,1,1);
         public DateTime UserDOB
         {
             get => _userDOB;
@@ -155,14 +155,6 @@ namespace _106_A2_M1.ViewModel
             get { return _baseUser.UserType == 2; }
         }
 
-        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                var passwordBox = (PasswordBox)sender;
-                string password = passwordBox.Password;
-            }
-        }
 
         private async Task<UserDB> GetUserDataAsync()
         {
@@ -181,7 +173,7 @@ namespace _106_A2_M1.ViewModel
                 
                 // Call create account model function
                 await _baseUser.CreateAccountAsync(UserEmail, UserPassword, UserFirstName, UserLastName, UserDOB, UserNHI);
-                ShowSuccessPopup("Well done! You're account has been made!");
+                ShowSuccessPopup("Welcome " + UserFirstName + "! You're account has been made!");
                 NavigateToFrame(new WelcomeBackFrame());
             }
 

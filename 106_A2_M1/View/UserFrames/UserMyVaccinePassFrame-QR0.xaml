@@ -13,16 +13,16 @@
         <converters:IntToVaccineStatusConverter x:Key="IntToVaccineStatusConverter" />
     </UserControl.Resources>
     <Grid>
-        <materialDesign:Card Padding="50" Background="#DEDDEB" Width="600">
+        <materialDesign:Card Margin="0 50 0 0" Padding="50" Background="#DEDDEB" Width="600" Height="auto" VerticalAlignment="Top">
             <materialDesign:Card.Effect>
                 <DropShadowEffect ShadowDepth="0" Opacity="0.3" BlurRadius="10"/>
             </materialDesign:Card.Effect>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition  Height="auto"/>
+                    <RowDefinition  Height="auto"/>
+                    <RowDefinition  Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0">
@@ -62,17 +62,22 @@
                             Grid.Row="1"
                             Text="{Binding Path=VaccineStatus, Converter={StaticResource IntToVaccineStatusConverter}}" 
                             FontSize="20"
-                            FontWeight="Bold" />
+                            FontWeight="Bold" 
+                            HorizontalAlignment="Right" />
                     </Grid>
 
                 </Grid>
-                <Grid Grid.Row="1" Margin="0 20 0 0">
-                    <Image 
-                        Source="/Resources/ExclamationMark.png"
-                        Stretch="Uniform"
-                        Width="100"
-                        Height="auto" />
-                </Grid>
+                <Image 
+                    Grid.Row="1" 
+                    Margin="0 20 0 0"
+                    Source="/Resources/ExclamationMark.png"
+                    Stretch="Uniform"
+                    Height="100" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                     Visibility="Visible"
+                     Width="auto"
+                     />
 
                 <Grid Grid.Row="2">
                     <TextBlock

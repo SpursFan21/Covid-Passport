@@ -49,7 +49,8 @@
                         BorderThickness="2"
                         Background="White" 
                         BorderBrush="{DynamicResource MaterialDesignDivider}"
-                        Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
+                        Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                        KeyDown="PasswordBox_KeyDown" />
 
                     <!-- Grid for "Forgot Password and Log In button -->
                     <Grid>

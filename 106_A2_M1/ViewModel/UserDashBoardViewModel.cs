@@ -438,6 +438,8 @@ namespace _106_A2_M1.ViewModel
         private void RequestQRCode()
         {
             // Update QR status
+            ActiveUser.UserDB.qr_status = 1;
+            ShowQRFrame();
         }
 
 
