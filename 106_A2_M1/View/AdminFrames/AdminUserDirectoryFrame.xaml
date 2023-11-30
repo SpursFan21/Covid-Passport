@@ -27,11 +27,11 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="NAME" Width="300"
-                                            DisplayMemberBinding="{Binding Path=FirstName}" />
+                                            DisplayMemberBinding="{Binding Path=first_name}" />
                             <GridViewColumn Header="DOB" Width="200"
                                             DisplayMemberBinding="{Binding Path=DateOfBirth}" />
                             <GridViewColumn Header="EMAIL" Width="300"
-                                            DisplayMemberBinding="{Binding Path=Email}" />
+                                            DisplayMemberBinding="{Binding Path=email}" />
                             <GridViewColumn Header="ACTIONS" Width="auto">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
