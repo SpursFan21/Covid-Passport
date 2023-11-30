@@ -95,7 +95,7 @@
             <StackPanel Grid.Column="0" Margin="0 15 0 0" >
                 <TextBlock HorizontalAlignment="Center">
                     
-                    Don't have an account?<Hyperlink Command="{Binding NavCreateAccountCommand}">Click Here</Hyperlink>
+                    Don't have an account? <Hyperlink Command="{Binding NavCreateAccountCommand}">Click Here</Hyperlink>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Center" Margin="10">
                     
